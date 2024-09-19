@@ -37,7 +37,7 @@
   --heading-font-size-xs: 22px;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 50px;
 }
 
 /* fallback fonts */
@@ -86,6 +86,12 @@ body.appear {
 
 header {
   height: var(--nav-height);
+}
+
+@media (width >= 768px) {
+    header {
+        height: 55px;
+    }
 }
 
 header .header,
