@@ -1,19 +1,23 @@
 /* General styles for all banners */
 main .section.hero-banner-container {
-    min-height:75vh;
+    height: 480px;
     display: flex;
     flex-direction: column;
     background: var(--hero-banner-background-color);
+    overflow: hidden;
 }
+
 .hero-banner-wrapper {
-    display: none;
-  }
+    display: none; /* Hide all banners by default */
+}
 
 .hero-banner > div {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    max-width: none;
     height: 100%;
+    flex-grow: 1;
 }
 
 .hero-banner a {
@@ -33,32 +37,49 @@ main .section.hero-banner-container {
 .hero-banner {
     color: var(--text-h1-color);
     font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
-    font-size: 0.9rem; /* 14.5px*/
+    font-size: 0.9rem; /* 14.5px */
     line-height: 1.33;
 }
 
 .hero-banner > div > div:first-child {
     display: flex;
-    flex-direction: column; 
-    justify-content: center; 
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
     text-align: center;
+}
+
+.hero-banner  {
+    font-size: 0.8rem;
+    letter-spacing: 0.03em
 }
 
 .hero-banner h1 {
     color: var(--text-h1-color);
     font-family: "ui-serifed", "Times New Roman", Times, serif;
-    font-size: 2rem;
-    margin: 0 !important;
-    font-style: normal;
+    font-size: 1.8rem;
     font-weight: 400;
-    line-height: 1.2;
+    line-height: 1.1;
+    letter-spacing: 0.03em
 }
 
-/* Mobile (up to 600px): Image at the top */
+/*button*/
+.hero-banner a.button {
+    padding: 0.7em 1.5em;
+    font-size: 1rem;
+    line-height: 1.25;
+}
 
+.ancestry::after {
+    content: "®";
+    font-size: 0.6em;
+    vertical-align: top;
+    position: relative;
+    top: -0.1em;
+  }
+
+/* Mobile banner styles */
 .hero-banner.mobile-banner > div {
-    display: flex;
     flex-direction: column-reverse;
 }
 
@@ -68,10 +89,8 @@ main .section.hero-banner-container {
     object-fit: cover;
 }
 
-/* Tablet (600px to 899px): Image at the bottom */
-
+/* Tablet banner styles */
 .hero-banner.tab-banner > div {
-    display: flex;
     flex-direction: column;
 }
 
@@ -81,50 +100,80 @@ main .section.hero-banner-container {
     object-fit: cover;
 }
 
-
+/* Desktop banner styles */
 .hero-banner.desktop-banner > div {
     display: grid;
-    grid-template-columns: 6fr 4fr;
+    grid-template-columns: 6fr 4fr; /* Default columns */
     align-items: center;
-    gap: 2rem;
 }
 
 .hero-banner.desktop-banner img {
     width: 100%;
     height: auto;
-    border-bottom-right-radius: 1rem;
 }
 
-
-/* Mobile: Show mobile-banner when width is up to 600px */
-@media (max-width: 600px) {
+/* Mobile: Show mobile-banner when width is up to 767px */
+@media (max-width: 767px) {
+    main .section.hero-banner-container {
+        height: 550px;
+    }
     .mobile-banner-wrapper {
         display: block;
-      }
+    }
     .hero-banner > div {
         flex-direction: column;
     }
 }
 
-/* Tablet: Show tab-banner when width is 600px to 899px with image at the bottom */
-@media (min-width: 601px) and (max-width: 899px) {
+/* Tablet: Show tab-banner when width is 768px to 1005px */
+@media (min-width: 768px) and (max-width: 1005px) {
+    main .section.hero-banner-container {
+        height: 700px;
+    }
     .tab-banner-wrapper {
         display: block;
-      }
-
+    }
     .hero-banner > div {
         flex-direction: column-reverse;
     }
 }
 
-/* Desktop: Show desktop-banner when width is 900px and above */
-@media (min-width: 900px) {
+/* Desktop: Show desktop-banner when width is 1006px and above */
+@media (min-width: 1006px) {
     .desktop-banner-wrapper {
-    display: block;
-  }
+        display: block;
+        overflow: hidden; /* Hide overflow to clip the image */
+    }
+
+    .hero-banner.desktop-banner {
+        width: 100%;
+        overflow: hidden;
+    }
+
+    .hero-banner.desktop-banner > div {
+        display: grid;
+        grid-template-columns: 1fr auto; /* Text adjusts, image has fixed width */
+        align-items: center;
+    }
+
+    .hero-banner.desktop-banner > div > div:first-child {
+        width: 300px; 
+        margin: 5rem 10rem 10rem 5rem;
+    }
+
+    .hero-banner.desktop-banner > div > div:last-child {
+        width: 600px;
+        flex-shrink: 0;
+    }
+
+    .hero-banner.desktop-banner img {
+        width: 600px;
+        height: 100%;
+        object-fit: cover;
+    }
 }
 
-/* Desktop: Adjust for 1200px and above */
+/* Desktop: Adjust for 1200px and above (if needed) */
 @media (min-width: 1200px) {
-
+    /* Your styles here, if any */
 }
