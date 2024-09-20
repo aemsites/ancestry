@@ -11,9 +11,9 @@ export default function decorate(block) {
 
   const heroBannerWrappers = document.querySelectorAll('.hero-banner-wrapper');
 
-  heroBannerWrappers.forEach(wrapper => {
+  heroBannerWrappers.forEach((wrapper) => {
     const heroBanner = wrapper.querySelector('.hero-banner');
-    
+
     if (heroBanner) {
       // Check the class of the inner div and apply the corresponding class to the outer wrapper
       if (heroBanner.classList.contains('mobile-banner')) {
@@ -37,4 +37,3 @@ export default function decorate(block) {
     }
   }
 }
-  

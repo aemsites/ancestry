@@ -13,10 +13,17 @@ main .section.hero-banner-container {
 
 .hero-banner {
     color: var(--text-h1-color);
-    font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
+
+    /* font-family: ui-serif, "Times New Roman", Times, serif; */
     font-size: 0.8rem;
     letter-spacing: 0.03em;
     line-height: 1.33;
+}
+
+.hero-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 
 .hero-banner > div {
@@ -26,6 +33,43 @@ main .section.hero-banner-container {
     max-width: none;
     height: 100%;
     flex-grow: 1;
+}
+
+/* Specific Banner Styles */
+
+/* Mobile Banner Styles */
+.hero-banner.mobile-banner > div {
+    flex-direction: column-reverse;
+}
+
+.hero-banner.mobile-banner img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Tablet Banner Styles */
+.hero-banner.tab-banner > div {
+    align-items: center;
+    flex-direction: column;
+}
+
+.hero-banner.tab-banner img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Desktop Banner Styles */
+.hero-banner.desktop-banner > div {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    align-items: center;
+}
+
+.hero-banner.desktop-banner img {
+    width: 100%;
+    height: auto;
 }
 
 .hero-banner > div > div:first-child {
@@ -43,15 +87,9 @@ main .section.hero-banner-container {
     font-weight: normal;
 }
 
-.hero-banner img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .hero-banner h1 {
     color: var(--text-h1-color);
-    font-family: "ui-serifed", "Times New Roman", Times, serif;
+    font-family: ui-serif, "Times New Roman", Times, serif;
     font-size: 2rem;
     font-weight: 400;
     line-height: 1.1;
@@ -89,51 +127,17 @@ main .section.hero-banner-container {
     top: -0.1em;
 }
 
-/* Mobile Banner Styles */
-.hero-banner.mobile-banner > div {
-    flex-direction: column-reverse;
-}
-
-.hero-banner.mobile-banner img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-/* Tablet Banner Styles */
-.hero-banner.tab-banner > div {
-    align-items: center;
-    flex-direction: column; /* Changed to 'column' */
-}
-
-.hero-banner.tab-banner img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-/* Desktop Banner Styles */
-.hero-banner.desktop-banner > div {
-    display: grid;
-    grid-template-columns: 6fr 4fr;
-    align-items: center;
-}
-
-.hero-banner.desktop-banner img {
-    width: 100%;
-    height: auto;
-}
-
 /* Responsive Styles */
 
 /* Mobile: Up to 767px */
-@media (max-width: 767px) {
+@media (width <= 767px) {
     main .section.hero-banner-container {
         height: 500px;
     }
 
-    .hero-banner-wrapper.mobile-banner-wrapper{
-        margin-top:0;
+    .hero-banner-wrapper.mobile-banner-wrapper {
+        margin-top: 0;
+        display: block;
     }
 
     /* Hide Icon on Mobile */
@@ -160,28 +164,19 @@ main .section.hero-banner-container {
         margin-bottom: 2rem;
     }
 
-    .mobile-banner-wrapper {
-        display: block;
-    }
-
     .hero-banner > div {
         flex-direction: column;
     }
 }
 
 /* Tablet: 768px to 1005px */
-@media (min-width: 768px) and (max-width: 1005px) {
+@media (width >= 768px) and (width <= 1005px) {
     main .section.hero-banner-container {
         height: 600px;
     }
 
     .hero-banner {
         padding-top: 3rem;
-    }
-
-    .hero-banner.tab-banner > div {
-        align-items: center;
-        flex-direction: column; /* Changed to 'column' */
     }
 
     .hero-banner.tab-banner > div > div:first-child {
@@ -199,7 +194,7 @@ main .section.hero-banner-container {
 }
 
 /* Desktop: 1006px and Above */
-@media (min-width: 1006px) {
+@media (width >= 1006px) {
     .desktop-banner-wrapper {
         display: block;
         overflow: hidden;
@@ -218,7 +213,7 @@ main .section.hero-banner-container {
 
     .hero-banner.desktop-banner > div > div:first-child {
         width: 300px;
-        margin: 6rem 10rem 10rem 7rem;
+        margin: 8rem;
     }
 
     .hero-banner.desktop-banner > div > div:last-child {
