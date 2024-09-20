@@ -1,6 +1,6 @@
-/* General styles for all banners */
+/* General Styles for All Banners */
 main .section.hero-banner-container {
-    height: 480px;
+    height: 600px;
     display: flex;
     flex-direction: column;
     background: var(--hero-banner-background-color);
@@ -11,13 +11,29 @@ main .section.hero-banner-container {
     display: none; /* Hide all banners by default */
 }
 
+.hero-banner {
+    color: var(--text-h1-color);
+    font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.03em;
+    line-height: 1.33;
+}
+
 .hero-banner > div {
     display: flex;
-    flex-direction: column;
+    flex-direction: column; /* Default direction */
     justify-content: center;
     max-width: none;
     height: 100%;
     flex-grow: 1;
+}
+
+.hero-banner > div > div:first-child {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
 }
 
 .hero-banner a {
@@ -33,27 +49,6 @@ main .section.hero-banner-container {
     object-fit: cover;
 }
 
-/* hero-txt */
-.hero-banner {
-    color: var(--text-h1-color);
-    font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
-    font-size: 0.9rem; /* 14.5px */
-    line-height: 1.33;
-}
-
-.hero-banner > div > div:first-child {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-}
-
-.hero-banner  {
-    font-size: 0.8rem;
-    letter-spacing: 0.03em
-}
-
 .hero-banner h1 {
     color: var(--text-h1-color);
     font-family: "ui-serifed", "Times New Roman", Times, serif;
@@ -61,9 +56,10 @@ main .section.hero-banner-container {
     font-weight: 400;
     line-height: 1.1;
     letter-spacing: 0.03em;
-    margin-top:1rem;
+    margin-top: 1rem;
 }
 
+/* Icon Styles */
 .hero-banner .icon.icon-icon-acom {
     display: flex;
     justify-content: center;
@@ -71,28 +67,29 @@ main .section.hero-banner-container {
     width: 100%;
 }
 
-.hero-banner .icon.icon-icon-acom img { 
-    max-width:none;
-    width:3rem;
+.hero-banner .icon.icon-icon-acom img {
+    max-width: none;
+    width: 3rem;
     height: 3rem;
-  }
+}
 
-/*button*/
+/* Button Styles */
 .hero-banner a.button {
     padding: 0.7em 1.5em;
     font-size: 1rem;
     line-height: 1.25;
 }
 
+/* Ancestry Trademark Symbol */
 .ancestry::after {
     content: "®";
     font-size: 0.6em;
     vertical-align: top;
     position: relative;
     top: -0.1em;
-  }
+}
 
-/* Mobile banner styles */
+/* Mobile Banner Styles */
 .hero-banner.mobile-banner > div {
     flex-direction: column-reverse;
 }
@@ -103,9 +100,10 @@ main .section.hero-banner-container {
     object-fit: cover;
 }
 
-/* Tablet banner styles */
+/* Tablet Banner Styles */
 .hero-banner.tab-banner > div {
-    flex-direction: column;
+    align-items: center;
+    flex-direction: column; /* Changed to 'column' */
 }
 
 .hero-banner.tab-banner img {
@@ -114,7 +112,7 @@ main .section.hero-banner-container {
     object-fit: cover;
 }
 
-/* Desktop banner styles */
+/* Desktop Banner Styles */
 .hero-banner.desktop-banner > div {
     display: grid;
     grid-template-columns: 6fr 4fr;
@@ -126,76 +124,81 @@ main .section.hero-banner-container {
     height: auto;
 }
 
-/* Mobile: Show mobile-banner when width is up to 767px */
+/* Responsive Styles */
+
+/* Mobile: Up to 767px */
 @media (max-width: 767px) {
     main .section.hero-banner-container {
         height: 500px;
     }
 
-    .hero-banner .icon.icon-icon-acom img { 
-        display:none;
-      }
- 
+    .hero-banner-wrapper.mobile-banner-wrapper{
+        margin-top:0;
+    }
+
+    /* Hide Icon on Mobile */
+    .hero-banner .icon.icon-icon-acom img {
+        display: none;
+    }
+
     .hero-banner a.button {
         padding: 0.6em 1.5em;
         font-size: 0.9rem;
     }
 
     .hero-banner p {
-        font-size:0.8em;
-        letter-spacing: 0.05em
+        font-size: 0.9em;
+        letter-spacing: 0.05em;
     }
 
     .hero-banner h1 {
-        margin:0;
+        margin: 0;
     }
 
     .hero-banner p:last-of-type {
-        font-size:0.7em;
+        font-size: 0.8em;
         margin-bottom: 2rem;
-      }
+    }
 
     .mobile-banner-wrapper {
         display: block;
     }
+
     .hero-banner > div {
         flex-direction: column;
     }
 }
 
-/* Tablet: Show tab-banner when width is 768px to 1005px */
+/* Tablet: 768px to 1005px */
 @media (min-width: 768px) and (max-width: 1005px) {
     main .section.hero-banner-container {
         height: 600px;
     }
 
+    .hero-banner {
+        padding-top: 3rem;
+    }
+
     .hero-banner.tab-banner > div {
         align-items: center;
+        flex-direction: column; /* Changed to 'column' */
     }
 
     .hero-banner.tab-banner > div > div:first-child {
-        width: 300px; 
-    }
-    
-    .hero-banner {
-        padding-top:3rem;
+        width: 300px;
     }
 
     .hero-banner p:last-of-type {
-        font-size:0.9em;
-        margin-bottom: 1.8rem; /* Adjust this value to add space */
-      }
+        font-size: 0.9em;
+        margin-bottom: 1.8rem;
+    }
 
     .tab-banner-wrapper {
         display: block;
     }
-    
-    .hero-banner > div {
-        flex-direction: column-reverse;
-    }
 }
 
-/* Desktop: Show desktop-banner when width is 1006px and above */
+/* Desktop: 1006px and Above */
 @media (min-width: 1006px) {
     .desktop-banner-wrapper {
         display: block;
@@ -214,8 +217,8 @@ main .section.hero-banner-container {
     }
 
     .hero-banner.desktop-banner > div > div:first-child {
-        width: 300px; 
-        margin: 5rem 10rem 10rem 5rem;
+        width: 300px;
+        margin: 6rem 10rem 10rem 7rem;
     }
 
     .hero-banner.desktop-banner > div > div:last-child {
@@ -228,8 +231,4 @@ main .section.hero-banner-container {
         height: 100%;
         object-fit: cover;
     }
-}
-
-/* Desktop: Adjust for 1200px and above (if needed) */
-@media (min-width: 1200px) {
 }
