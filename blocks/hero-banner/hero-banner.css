@@ -50,7 +50,7 @@ main .section.hero-banner-container {
 }
 
 .hero-banner  {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
     letter-spacing: 0.03em
 }
 
@@ -103,7 +103,7 @@ main .section.hero-banner-container {
 /* Desktop banner styles */
 .hero-banner.desktop-banner > div {
     display: grid;
-    grid-template-columns: 6fr 4fr; /* Default columns */
+    grid-template-columns: 6fr 4fr;
     align-items: center;
 }
 
@@ -115,8 +115,28 @@ main .section.hero-banner-container {
 /* Mobile: Show mobile-banner when width is up to 767px */
 @media (max-width: 767px) {
     main .section.hero-banner-container {
-        height: 550px;
+        height: 450px;
     }
+ 
+    .hero-banner a.button {
+        padding: 0.6em 1.5em;
+        font-size: 0.9rem;
+    }
+
+    .hero-banner p {
+        font-size:0.8em;
+        letter-spacing: 0.05em
+    }
+
+    .hero-banner h1 {
+        margin:0;
+    }
+
+    .hero-banner p:last-of-type {
+        font-size:0.7em;
+        margin-bottom: 2rem;
+      }
+
     .mobile-banner-wrapper {
         display: block;
     }
@@ -128,8 +148,20 @@ main .section.hero-banner-container {
 /* Tablet: Show tab-banner when width is 768px to 1005px */
 @media (min-width: 768px) and (max-width: 1005px) {
     main .section.hero-banner-container {
-        height: 700px;
+        height: 600px;
     }
+    .hero-banner {
+        padding-top:3rem;
+    }
+    .hero-banner h1 {
+        margin:0;
+    }
+
+    .hero-banner p:last-of-type {
+        font-size:0.8em;
+        margin-bottom: 1.8rem; /* Adjust this value to add space */
+      }
+
     .tab-banner-wrapper {
         display: block;
     }
@@ -142,7 +174,7 @@ main .section.hero-banner-container {
 @media (min-width: 1006px) {
     .desktop-banner-wrapper {
         display: block;
-        overflow: hidden; /* Hide overflow to clip the image */
+        overflow: hidden;
     }
 
     .hero-banner.desktop-banner {
@@ -152,7 +184,7 @@ main .section.hero-banner-container {
 
     .hero-banner.desktop-banner > div {
         display: grid;
-        grid-template-columns: 1fr auto; /* Text adjusts, image has fixed width */
+        grid-template-columns: 1fr auto;
         align-items: center;
     }
 
@@ -175,5 +207,4 @@ main .section.hero-banner-container {
 
 /* Desktop: Adjust for 1200px and above (if needed) */
 @media (min-width: 1200px) {
-    /* Your styles here, if any */
 }
