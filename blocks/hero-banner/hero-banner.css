@@ -1,0 +1,130 @@
+/* General styles for all banners */
+main .section.hero-banner-container {
+    min-height:75vh;
+    display: flex;
+    flex-direction: column;
+    background: var(--hero-banner-background-color);
+}
+.hero-banner-wrapper {
+    display: none;
+  }
+
+.hero-banner > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 100%;
+}
+
+.hero-banner a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+}
+
+.hero-banner img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* hero-txt */
+.hero-banner {
+    color: var(--text-h1-color);
+    font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
+    font-size: 0.9rem; /* 14.5px*/
+    line-height: 1.33;
+}
+
+.hero-banner > div > div:first-child {
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;
+    text-align: center;
+}
+
+.hero-banner h1 {
+    color: var(--text-h1-color);
+    font-family: "ui-serifed", "Times New Roman", Times, serif;
+    font-size: 2rem;
+    margin: 0 !important;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 1.2;
+}
+
+/* Mobile (up to 600px): Image at the top */
+
+.hero-banner.mobile-banner > div {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.hero-banner.mobile-banner img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+/* Tablet (600px to 899px): Image at the bottom */
+
+.hero-banner.tab-banner > div {
+    display: flex;
+    flex-direction: column;
+}
+
+.hero-banner.tab-banner img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+
+.hero-banner.desktop-banner > div {
+    display: grid;
+    grid-template-columns: 6fr 4fr;
+    align-items: center;
+    gap: 2rem;
+}
+
+.hero-banner.desktop-banner img {
+    width: 100%;
+    height: auto;
+    border-bottom-right-radius: 1rem;
+}
+
+
+/* Mobile: Show mobile-banner when width is up to 600px */
+@media (max-width: 600px) {
+    .mobile-banner-wrapper {
+        display: block;
+      }
+    .hero-banner > div {
+        flex-direction: column;
+    }
+}
+
+/* Tablet: Show tab-banner when width is 600px to 899px with image at the bottom */
+@media (min-width: 601px) and (max-width: 899px) {
+    .tab-banner-wrapper {
+        display: block;
+      }
+
+    .hero-banner > div {
+        flex-direction: column-reverse;
+    }
+}
+
+/* Desktop: Show desktop-banner when width is 900px and above */
+@media (min-width: 900px) {
+    .desktop-banner-wrapper {
+    display: block;
+  }
+}
+
+/* Desktop: Adjust for 1200px and above */
+@media (min-width: 1200px) {
+
+}
