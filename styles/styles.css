@@ -10,12 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-:root {
+ :root {
   /* colors */
   --background-color: white;
+  --button-green-color: #328800;
+  --button-green-hover-color: #276b00;
+  --button-green-active-color: #205503;
   --light-color: #f8f8f8;
   --dark-color: #505050;
+  --hero-banner-background-color: #21201d;
   --text-color: #131313;
+  --text-h1-color:white;
   --link-color: #3b63fb;
   --link-hover-color: #1d3ecf;
 
@@ -37,7 +42,7 @@
   --heading-font-size-xs: 22px;
 
   /* nav height */
-  --nav-height: 64px;
+  --nav-height: 50px;
 }
 
 /* fallback fonts */
@@ -86,6 +91,12 @@ body.appear {
 
 header {
   height: var(--nav-height);
+}
+
+@media (width >= 768px) {
+    header {
+        height: 55px;
+    }
 }
 
 header .header,
@@ -181,7 +192,7 @@ button {
   line-height: 1.25;
   text-align: center;
   text-decoration: none;
-  background-color: var(--link-color);
+  background-color: var(--button-green-color);
   color: var(--background-color);
   cursor: pointer;
   overflow: hidden;
@@ -193,7 +204,13 @@ a.button:hover,
 a.button:focus,
 button:hover,
 button:focus {
-  background-color: var(--link-hover-color);
+  background-color: var(--button-green-hover-color);
+  cursor: pointer;
+}
+
+a.button:active,
+button:active {
+  background-color: var(--button-green-active-color);
   cursor: pointer;
 }
 
