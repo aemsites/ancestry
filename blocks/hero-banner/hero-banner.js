@@ -2,13 +2,6 @@ export default function decorate(block) {
   const ctaContainer = block.querySelector('.button-container');
   const ctaLink = ctaContainer.querySelector('a');
 
-  // Make entire block clickable.
-  ctaContainer.onclick = () => {
-    if (ctaLink) {
-      ctaLink.click();
-    }
-  };
-
   const heroBannerWrappers = document.querySelectorAll('.hero-banner-wrapper');
 
   heroBannerWrappers.forEach((wrapper) => {

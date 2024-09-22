@@ -130,7 +130,7 @@ main .section.hero-banner-container {
 /* Responsive Styles */
 
 /* Mobile: Up to 767px */
-@media (width <= 767px) {
+@media (max-width: 767px) {
     main .section.hero-banner-container {
         height: 500px;
     }
@@ -170,7 +170,7 @@ main .section.hero-banner-container {
 }
 
 /* Tablet: 768px to 1005px */
-@media (width >= 768px) and (width <= 1005px) {
+@media (min-width: 768px) and (max-width: 1005px) {
     main .section.hero-banner-container {
         height: 600px;
     }
@@ -194,7 +194,7 @@ main .section.hero-banner-container {
 }
 
 /* Desktop: 1006px and Above */
-@media (width >= 1006px) {
+@media (min-width: 1006px) {
     .desktop-banner-wrapper {
         display: block;
         overflow: hidden;
