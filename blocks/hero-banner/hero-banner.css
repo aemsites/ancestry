@@ -35,6 +35,15 @@ main .section.hero-banner-container {
     flex-grow: 1;
 }
 
+.hero-banner .icon::before{
+    font-family:ancestry-icon, sans-serif;
+    content: "\e685";
+    color:#9BBE3C;
+    font-size:2.5rem;
+    text-align:center;
+    font-weight:400;
+}
+
 /* Specific Banner Styles */
 
 /* Mobile Banner Styles */
@@ -109,6 +118,7 @@ main .section.hero-banner-container {
     max-width: none;
     width: 3rem;
     height: 3rem;
+    display: none;
 }
 
 /* Button Styles */
@@ -145,6 +155,10 @@ main .section.hero-banner-container {
         display: none;
     }
 
+    .hero-banner .icon::before{
+        display: none;
+    }
+    
     .hero-banner a.button {
         padding: 0.6em 1.5em;
         font-size: 0.9rem;

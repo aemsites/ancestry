@@ -85,6 +85,7 @@
   width: 200%;
   max-width: 400px;
   height: auto;
+  display:none;
 }
 
 .columns.homepage.block.columns-2-cols > div > .columns-img-col {
@@ -202,6 +203,50 @@
     text-align: center;
     max-width: 500px;
     padding: 0 1rem;
+  }
+
+  .columns.homepage.block.columns-2-cols > div > .text-content .icon-icon-leaf {
+    background-color: #328800;
+    border-width: 0;
+    border-color: #328800;
+    box-shadow: 0 0 0 0 #328800;
+    margin: 0.3rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .columns.homepage.block.columns-2-cols > div > .text-content .icon-icon-leaf::before {
+    font-family: ancestry-icon, sans-serif;
+    content: "\e610";
+    color: #fff;
+    font-size: 15px;
+    text-align: center;
+  }
+  
+  .columns.homepage.block.columns-2-cols > div > .text-content .icon-icon-dna {
+    background-color: #117fa6;
+    border-width: 0;
+    border-color: #117fa6;
+    box-shadow: 0 0 0 0 #117fa6;
+    margin: 0.3rem;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .columns.homepage.block.columns-2-cols > div > .text-content .icon-icon-dna::before {
+    font-family: ancestry-icon, sans-serif;
+    content: "\e607";
+    color: #fff;
+    font-size: 15px;
+    text-align: center;
   }
 
   .columns.homepage.block.columns-2-cols > div > .columns-img-col {
