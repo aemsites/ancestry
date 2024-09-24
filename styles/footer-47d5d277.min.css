@@ -1,0 +1,340 @@
+ui-custom[stack-id=shared-navigation][type=global-footer] form.noDisplay {
+    display: none !important
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footer {
+    background-color: #ece9e4;
+    border-top: 1px solid rgba(0, 0, 0, .1);
+    clear: both;
+    color: #262626;
+    margin-top: 20px;
+    padding: 10px 10px 20px
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] a:hover,
+ui-custom[stack-id=shared-navigation][type=global-footer] label {
+    color: #262626
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footerContainer {
+    display: block;
+    margin: 0 auto;
+    max-width: 100%;
+    width: 1200px
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .link:not(:hover),
+ui-custom[stack-id=shared-navigation][type=global-footer] a:not(:hover) {
+    color: inherit
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerLinks {
+    display: block;
+    padding: 3px
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerLink {
+    display: inline-block;
+    line-height: 18px;
+    padding: 5px 7px
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerLink a {
+    line-height: inherit
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerSitesLabel.footerSitesLabel.footerSitesLabel {
+    display: inline-block;
+    font-weight: 400;
+    line-height: 30px;
+    vertical-align: top;
+    font-size: inherit
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerSitesSelect.footerSitesSelect {
+    display: inline-block;
+    margin: 0 0 0 5px;
+    width: 160px
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerLegal {
+    font-size: 12px;
+    line-height: 25px;
+    margin-top: 4px;
+    padding: 0 10px;
+    text-align: center
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerLegal:only-child {
+    margin-top: 0
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerLegalLink {
+    display: inline
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerLegalLink:not(:first-child)::before {
+    content: "·";
+    font-weight: 700;
+    margin: 0 4px
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .hideNavigation .footerLinks {
+    display: none !important
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerSites:not(.footerShowGo) .goBtnDiv {
+    display: none
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .goBtnDiv {
+    margin-top: 5px
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerLegalLink ui-badge {
+    margin: 0
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs {
+    padding-bottom: 10px
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerLinks {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerLinks ul {
+    flex: 1
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSelects {
+    display: flex;
+    flex: 0
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSelects .footerFlexColumn {
+    display: flex;
+    align-content: flex-start
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSelects select {
+    margin-left: 0;
+    margin-right: 10px
+}
+
+@media(min-width:1200px) {
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerLinks li {
+        float: left
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerSites {
+        float: right
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerPoweredBy~.footerLegal {
+        margin-top: 0;
+        text-align: center
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerLegal {
+        text-align: left
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerLegal {
+        text-align: center;
+        margin-top: 15px
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSitesLabel {
+        line-height: 1.26
+    }
+}
+
+@media(max-width:1199px) {
+    ui-custom[stack-id=shared-navigation][type=global-footer] {
+        text-align: center
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerLinks li {
+        display: inline-block
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerSites {
+        clear: both;
+        padding-bottom: 3px;
+        padding-left: 7px;
+        padding-top: 4px
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerLinks {
+        flex-direction: column;
+        align-items: center
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSelects {
+        display: flex;
+        justify-content: center
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSelects .footerFlexColumn {
+        display: flex;
+        align-items: flex-end;
+        flex-direction: column
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerLegal {
+        margin-top: 4px
+    }
+}
+
+@media(min-width:800px)and (max-width:1199px) {
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSelects .footerFlexColumn {
+        flex-direction: row;
+        margin-top: 10px
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSelects .footerSites {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSelects .footerSites .footerSitesLabel {
+        line-height: 1.26
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerLegal {
+        margin-top: 20px
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSitesSelect.footerSitesSelect {
+        width: 200px
+    }
+}
+
+@media(max-width:799px) {
+    ui-custom[stack-id=shared-navigation][type=global-footer] {
+        padding-right: 20px
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerSites {
+        padding: 10px 0 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        -moz-column-gap: 5px;
+        column-gap: 5px
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerSites .footerSitesSelect {
+        margin: 0;
+        flex-shrink: 0
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerSites .footerSitesLabel.footerSitesLabel.footerSitesLabel {
+        text-align: end;
+        line-height: normal
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerSelects {
+        margin-top: 5px
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] #footer.withLangs .footerLegal {
+        margin-top: 15px
+    }
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] {
+    --ui-footer-height: 0
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footer.infiniteFooter {
+    position: fixed;
+    bottom: calc(-1*var(--ui-footer-height));
+    width: 100%
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footer.infiniteFooter[data-open=true] {
+    bottom: 0
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #footer.infiniteFooterAnimated,
+ui-custom[stack-id=shared-navigation][type=global-footer] #infiniteFooterButton:has(~#footer.infiniteFooterAnimated) {
+    transition: bottom var(--ui-appearance-time) ease-out
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #infiniteFooterButton {
+    position: fixed;
+    color: var(--ui-text-color);
+    height: calc(1em + 1.6rem);
+    bottom: 0;
+    background-color: #ece9e4;
+    border-top-right-radius: var(--ui-corner-radius);
+    border-top-left-radius: var(--ui-corner-radius);
+    border-left: .1rem solid var(--ui-separator-secondary-color);
+    border-right: .1rem solid var(--ui-separator-secondary-color);
+    border-top: .1rem solid var(--ui-separator-secondary-color);
+    border-bottom: none;
+    cursor: pointer;
+    align-items: center;
+    left: 2rem;
+    padding: 0 1.6rem;
+    z-index: 2001
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] #infiniteFooterButton:has(~#footer.infiniteFooter[data-open=true]) {
+    bottom: calc(var(--ui-footer-height) - .1rem)
+}
+
+@media(max-width:799px) {
+    ui-custom[stack-id=shared-navigation][type=global-footer] #infiniteFooterButton {
+        left: 1rem
+    }
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] a.footerDistributedBy,
+ui-custom[stack-id=shared-navigation][type=global-footer] a.footerPoweredBy {
+    display: inline-block;
+    font-size: 12px;
+    line-height: 25px;
+    margin: 0 4px;
+    text-decoration: none;
+    white-space: nowrap
+}
+
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerDistributedBy img,
+ui-custom[stack-id=shared-navigation][type=global-footer] .footerPoweredBy img {
+    vertical-align: middle
+}
+
+@media(min-width:478px) {
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerDistributedBy {
+        float: left
+    }
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerPoweredBy {
+        float: right
+    }
+}
+
+@media(max-width:700px) {
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerLegalLibrary {
+        clear: both;
+        padding-top: 10px
+    }
+}
+
+@media print {
+
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerLegal .badge,
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerLegal a,
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerLegal span::before,
+    ui-custom[stack-id=shared-navigation][type=global-footer] .footerLinks {
+        display: none
+    }
+}
+
+/*# sourceMappingURL=footer-47d5d277.min.css.map */
