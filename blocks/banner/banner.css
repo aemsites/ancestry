@@ -104,6 +104,16 @@
   max-width: 400px;
 }
 
+.banner.no-image .anchor:hover {
+  background-color: var(--button-green-hover-color);
+  color: #e0e0e0;
+}
+
+.banner.no-image .anchor:active {
+  background-color: var(--button-green-active-color);
+  color: #ccc;
+}
+
 .banner.no-image p {
   margin: 0.5rem 0;
 }
