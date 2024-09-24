@@ -1,0 +1,106 @@
+/* Base styles for the container with 'expand' class */
+.section.expand.banner-container {
+  margin: 0;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  color: #fff;
+}
+
+.section.expand .banner-wrapper {
+  padding: 0;
+}
+
+.section.expand.banner-container .banner.block {
+  width: 100%;
+  position: relative;
+}
+
+.section.expand.banner-container .banner.block img {
+  display: none;
+}
+
+/* Mobile styles */
+@media (max-width: 899px) {
+  .section.expand.banner-container {
+    background-color: #e1eeef;
+    color: #181a1c;
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 2rem;
+    padding-top: 2rem;
+  }
+
+  /* Display the image */
+  .section.expand.banner-container .banner.block img {
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 90%; /* Set width as a percentage so it shrinks with screen size */
+    max-width: 250px;
+    height: auto;
+    z-index: 1;
+  }
+
+  .section.expand.banner-container .banner.block > div {
+    padding: 0 2rem;
+    padding-bottom: 150px;
+  }
+
+  /* Style the 'LEARN MORE' button */
+  .section.expand.banner-container .anchor {
+    display: block;
+    margin: 20px auto 0;
+    padding: 0.7rem 2rem;
+    background-color: #117fa6;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    line-height: 1.2rem;
+    font-weight: 500;
+    max-width: 150px;
+    min-width: 120px;
+    text-align: center;
+  }
+}
+
+/* Adjust button width for larger mobile screens */
+@media (min-width: 600px) and (max-width: 899px) {
+  .section.expand.banner-container .anchor {
+    width: auto;
+    min-width: 150px;
+  }
+}
+
+/* Desktop styles */
+@media (min-width: 900px) {
+  .section.expand.banner-container {
+    background-color: #265b7a;
+    font-size: 1.15rem;
+    padding: 0.5rem 0.5rem 1rem;
+  }
+
+  /* Center the text vertically and horizontally */
+  .section.expand.banner-container .banner.block {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 40px;
+  }
+
+  .section.expand.banner-container .banner.block img {
+    display: none;
+  }
+
+  .section.expand.banner-container .anchor::before {
+    content: " | ";
+    color: #fff;
+  }
+
+  .section.expand.banner-container .anchor span {
+    color: #fff;
+    text-decoration: underline;
+  }
+}

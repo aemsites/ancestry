@@ -5,6 +5,7 @@ main .section.hero-banner-container {
     flex-direction: column;
     background: var(--hero-banner-background-color);
     overflow: hidden;
+    margin:0;
 }
 
 .hero-banner-wrapper {
