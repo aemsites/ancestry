@@ -130,7 +130,7 @@ main .section.hero-banner-container {
 }
 
 /* Ancestry Trademark Symbol */
-.ancestry::after {
+.hero-banner .ancestry::after {
     content: "®";
     font-size: 0.6em;
     vertical-align: top;
@@ -141,7 +141,7 @@ main .section.hero-banner-container {
 /* Responsive Styles */
 
 /* Mobile: Up to 767px */
-@media (max-width: 767px) {
+@media (max-width: 768px) {
     main .section.hero-banner-container {
         height: 500px;
     }
@@ -209,7 +209,7 @@ main .section.hero-banner-container {
 }
 
 /* Desktop: 1006px and Above */
-@media (min-width: 1006px) {
+@media (min-width: 1005px) {
     .desktop-banner-wrapper {
         display: block;
         overflow: hidden;
