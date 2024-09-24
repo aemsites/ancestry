@@ -1,106 +1,276 @@
-/* Base styles for the container with 'expand' class */
-.section.expand.banner-container {
+/* Base styles for the container with 'multiple' class */
+.section.multiple.banner-container {
   margin: 0;
   position: relative;
   overflow: hidden;
   text-align: center;
   color: #fff;
+  width: 100%; /* Ensure the container takes full width */
 }
 
-.section.expand .banner-wrapper {
+.section.multiple.banner-container  > div {
+ margin:0;
+ max-width: 100%;
+}
+
+.section.multiple .banner-wrapper {
   padding: 0;
+  margin-bottom: 1rem;
+  width: 100%; /* Ensure the banner-wrapper takes full width */
+  background-color: inherit; /* Inherit background color if necessary */
+  display: block; /* Ensure block-level behavior */
+  min-height: 100px; /* Adjust to desired height */
 }
 
-.section.expand.banner-container .banner.block {
+/* Ensure the banner block takes full width */
+.section.multiple.banner-container .banner.block {
   width: 100%;
   position: relative;
+  display: block; /* Remove any flex behavior */
+  background-color: inherit; /* Ensure background is applied */
 }
 
-.section.expand.banner-container .banner.block img {
-  display: none;
+/* Styling for banners with images */
+.section.multiple.banner-container .banner.image {
+  background-color: #e1eeef;
+  color: #181a1c;
+  width: 100%; /* Ensure the image banner takes full width */
+  height: 100%; /* Ensure it takes full height */
+}
+
+.section.multiple.banner-container .banner.image img {
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  width: 90%; /* Shrinks with screen size */
+  max-width: 250px;
+  height: auto;
+  z-index: 1;
+}
+
+.section.multiple.banner-container .banner.image > div > div {
+  padding: 1rem 2rem 0 2rem;
+}
+
+.section.multiple.banner-container .banner.image .anchor {
+  display: block;
+  margin: 20px auto 0;
+  padding: 0.7rem 2rem;
+  background-color: #117fa6;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 50px;
+  font-size: 1rem;
+  line-height: 1.2rem;
+  font-weight: 500;
+  max-width: 150px;
+  min-width: 120px;
+  text-align: center;
+}
+
+/* Styling for banners without images */
+.section.multiple.banner-container .banner.no-image {
+  background-color: var(--button-green-color);
+  color: #fff;
+  padding: 1rem 0.5rem;
+  width: 100%;
+  height: 100%;
+}
+
+.section.multiple.banner-container .banner.no-image .button-container {
+  text-align: center;
+}
+
+.section.multiple.banner-container .banner.no-image .button-container .button {
+  display: inline-block;
+  padding: 0.7rem 2rem;
+  background-color: transparent;
+  color: #fff;
+  border-color:#fff ;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1rem;
+  font-weight: 500;
+  text-align: center;
+  max-width: 400px;
+}
+
+.section.multiple.banner-container .banner.no-image p {
+  margin: 0.5rem 0;
 }
 
 /* Mobile styles */
 @media (max-width: 899px) {
-  .section.expand.banner-container {
-    background-color: #e1eeef;
-    color: #181a1c;
+  .section.multiple.banner-container .banner.image {
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 2rem;
-    padding-top: 2rem;
   }
 
-  /* Display the image */
-  .section.expand.banner-container .banner.block img {
-    display: block;
-    position: absolute;
-    right: 0;
-    bottom: 0;
-    width: 90%; /* Set width as a percentage so it shrinks with screen size */
-    max-width: 250px;
-    height: auto;
-    z-index: 1;
+  .section.multiple.banner-container .banner.image img {
+    width: 90%;
   }
 
-  .section.expand.banner-container .banner.block > div {
-    padding: 0 2rem;
-    padding-bottom: 150px;
+  .section.multiple.banner-container .banner.image > div {
+    padding:1rem;
+    margin-bottom:1rem;
   }
 
-  /* Style the 'LEARN MORE' button */
-  .section.expand.banner-container .anchor {
+  .section.multiple.banner-container .banner.no-image {
+    padding: 2rem 1rem;
+  }
+
+  .section.multiple.banner-container .banner.no-image .button-container .button {
+    width: 100%;
+    max-width: 300px;
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  .section.multiple.banner-container .banner.no-image > div {
+    margin: 1rem;
+  }
+
+  /* Ensure the anchor is styled as a button on mobile */
+  .section.multiple.banner-container .banner.image .anchor {
     display: block;
     margin: 20px auto 0;
     padding: 0.7rem 2rem;
     background-color: #117fa6;
-    color: #fff;
-    text-decoration: none;
     border-radius: 50px;
-    font-size: 1rem;
-    line-height: 1.2rem;
-    font-weight: 500;
     max-width: 150px;
     min-width: 120px;
     text-align: center;
   }
-}
 
-/* Adjust button width for larger mobile screens */
-@media (min-width: 600px) and (max-width: 899px) {
-  .section.expand.banner-container .anchor {
-    width: auto;
-    min-width: 150px;
+  .section.multiple.banner-container .banner.image .anchor::before {
+    content: "";
+  }
+
+  .section.multiple.banner-container .banner.image .anchor span {
+    color: #fff;
+    text-decoration: none;
   }
 }
 
 /* Desktop styles */
 @media (min-width: 900px) {
-  .section.expand.banner-container {
+  .section.multiple.banner-container .banner.image {
     background-color: #265b7a;
+    color: #fff;
     font-size: 1.15rem;
-    padding: 0.5rem 0.5rem 1rem;
-  }
-
-  /* Center the text vertically and horizontally */
-  .section.expand.banner-container .banner.block {
+    padding: 0;
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 40px;
+    width: 100%; /* Ensure full width on desktop */
+    height: 100%; /* Ensure full height on desktop */
   }
 
-  .section.expand.banner-container .banner.block img {
-    display: none;
+  .section.multiple.banner-container .banner.image > div {
+    padding-bottom: 0 !important;
   }
 
-  .section.expand.banner-container .anchor::before {
+  .section.multiple.banner-container .banner.image p {
+    margin: 0;
+  }
+
+  .section.multiple.banner-container .banner.image img {
+    display: none; /* Hide image on desktop */
+  }
+
+  /* Style the anchor to be inline with text */
+  .section.multiple.banner-container .banner.image .anchor {
+    display: inline;
+    margin: 0;
+    padding: 0;
+    background-color: transparent;
+    border: none;
+    font-weight: normal;
+  }
+
+  .section.multiple.banner-container .banner.image .anchor::before {
     content: " | ";
     color: #fff;
   }
 
-  .section.expand.banner-container .anchor span {
+  .section.multiple.banner-container .banner.image .anchor span {
     color: #fff;
     text-decoration: underline;
+  }
+
+  /* Adjust the inner div to display content inline */
+  .section.multiple.banner-container .banner.image > div > div {
+    display: inline;
+  }
+
+  /* Center content */
+  .section.multiple.banner-container .banner.image > div {
+    text-align: center;
+  }
+/* 
+  .section.multiple.banner-container .banner.no-image .anchor::before {
+    content: " | ";
+    color: #fff;
+  } */
+
+  .section.multiple.banner-container .banner.no-image {
+    padding: 1rem;
+    width: 100%; /* Ensure full width on desktop */
+    height: 100%; /* Ensure full height on desktop */
+  }
+
+  .section.multiple.banner-container .banner.no-image >  {
+    margin: 2rem;
+  }
+  .section.multiple.banner-container .banner.no-image {
+    padding: 1rem;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+  }
+
+  /* Ensure that paragraphs and the button are on the same line */
+  .section.multiple.banner-container .banner.no-image p {
+    display: inline;
+  }
+
+  /* Convert button to inline link */
+  /* .section.multiple.banner-container .banner.no-image .button-container .button {
+    display: inline;
+    background-color: transparent;
+    border: none;
+    text-decoration: underline;
+    color: #fff;
+    padding: 0;
+    font-size: 1rem;
+  } */
+
+  .section.multiple.banner-container .banner.no-image .button-container {
+    display: inline-flex;
+    align-items: center; /* Ensure the button aligns vertically with the text */
+    justify-content: center; /* Center the content within the container */
+  }
+  
+  .section.multiple.banner-container .banner.no-image .button-container .button {
+    padding: 0.4rem;
+    margin: 0;
+    background-color: transparent;
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    text-align: center;
+    white-space: nowrap; /* Prevent the button text from breaking onto multiple lines */
+    line-height: 1.2rem;
+    min-width: 120px; /* Optional: Control button width */
+  }
+
+  /* Add separator between paragraphs */
+  .section.multiple.banner-container .banner.no-image p:nth-child(1) + p::before {
+    content: " | ";
+    color: #fff;
+    margin: 0 0.5rem;
   }
 }
