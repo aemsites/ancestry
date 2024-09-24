@@ -172,7 +172,7 @@
 }
 
 /* Desktop styles */
-@media (min-width: 900px) {
+@media (min-width: 901px) {
   .banner-wrapper .banner.image {
     background-color: var(--background-blue-dark-color);
     color: #fff;
