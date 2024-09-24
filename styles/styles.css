@@ -30,7 +30,7 @@
   --link-hover-color: #1d3ecf;
 
   /* fonts */
-  --body-font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
+  --body-font-family: ui-sans, "Helvetica Neue", arial, sans-serif;
   --heading-font-family: roboto-condensed, roboto-condensed-fallback, sans-serif;
 
   /* body sizes */
@@ -88,6 +88,7 @@ body {
   font-family: var(--body-font-family);
   font-size: var(--body-font-size-m);
   line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
 }
 
 body.appear {

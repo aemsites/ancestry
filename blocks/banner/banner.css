@@ -1,4 +1,4 @@
-/* Base styles for the banner section with 'multiple' class */
+/* Base styles for the banner section */
 .section.banner-container {
   margin: 0;
   position: relative;
@@ -8,12 +8,12 @@
   width: 100%;
 }
 
-.section.banner-container  > div {
- max-width: 100%;
- line-height:1.2;
+.section.banner-container > div {
+  max-width: 100%;
+  line-height: 1rem;
 }
 
-/* Space between the banners*/
+/* Banner wrapper */
 .section.banner-container .banner-wrapper {
   padding: 0;
   margin-bottom: 0.5rem;
@@ -21,22 +21,22 @@
   display: block;
 }
 
-.section.banner-container .banner.block {
+.banner.block {
   width: 100%;
   position: relative;
   display: block;
   background-color: inherit;
 }
 
-/* Styling for banners with images */
-.section.banner-container .banner.image {
+/* Image banner styles */
+.banner.image {
   background-color: var(--background-blue-light-color);
   color: #181a1c;
   width: 100%;
   height: 100%;
 }
 
-.section.banner-container .banner.image img {
+.banner.image img {
   display: block;
   position: absolute;
   right: 0;
@@ -47,11 +47,11 @@
   z-index: 1;
 }
 
-.section.banner-container .banner.image > div > div {
-  padding: 1rem 2rem 0 2rem;
+.banner.image > div > div {
+  padding: 1rem 2rem 0;
 }
 
-.section.banner-container .banner.image .anchor {
+.banner.image .anchor {
   display: block;
   margin: 20px auto 0;
   padding: 0.7rem 2rem;
@@ -65,38 +65,37 @@
   max-width: 150px;
   min-width: 120px;
   text-align: center;
+  transition: background-color 0.3s ease;
 }
 
-.section.banner-container .banner.image .anchor:hover {
+.banner.image .anchor:hover {
   background-color: var(--button-blue-hover-color);
   color: #e0e0e0;
 }
 
-/* Change background and text color on active */
-.section.banner-container .banner.image .anchor:active {
+.banner.image .anchor:active {
   background-color: var(--button-blue-active-color);
   color: #ccc;
 }
 
-/* Styling for banners without images */
-.section.banner-container .banner.no-image {
+/* No-image banner styles */
+.banner.no-image {
   background-color: var(--button-green-color);
   color: #fff;
-  padding: 0.5rem 0;
   width: 100%;
   height: 100%;
 }
 
-.section.banner-container .banner.no-image .button-container {
+.banner.no-image .button-container {
   text-align: center;
 }
 
-.section.banner-container .banner.no-image .button-container .button {
+.banner.no-image .button-container .button {
   display: inline-block;
-  padding: 0.7rem 2rem;
+  padding: 0.5rem 0.7rem;
   background-color: transparent;
   color: #fff;
-  border-color:#fff ;
+  border: 1px solid #fff;
   text-decoration: none;
   border-radius: 5px;
   font-size: 1rem;
@@ -105,46 +104,44 @@
   max-width: 400px;
 }
 
-.section.banner-container .banner.no-image p {
+.banner.no-image p {
   margin: 0.5rem 0;
 }
 
 /* Mobile styles */
-@media (max-width: 768px) {
-  .section.banner-container .banner.image {
+@media (max-width: 900px) {
+  .banner.image {
     font-size: 1.5rem;
     font-weight: 700;
     line-height: 2rem;
   }
 
-  .section.banner-container .banner.image img {
+  .banner.image img {
     width: 90%;
   }
 
-  .section.banner-container .banner.image > div {
-    padding:1rem;
-    margin-bottom:1rem;
+  .banner.image > div {
+    padding: 1rem;
+    margin-bottom: 1rem;
   }
 
-  .section.banner-container .banner.no-image {
+  .banner.no-image {
     font-size: 1.3rem;
     padding: 2rem 1rem;
   }
 
-  .section.banner-container .banner.no-image .button-container .button {
+  .banner.no-image .button {
     width: 100%;
     max-width: 300px;
     white-space: normal;
     word-wrap: break-word;
   }
 
-  .banner-container .banner.no-image > div {
+  .banner.no-image > div {
     margin: 1rem;
   }
 
-  /* Ensure the anchor is styled as a button on mobile */
- .banner-container .banner.image .anchor {
-    display: block;
+  .banner.image .anchor {
     margin: 20px auto 0;
     padding: 0.7rem 2rem;
     background-color: #117fa6;
@@ -154,22 +151,23 @@
     text-align: center;
   }
 
-  .banner-container .banner.image .anchor::before {
+  .banner.image .anchor::before {
     content: "";
   }
 
-  .banner-container .banner.image .anchor span {
+  .banner.image .anchor span {
     color: #fff;
     text-decoration: none;
   }
 }
 
 /* Desktop styles */
-@media (min-width: 768px) {
-  .section.multiple.banner-container .banner.image {
+@media (min-width: 900px) {
+  .banner-wrapper .banner.image {
     background-color: var(--background-blue-dark-color);
     color: #fff;
     font-size: 1.15rem;
+    font-weight: 400;
     padding: 0;
     display: flex;
     align-items: center;
@@ -178,20 +176,19 @@
     height: 100%;
   }
 
-  .section.multiple.banner-container .banner.image > div {
+  .banner.image > div {
     padding-bottom: 0 !important;
   }
 
-  .section.multiple.banner-container .banner.image p {
+  .banner.image p {
     margin: 0;
   }
 
-  .section.multiple.banner-container .banner.image img {
+  .banner.image picture img {
     display: none;
   }
 
-  /* Style the anchor to be inline with text */
-  .section.multiple.banner-container .banner.image .anchor {
+  .banner.image .anchor {
     display: inline;
     margin: 0;
     padding: 0;
@@ -200,76 +197,50 @@
     font-weight: normal;
   }
 
-  .section.multiple.banner-container .banner.image .anchor::before {
+  .banner.image .anchor::before {
     content: " | ";
     color: #fff;
   }
 
-  .section.multiple.banner-container .banner.image .anchor span {
+  .banner.image .anchor span {
     color: #fff;
     text-decoration: underline;
   }
 
-  /* Adjust the inner div to display content inline */
-  .section.multiple.banner-container .banner.image > div > div {
-    display: inline;
+  .banner.no-image > div {
+    margin: 0 2rem;
   }
 
-  /* Center content */
-  .section.multiple.banner-container .banner.image > div {
-    text-align: center;
-  }
-
-  .section.multiple.banner-container .banner.no-image {
-    width: 100%;
-    height: 100%;
+  .banner.no-image {
     text-align: center;
     font-size: 1.1rem;
   }
 
-  .section.multiple.banner-container .banner.no-image > div {
-    margin: 0 2rem;
-  }
-
-  /* Ensure that paragraphs and the button are on the same line */
-  .section.multiple.banner-container .banner.no-image p {
+  .banner.no-image p {
     display: inline;
   }
 
-  /* Convert button to inline link */
-  /* .section.multiple.banner-container .banner.no-image .button-container .button {
-    display: inline;
-    background-color: transparent;
-    border: none;
-    text-decoration: underline;
-    color: #fff;
-    padding: 0;
-    font-size: 1rem;
-  } */
-
-  .section.multiple.banner-container .banner.no-image .button-container {
+  .banner.no-image .button-container {
     display: inline-flex;
     align-items: center;
     justify-content: center;
   }
-  
-  .section.multiple.banner-container .banner.no-image .button-container .button {
-    padding: 0.5rem;
+
+  .banner.no-image .button {
     margin: 0 1rem;
     background-color: transparent;
-    border-width: 1px;
+    border: 1px solid #fff;
     color: #fff;
     text-decoration: none;
     border-radius: 5px;
     font-size: 1rem;
     text-align: center;
     white-space: nowrap;
-    line-height: 1.2rem;
+    line-height: 1rem;
     min-width: 120px;
   }
 
-  /* Add separator between paragraphs */
-  .section.multiple.banner-container .banner.no-image p:nth-child(1) + p::before {
+  .banner.no-image p:nth-child(1) + p::before {
     content: " | ";
     color: #fff;
     margin: 0 0.5rem;
