@@ -5,6 +5,7 @@ main .section.hero-banner-container {
     flex-direction: column;
     background: var(--hero-banner-background-color);
     overflow: hidden;
+    margin:0;
 }
 
 .hero-banner-wrapper {
@@ -129,7 +130,7 @@ main .section.hero-banner-container {
 }
 
 /* Ancestry Trademark Symbol */
-.ancestry::after {
+.hero-banner .ancestry::after {
     content: "®";
     font-size: 0.6em;
     vertical-align: top;
@@ -140,7 +141,7 @@ main .section.hero-banner-container {
 /* Responsive Styles */
 
 /* Mobile: Up to 767px */
-@media (max-width: 767px) {
+@media (max-width: 600px) {
     main .section.hero-banner-container {
         height: 500px;
     }
@@ -184,7 +185,7 @@ main .section.hero-banner-container {
 }
 
 /* Tablet: 768px to 1005px */
-@media (min-width: 768px) and (max-width: 1005px) {
+@media (min-width: 601px) and (max-width: 900px) {
     main .section.hero-banner-container {
         height: 600px;
     }
@@ -208,7 +209,7 @@ main .section.hero-banner-container {
 }
 
 /* Desktop: 1006px and Above */
-@media (min-width: 1006px) {
+@media (min-width: 901px) {
     .desktop-banner-wrapper {
         display: block;
         overflow: hidden;

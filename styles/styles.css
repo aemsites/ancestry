@@ -13,9 +13,14 @@
  :root {
   /* colors */
   --background-color: white;
+  --background-blue-dark-color: #265b7a;
+  --background-blue-light-color: #e1eeef;
   --button-green-color: #328800;
   --button-green-hover-color: #276b00;
   --button-green-active-color: #205503;
+  --button-blue-color:#117fa6;
+  --button-blue-hover-color:#0e6b91;
+  --button-blue-active-color:#0b5170;
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --hero-banner-background-color: #21201d;
