@@ -1,20 +1,100 @@
 footer {
-  background-color: var(--light-color);
-  font-size: var(--body-font-size-xs);
+  background-color: var(--footer-background-color);
+  font-size: var(--footer-font-size-m);
 }
 
 footer .footer > div {
   margin: auto;
   max-width: 1200px;
-  padding: 40px 24px 24px;
+  padding: 10px 24px;
 }
 
 footer .footer p {
   margin: 0;
 }
 
-@media (width >= 900px) {
-  footer .footer > div {
-    padding: 40px 32px 24px;
+footer .footer-links ul, footer .footer-legal ul {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-left: 0;
+  padding-bottom: 10px;
+}
+
+footer .footer-links li, footer .footer-legal li {
+  padding: 5px 7px;
+  list-style: none;
+}
+
+footer .footer-links li a, footer .footer-legal li a {
+  color: var(--footer-text-color);
+}
+
+footer .footer-select div {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 10px;
+}
+
+footer .footer-select .select-other-sites-div, footer .footer-select .select-language-div {
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+}
+
+footer .footer-select select {
+  display: inline-block;
+  width: 160px;
+  padding-right: 27px;
+  white-space: nowrap;
+  cursor: pointer;
+  height: 30px;
+  line-height: 28px;
+
+  /* padding: 0 6px; */
+  border: 1px solid rgba(0 0 0 / 20%);
+}
+
+footer .footer-legal li {
+  padding: 0;
+}
+
+footer .footer-legal li:not(:first-child)::before {
+  content: "·";
+  font-weight: 700;
+  margin: 0 4px;
+}
+
+footer .footer-legal li a, footer .footer-legal li:first-child {
+  font-size: var(--footer-font-size-s);
+}
+
+.select-other-sites, .select-language {
+  display: block;
+}
+
+@media (width >= 600px) {
+  footer .footer-select div {
+    flex-direction: row;
   }
+
+  footer .footer-select:not([data-hide-language="true"]) .select-other-sites-div,
+  footer .footer-select:not([data-hide-language="true"]) .select-language-div {
+    flex-direction: column;
+    align-items: unset;
+    gap: 4px;
+  }
+}
+
+@media (width >= 900px) {
+  .footer-links, .footer-select {
+    display: inline-block;
+    width: 50%;
+  }
+
+  footer .footer-legal ul, .footer .footer-links ul {
+    justify-content: left;
+  }
+  
 }
