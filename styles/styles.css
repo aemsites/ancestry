@@ -23,6 +23,8 @@
   --text-h1-color:white;
   --link-color: #3b63fb;
   --link-hover-color: #1d3ecf;
+  --footer-background-color: #ece9e4;
+  --footer-text-color: #262626;
 
   /* fonts */
   --body-font-family: ui-sans, helvetica neue, arial, sans-serif;
@@ -40,6 +42,10 @@
   --heading-font-size-m: 27px;
   --heading-font-size-s: 24px;
   --heading-font-size-xs: 22px;
+
+  /* footer sizes */
+  --footer-font-size-m: 13px;
+  --footer-font-size-s: 12px;
 
   /* nav height */
   --nav-height: 50px;
