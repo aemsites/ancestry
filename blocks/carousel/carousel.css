@@ -1,0 +1,123 @@
+/* Base styling for the carousel container */
+.section.carousel-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    background-color: #d9e7d4;
+    font-size: 1.8rem;
+    position: relative;
+    
+    /* font-family: ui-sans, "Helvetica Neue", Arial, sans-serif; */
+    padding: 2rem;
+    margin: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+  }
+  
+  /* Carousel wrapper */
+  .carousel-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    font-weight: 700;
+  }
+  
+  /* Carousel block */
+  .carousel.block {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    max-width: 100%;
+    overflow: hidden;
+  }
+  
+  .carousel.block > div {
+    margin: 3rem;
+    max-width: 100%;
+  }
+  
+  /* Inner content of the block */
+  .carousel.block > div > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    max-width: 100%;
+  }
+  
+  /* Paragraph styling */
+  .carousel.block p {
+    text-align: center;
+    margin: 0.5rem 1rem;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  
+  /* Icon styling */
+  .icon {
+    display: inline-block;
+    margin: 0.5rem;
+    width: 6rem;
+    height: auto;
+  }
+  
+  .icon img {
+    display: inline-block;
+    max-width: 100%;
+  }
+  
+  /* Left and right quote styling */
+  .left-quote {
+    position: absolute;
+    top: 60px;
+    left: -25px;
+    width: 80px;
+    height: 50px;
+    background-image: url('../../icons/quote-left.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: translate(-20%, -20%);
+    z-index: 1;
+  }
+  
+  .right-quote {
+    position: absolute;
+    bottom: 60px;
+    right: -25px;
+    width: 80px;
+    height: 50px;
+    background-image: url('../../icons/quote-right.png');
+    background-size: contain;
+    background-repeat: no-repeat;
+    transform: translate(20%, 20%);
+    z-index: 1;
+  }
+  
+  /* Last paragraph styling */
+  .carousel.block p:last-of-type {
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+  
+  /* Media queries */
+  @media (max-width: 900px) {
+    .section.carousel-container {
+        display: none;
+      }
+
+    .carousel.block, .section.carousel-container::before {
+      display: none;
+    }
+  }
+  
+  @media (max-width: 600px) {
+    .carousel.block, .section.carousel-container::before {
+      display: none;
+    }
+  }
