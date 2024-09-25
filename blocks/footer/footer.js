@@ -1,41 +1,12 @@
 import { getMetadata } from '../../scripts/aem.js';
 import { loadFragment } from '../fragment/fragment.js';
 
-function convertListToDropdown(listWrappers, isHideLanguageDropdown) {
-  listWrappers.forEach(listWrapper => {
-    const select = document.createElement('select');
-    const mainItems = listWrapper.querySelectorAll(':scope > li');
-    let className;
-
-    mainItems.forEach(mainItem => {
-      const subList = mainItem.querySelector('ul');
-      const subItems = subList ? subList.querySelectorAll('li a') : mainItem.querySelectorAll('a');
-
-      if (subItems.length > 0) {
-        if (subList) {
-          className = 'select-other-sites';
-          createOptGroup(select, mainItem, subItems);
-        } else {
-          className = 'select-language';
-          appendOptions(select, subItems);
-        }
-      }
-    });
-
-    if (className) {
-      select.classList.add(className);
-      wrapAndReplace(listWrapper, select, className, isHideLanguageDropdown);
-      addChangeEvent(select);
-    }
-  });
-}
-
 function createOptGroup(select, mainItem, subItems) {
   const groupLabel = mainItem.firstChild.textContent.trim();
   const optGroup = document.createElement('optgroup');
   optGroup.label = groupLabel;
 
-  subItems.forEach(link => {
+  subItems.forEach((link) => {
     const opt = document.createElement('option');
     opt.value = link.href;
     opt.textContent = link.textContent;
@@ -46,7 +17,7 @@ function createOptGroup(select, mainItem, subItems) {
 }
 
 function appendOptions(select, subItems) {
-  subItems.forEach(link => {
+  subItems.forEach((link) => {
     const opt = document.createElement('option');
     opt.value = link.href;
     opt.textContent = link.textContent;
@@ -68,9 +39,38 @@ function wrapAndReplace(listWrapper, select, className, isHideLanguageDropdown) 
 }
 
 function addChangeEvent(select) {
-  select.addEventListener('change', function() {
-    if (this.value) {
-      window.location.href = this.value;
+  select.addEventListener('change', (event) => {
+    if (event.target.value) {
+      window.location.href = event.target.value;
+    }
+  });
+}
+
+function convertListToDropdown(listWrappers, isHideLanguageDropdown) {
+  listWrappers.forEach((listWrapper) => {
+    const select = document.createElement('select');
+    const mainItems = listWrapper.querySelectorAll(':scope > li');
+    let className;
+
+    mainItems.forEach((mainItem) => {
+      const subList = mainItem.querySelector('ul');
+      const subItems = subList ? subList.querySelectorAll('li a') : mainItem.querySelectorAll('a');
+
+      if (subItems.length > 0) {
+        if (subList) {
+          className = 'select-other-sites';
+          createOptGroup(select, mainItem, subItems);
+        } else {
+          className = 'select-language';
+          appendOptions(select, subItems);
+        }
+      }
+    });
+
+    if (className) {
+      select.classList.add(className);
+      wrapAndReplace(listWrapper, select, className, isHideLanguageDropdown);
+      addChangeEvent(select);
     }
   });
 }
