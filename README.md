@@ -2,8 +2,8 @@
 Your project's description...
 
 ## Environments
-- Preview: https://main--ancestry--aemsites.aem.page/ 
-- Live: https://main--ancestry--aemsites.aem.live/ 
+- Preview: https://main--ancestry--aemsites.aem.page/en/ 
+- Live: https://main--ancestry--aemsites.aem.live/en/ 
 
 ## Installation
 
