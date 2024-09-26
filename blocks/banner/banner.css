@@ -16,7 +16,6 @@
 /* Banner wrapper */
 .section.banner-container .banner-wrapper {
   padding: 0;
-  margin-bottom: 0.5rem;
   background-color: inherit;
   display: block;
 }
@@ -116,6 +115,7 @@
 
 .banner.no-image p {
   margin: 0.5rem 0;
+  line-height:2rem;
 }
 
 /* Mobile styles */
@@ -132,7 +132,6 @@
 
   .banner.image > div {
     padding: 1rem;
-    margin-bottom: 1rem;
   }
 
   .banner.no-image {
