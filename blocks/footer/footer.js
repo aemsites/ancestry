@@ -1,5 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
-import { getLanguage } from '../../scripts/scripts.js';
+import { isHomepageUrl } from '../../scripts/scripts.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 function createOptGroup(select, mainItem, subItems) {
@@ -83,8 +83,7 @@ function convertListToDropdown(listWrappers, isHideLanguageDropdown) {
 export default async function decorate(block) {
   // load footer as fragment
   const footerMeta = getMetadata('footer');
-  // const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
-  const footerPath = footerMeta || (getLanguage() === 'en' ? '/footer' : `/${getLanguage()}/footer`);
+  const footerPath = footerMeta || (isHomepageUrl() ? '/footer' : '/footer-product');
   const fragment = await loadFragment(footerPath);
 
   // decorate footer DOM

@@ -16,11 +16,8 @@ import {
 
 const LANGUAGES = new Set(['en', 'es']);
 let language;
-export function getLanguageFromPath(pathname, resetCache = false) {
-  if (resetCache) {
-    language = undefined;
-  }
 
+export function getLanguageFromPath(pathname) {
   if (language !== undefined) return language;
 
   const segs = pathname.split('/');
@@ -38,8 +35,8 @@ export function getLanguageFromPath(pathname, resetCache = false) {
   return language;
 }
 
-export function getLanguage(curPath = window.location.pathname, resetCache = false) {
-  return getLanguageFromPath(curPath, resetCache);
+export function isHomepageUrl(curPath = window.location.pathname) {
+  return curPath === `/${getLanguageFromPath(curPath)}/`;
 }
 
 /**

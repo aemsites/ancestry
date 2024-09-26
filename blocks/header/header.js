@@ -1,5 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
-import { getLanguage } from '../../scripts/scripts.js';
+import { getLanguageFromPath, isHomepageUrl } from '../../scripts/scripts.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 // media query match that indicates mobile/tablet width
@@ -105,22 +105,24 @@ function toggleMenu(nav, navSections, forceExpanded = null) {
 }
 
 function handleLanguageSelector() {
-  const esElement = document.querySelector('[title="ES"]');
-  const enElement = document.querySelector('[title="EN"]');
+  const navToolsElement = document.querySelector('.nav-tools');
+  const esElement = navToolsElement.querySelector('[title="ES"]');
+  const enElement = navToolsElement.querySelector('[title="EN"]');
+
+  if (getLanguageFromPath(window.location.pathname) === 'es') {
+    esElement.parentElement.style.display = 'none';
+  } else {
+    enElement.parentElement.style.display = 'none';
+  }
 
   esElement.addEventListener('click', () => {
-    // event.preventDefault();
-    // wrap esElement in a em block
-    // remove enElement from the es block and put simply under li
-
     esElement.parentElement.style.display = 'none';
-    enElement.parentElement.style.display = 'block';
+    enElement.parentElement.style.display = 'inline-block';
   });
 
   enElement.addEventListener('click', () => {
-    // event.preventDefault();
     enElement.parentElement.style.display = 'none';
-    esElement.parentElement.style.display = 'block';
+    esElement.parentElement.style.display = 'inline-block';
   });
 }
 
@@ -131,8 +133,8 @@ function handleLanguageSelector() {
 export default async function decorate(block) {
   // load nav as fragment
   const navMeta = getMetadata('nav');
-  // const navPath = navMeta ? new URL(navMeta, window.location).pathname : '/nav';
-  const navPath = navMeta || (getLanguage() === 'en' ? '/nav' : `/${getLanguage()}/nav`);
+  const isHomePage = isHomepageUrl();
+  const navPath = navMeta || (isHomePage ? '/nav' : '/nav-product');
   const fragment = await loadFragment(navPath);
 
   // decorate nav DOM
@@ -186,5 +188,7 @@ export default async function decorate(block) {
   navWrapper.className = 'nav-wrapper';
   navWrapper.append(nav);
   block.append(navWrapper);
-  // handleLanguageSelector();
+  if (isHomePage) {
+    handleLanguageSelector();
+  }
 }
