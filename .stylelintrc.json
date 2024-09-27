@@ -1,6 +1,7 @@
 {
   "extends": ["stylelint-config-standard"],
   "rules": {
+    "color-hex-length": null,
     "property-no-vendor-prefix": null,
     "media-feature-range-notation": null
   }
