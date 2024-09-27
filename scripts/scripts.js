@@ -14,6 +14,31 @@ import {
   sampleRUM,
 } from './aem.js';
 
+const LANGUAGES = new Set(['en', 'es']);
+let language;
+
+export function getLanguageFromPath(pathname) {
+  if (language !== undefined) return language;
+
+  const segs = pathname.split('/');
+  if (segs.length > 1) {
+    const l = segs[1];
+    if (LANGUAGES.has(l)) {
+      language = l;
+    }
+  }
+
+  if (language === undefined) {
+    language = 'en'; // default to English
+  }
+
+  return language;
+}
+
+export function isHomepageUrl(curPath = window.location.pathname) {
+  return curPath === `/${getLanguageFromPath(curPath)}/`;
+}
+
 /**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element

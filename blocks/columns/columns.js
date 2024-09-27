@@ -23,9 +23,13 @@ export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
   block.classList.add(`columns-${cols.length}-cols`);
 
-  // Loop through each row in the block
-  [...block.children].forEach((row) => {
+  /* Altenate color pattern */
+  const backgroundClasses = ['bg-color-1', 'bg-color-2', 'bg-color-3', 'bg-color-2'];
+
+  [...block.children].forEach((row, index) => {
     const contentBlocks = [...row.children];
+    const bgClass = backgroundClasses[index % backgroundClasses.length];
+    row.classList.add(bgClass);
 
     // Apply classes to text and image columns
     contentBlocks.forEach((col) => {
@@ -37,16 +41,15 @@ export default function decorate(block) {
       }
     });
 
-    // Rearrange columns: text-content before columns-img-col
-    const textContent = row.querySelector('.text-content');
-    const imgContent = row.querySelector('.columns-img-col');
-    if (textContent && imgContent) {
-      row.innerHTML = '';
-      row.appendChild(textContent);
-      row.appendChild(imgContent);
-    }
+    const images = document.querySelectorAll('.text-content img');
 
-    // Process textContent to wrap 'Ancestry' in a span
+    images.forEach((img) => {
+      if (img.hasAttribute('data-icon-name')) {
+        img.parentElement.parentElement.classList.add('icon-wrapper');
+      }
+    });
+
+    const textContent = row.querySelector('.text-content');
     if (textContent) {
       wrapAncestryText(textContent);
     }

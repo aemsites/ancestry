@@ -15,6 +15,8 @@
   --background-color: white;
   --background-blue-dark-color: #265b7a;
   --background-blue-light-color: #e1eeef;
+  --backgroung-blue-ligher-color:#f2f7f8;
+  --background-isabelline-color: #f6f3f0;
   --button-green-color: #328800;
   --button-green-hover-color: #276b00;
   --button-green-active-color: #205503;
@@ -24,10 +26,16 @@
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --hero-banner-background-color: #21201d;
+  --icon-font-color:white;
+  --icon-background-green-color:#328800;
+  --icon-background-blue-color:#117fa6;
   --text-color: #131313;
+  --text-gray-color:#999;
   --text-h1-color:white;
   --link-color: #3b63fb;
   --link-hover-color: #1d3ecf;
+  --footer-background-color: #ece9e4;
+  --footer-text-color: #262626;
 
   /* fonts */
   --body-font-family: ui-sans, helvetica neue, arial, sans-serif;
@@ -45,6 +53,10 @@
   --heading-font-size-m: 27px;
   --heading-font-size-s: 24px;
   --heading-font-size-xs: 22px;
+
+  /* footer sizes */
+  --footer-font-size-m: 13px;
+  --footer-font-size-s: 12px;
 
   /* nav height */
   --nav-height: 50px;
