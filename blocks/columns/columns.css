@@ -46,10 +46,6 @@ main .section.columns-container > div{
 }
 
 /* Text Styling */
-.section.columns-container{
-  margin-bottom:0;
-}
-
 .columns.homepage h2 {
   font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
   font-size: 1.875rem;
