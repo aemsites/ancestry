@@ -17,12 +17,15 @@
   --background-blue-light-color: #e1eeef;
   --backgroung-blue-ligher-color:#f2f7f8;
   --background-isabelline-color: #f6f3f0;
+  --backgroung-black-color:#21201d;
   --button-green-color: #328800;
   --button-green-hover-color: #276b00;
   --button-green-active-color: #205503;
   --button-blue-color:#117fa6;
   --button-blue-hover-color:#0e6b91;
   --button-blue-active-color:#0b5170;
+  --button-white-hover-color:#ffffff99;
+  --button-white-active-color:#ffffff4d;
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --hero-banner-background-color: #21201d;
