@@ -19,19 +19,6 @@
   display: block;
 }
 
-/* @media (width >= 900px) {
-  .columns > div {
-    align-items: center;
-    flex-direction: unset;
-    gap: 24px;
-  }
-
-  .columns > div > div {
-    flex: 1;
-    order: unset;
-  }
-} */
-
 /* Homepage */
 
 /* Clear the padding and margin at homepage */
@@ -154,9 +141,17 @@ main .section.columns-container > div{
   width: 100vw;
 }
 
-/* Blue background with blue button */
-.columns.homepage.block.columns-2-cols .bg-color-3 .button{
+/* DNA button with blue background */
+.columns.homepage.block.columns-2-cols .dna-button{
  background-color: var(--button-blue-color);
+}
+
+.columns.homepage.block.columns-2-cols .dna-button:hover {
+  background-color: var(--button-blue-hover-color);
+}
+
+.columns.homepage.block.columns-2-cols .dna-button:active {
+  background-color: var(--button-blue-active-color);
 }
 
 /* Mobile-specific adjustments */
@@ -205,7 +200,7 @@ main .section.columns-container > div{
   }
 }
 
-/* Tablet and Desktop Styles (768px and above) */
+/* Tablet and Desktop Styles */
 @media (min-width: 900px) {
   .columns.homepage.block.columns-2-cols > div {
     display: flex;
@@ -356,19 +351,19 @@ main .section.columns-container > div{
 }
 
 @media (max-width: 750px) {
-  .columns.footer.block.columns-3-cols .bg-color-1 {
+  .columns.footer.block.columns-3-cols > div {
     flex-direction: column;
     align-items: center;
     gap: 0.5rem;
   }
 
-  .columns.footer.block.columns-3-cols .text-content p {
-    padding: 0;
-  }
-
-  .columns.footer.block.columns-3-cols .bg-color-1 .text-content {
+  .columns.footer.block.columns-3-cols .text-content {
     max-width: 100%;
     margin-bottom: 20px; 
     text-align: center;
+  }
+
+  .columns.footer.block.columns-3-cols .text-content p {
+    padding: 0;
   }
 }
