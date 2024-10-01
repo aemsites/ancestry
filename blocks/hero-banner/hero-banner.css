@@ -1,6 +1,5 @@
 /* General Styles for All Banners */
 main .section.hero-banner-container {
-    height: 600px;
     display: flex;
     flex-direction: column;
     background: var(--hero-banner-background-color);
@@ -9,77 +8,23 @@ main .section.hero-banner-container {
 }
 
 .hero-banner-wrapper {
-    display: none; /* Hide all banners by default */
+    display: none;
 }
 
 .hero-banner {
     color: var(--text-h1-color);
-
-    /* font-family: ui-serif, "Times New Roman", Times, serif; */
     font-size: 0.8rem;
     letter-spacing: 0.03em;
     line-height: 1.33;
 }
 
-.hero-banner img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
 .hero-banner > div {
     display: flex;
-    flex-direction: column; /* Default direction */
+    flex-direction: column;
     justify-content: center;
     max-width: none;
     height: 100%;
     flex-grow: 1;
-}
-
-.hero-banner .icon::before{
-    font-family:ancestry-icon, sans-serif;
-    content: "\e685";
-    color:#9BBE3C;
-    font-size:2.5rem;
-    text-align:center;
-    font-weight:400;
-}
-
-/* Specific Banner Styles */
-
-/* Mobile Banner Styles */
-.hero-banner.mobile-banner > div {
-    flex-direction: column-reverse;
-}
-
-.hero-banner.mobile-banner img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-/* Tablet Banner Styles */
-.hero-banner.tab-banner > div {
-    align-items: center;
-    flex-direction: column;
-}
-
-.hero-banner.tab-banner img {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
-}
-
-/* Desktop Banner Styles */
-.hero-banner.desktop-banner > div {
-    display: grid;
-    grid-template-columns: 6fr 4fr;
-    align-items: center;
-}
-
-.hero-banner.desktop-banner img {
-    width: 100%;
-    height: auto;
 }
 
 .hero-banner > div > div:first-child {
@@ -90,24 +35,48 @@ main .section.hero-banner-container {
     text-align: center;
 }
 
-.hero-banner a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: normal;
-}
-
 .hero-banner h1 {
     color: var(--text-h1-color);
     font-family: ui-serif, "Times New Roman", Times, serif;
     font-size: 2rem;
     font-weight: 400;
-    line-height: 1.1;
+    line-height: 1.2;
     letter-spacing: 0.03em;
-    margin-top: 1rem;
+}
+
+/* General margins for when there's only one h1 */
+.hero-banner h1:only-of-type {
+    margin-top: 2rem;
+    margin-bottom: 1.5rem;
+}
+
+/* Apply to h1s that are neither first nor last, when there's more than one h1 */
+.hero-banner h1:not(:first-of-type, :last-of-type) {
+    margin: 0;
+}
+
+/* Apply to the first h1 only when there is more than one h1 */
+.hero-banner h1:first-of-type:not(:only-of-type) {
+    margin-top: 1.5rem;
+    margin-bottom: 0;
+}
+
+/* Apply to the last h1 only when there is more than one h1 */
+.hero-banner h1:last-of-type:not(:only-of-type) {
+    margin-bottom: 2rem;
+    margin-top: 0;
 }
 
 /* Icon Styles */
+.hero-banner .icon::before{
+    font-family:ancestry-icon, sans-serif;
+    content: "\e685";
+    color:#9BBE3C;
+    font-size:2.5rem;
+    text-align:center;
+    font-weight:400;
+}
+
 .hero-banner .icon.icon-icon-acom {
     display: flex;
     justify-content: center;
@@ -123,6 +92,13 @@ main .section.hero-banner-container {
 }
 
 /* Button Styles */
+.hero-banner a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: normal;
+}
+
 .hero-banner a.button {
     padding: 0.7em 1.5em;
     font-size: 1rem;
@@ -140,62 +116,108 @@ main .section.hero-banner-container {
 
 /* Responsive Styles */
 
-/* Mobile: Up to 767px */
+/* Mobile */
 @media (max-width: 600px) {
-    main .section.hero-banner-container {
-        height: 500px;
-    }
-
     .hero-banner-wrapper.mobile-banner-wrapper {
         margin-top: 0;
         display: block;
     }
 
-    /* Hide Icon on Mobile */
-    .hero-banner .icon.icon-icon-acom img {
-        display: none;
+    .hero-banner.mobile-banner > div {
+        flex-direction: column-reverse;
+        align-items: center;
+        width: 100%;
     }
 
-    .hero-banner .icon::before{
-        display: none;
+    .hero-banner.mobile-banner > div > div {
+        margin: 0 0.5rem;
+    }
+
+    .hero-banner.mobile-banner img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        object-position: center;
+        display: block;
+    }
+
+    /* Hide Icon on Mobile */
+    .hero-banner .icon,
+    .hero-banner .icon::before,
+    .hero-banner .icon.icon-icon-acom img {
+        display: none !important;
+    }
+
+    /* Adjust Text Styles */
+    .hero-banner h1 {
+        font-size: 2rem;
+        font-weight:400;
+        margin: 0;
+        width: 100%;
+        max-width: 480px;
+    }
+
+    /* General margins for when there's only one h1 */
+    .hero-banner h1:only-of-type {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
     }
     
-    .hero-banner a.button {
-        padding: 0.6em 1.5em;
-        font-size: 0.9rem;
+    .hero-banner h1:last-of-type:not(:only-of-type) {
+        margin-bottom: 1rem;
     }
 
     .hero-banner p {
         font-size: 0.9em;
         letter-spacing: 0.05em;
+        width: 100%;
+        max-width: 360px;
+        margin: 0.5rem auto;
     }
 
-    .hero-banner h1 {
-        margin: 0;
+    .hero-banner a.button {
+        padding: 0.6em 1.5em;
+        font-size: 0.9rem;
     }
 
     .hero-banner p:last-of-type {
         font-size: 0.8em;
         margin-bottom: 2rem;
     }
-
-    .hero-banner > div {
-        flex-direction: column;
-    }
 }
 
-/* Tablet: 768px to 1005px */
+/* Tablet */
 @media (min-width: 601px) and (max-width: 900px) {
     main .section.hero-banner-container {
-        height: 600px;
+        height: 700px;
     }
 
-    .hero-banner {
-        padding-top: 3rem;
+    .hero-banner.tab-banner > div {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        padding-top:2rem;
     }
 
     .hero-banner.tab-banner > div > div:first-child {
-        width: 300px;
+        width: 100%;
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .hero-banner.tab-banner > div > div:last-child {
+        flex-grow: 1;
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .hero-banner.tab-banner img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: center;
+        display: block;
     }
 
     .hero-banner p:last-of-type {
@@ -208,8 +230,13 @@ main .section.hero-banner-container {
     }
 }
 
-/* Desktop: 1006px and Above */
+
+/* Desktop */
 @media (min-width: 901px) {
+    .section.hero-banner-container {
+        height: 700px;
+    }
+
     .desktop-banner-wrapper {
         display: block;
         overflow: hidden;
@@ -217,7 +244,6 @@ main .section.hero-banner-container {
 
     .hero-banner.desktop-banner {
         width: 100%;
-        overflow: hidden;
     }
 
     .hero-banner.desktop-banner > div {
@@ -227,18 +253,23 @@ main .section.hero-banner-container {
     }
 
     .hero-banner.desktop-banner > div > div:first-child {
-        width: 300px;
-        margin: 8rem;
+        width: 490px;
+        padding:2rem;
+        margin: 2rem;
+    }
+    
+    .hero-banner.desktop-banner > div > div p {
+        width: 360px;
     }
 
     .hero-banner.desktop-banner > div > div:last-child {
-        width: 600px;
-        flex-shrink: 0;
+        width: 700px;
     }
 
     .hero-banner.desktop-banner img {
-        width: 600px;
+        width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: center;
     }
 }
