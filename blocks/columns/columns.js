@@ -20,8 +20,8 @@ function wrapAncestryText(element) {
 }
 
 // Check for DNA icon and apply blue button background
-function checkDNAIconAndApplyClass() {
-  const dnaIcons = document.querySelectorAll('img[data-icon-name="icon-dna"]');
+function checkDNAIconAndApplyClass(block) {
+  const dnaIcons = block.querySelectorAll('img[data-icon-name="icon-dna"]');
 
   dnaIcons.forEach((dnaIcon) => {
     const container = dnaIcon.closest('.bg-color-1, .bg-color-2, .bg-color-3');
@@ -68,5 +68,5 @@ export default function decorate(block) {
       wrapAncestryText(textContent);
     }
   });
-  checkDNAIconAndApplyClass();
+  checkDNAIconAndApplyClass(block);
 }
