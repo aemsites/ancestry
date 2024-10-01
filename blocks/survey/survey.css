@@ -1,3 +1,13 @@
+@keyframes show-container {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
+
 @keyframes expand-height {
     from {
         max-height: 0;
@@ -18,6 +28,18 @@
     }
   }
 
+  .survey-container.animate-container {
+    max-height: 0;
+    overflow: hidden;
+    animation: show-container 1s forwards, expand-height 1s ease-in-out;
+    animation-delay: 2s;
+    animation-fill-mode: forwards;
+    clear: both;
+    background-color: var(--survey-background-color);
+    position: relative;
+    margin-bottom: 0;
+  }
+
   .survey-container.fixed-container {
     background-color: var(--survey-text-color);
     margin-bottom: 0;
@@ -30,19 +52,11 @@
     text-align: center;
   }
 
-  .survey-container.animate-container {
-    overflow: hidden;
-    animation: expand-height 1s ease-in-out;
-    max-height: 1000px;
-    clear: both;
-    background-color: var(--survey-background-color);
-    position: relative;
-    margin-bottom: 0;
-  }
+  
 
   .survey-container.animate-container.hidden {
     animation: reduce-height 1s ease-in-out;
-    max-height: 0;
+    overflow: hidden;
   }
 
   .survey-container .animate h2 {
