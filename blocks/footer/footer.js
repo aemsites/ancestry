@@ -1,5 +1,5 @@
 import { getMetadata } from '../../scripts/aem.js';
-import { isHomepageUrl } from '../../scripts/scripts.js';
+import { getLanguageFromPath, isHomepageUrl } from '../../scripts/scripts.js';
 import { loadFragment } from '../fragment/fragment.js';
 
 function createOptGroup(select, mainItem, subItems) {
@@ -20,7 +20,16 @@ function createOptGroup(select, mainItem, subItems) {
 function appendOptions(select, subItems) {
   subItems.forEach((link) => {
     const opt = document.createElement('option');
-    opt.value = link.href;
+    const currentPath = window.location.pathname;
+    const url = new URL(link.href);
+    const selectedLanguage = getLanguageFromPath(url.pathname);
+    let pathAfterLanguage;
+    const segs = currentPath.split('/');
+    if (segs.length > 2) {
+      pathAfterLanguage = segs.slice(2).join('/');
+    }
+    const newHref = `/${selectedLanguage}/${pathAfterLanguage}`;
+    opt.value = newHref;
     opt.textContent = link.textContent;
     select.appendChild(opt);
   });
