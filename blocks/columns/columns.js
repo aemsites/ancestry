@@ -19,6 +19,20 @@ function wrapAncestryText(element) {
   traverseNodes(element);
 }
 
+// Check for DNA icon and apply blue button background
+function checkDNAIconAndApplyClass(block) {
+  const dnaIcons = block.querySelectorAll('img[data-icon-name="icon-dna"]');
+
+  dnaIcons.forEach((dnaIcon) => {
+    const container = dnaIcon.closest('.bg-color-1, .bg-color-2, .bg-color-3');
+    const button = container.querySelector('.button');
+
+    if (button) {
+      button.classList.add('dna-button');
+    }
+  });
+}
+
 export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
   block.classList.add(`columns-${cols.length}-cols`);
@@ -54,4 +68,5 @@ export default function decorate(block) {
       wrapAncestryText(textContent);
     }
   });
+  checkDNAIconAndApplyClass(block);
 }

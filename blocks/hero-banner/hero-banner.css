@@ -7,6 +7,10 @@ main .section.hero-banner-container {
     margin:0;
 }
 
+.hero-banner-container > div{
+    max-width:1400px;
+}
+
 .hero-banner-wrapper {
     display: none;
 }
@@ -171,7 +175,6 @@ main .section.hero-banner-container {
         margin: 0;
         width: 100%;
         max-width: 480px;
-        min-height:120px;
     }
 
     /* General margins for when there's only one h1 */
@@ -235,6 +238,7 @@ main .section.hero-banner-container {
         object-fit: cover;
         object-position: center;
         display: block;
+
     }
 
     .hero-banner p:last-of-type {
