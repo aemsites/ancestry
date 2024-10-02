@@ -39,5 +39,5 @@ export default async function decorate(block) {
 
   block.append(footer);
   await loadCSS(ancJson[0].Resources[0].Src);
-  await loadScript('../../scripts/footer-f2f29243.js', { type: 'text/javascript' });
+  await loadScript('../../scripts/footer-235c199d.js', { type: 'text/javascript' });
 }
