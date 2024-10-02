@@ -629,6 +629,38 @@ async function fetchPlaceholders(prefix = 'default') {
 }
 
 /**
+ * Loads JS and CSS for a module and executes it's default export.
+ * @param {string} name The module name
+ * @param {string} jsPath The JS file to load
+ * @param {string} [cssPath] An optional CSS file to load
+ * @param {object[]} [args] Parameters to be passed to the default export when it is called
+ */
+async function loadModule(name, jsPath, cssPath, ...args) {
+  const cssLoaded = cssPath
+    ? new Promise((resolve) => { loadCSS(cssPath, resolve); })
+    : Promise.resolve();
+  const decorationComplete = jsPath
+    ? new Promise((resolve) => {
+      (async () => {
+        let mod;
+        try {
+          mod = await import(jsPath);
+          if (mod.default) {
+            await mod.default.apply(null, args);
+          }
+        } catch (error) {
+          // eslint-disable-next-line no-console
+          console.log(`failed to load module for ${name}`, error);
+        }
+        resolve(mod);
+      })();
+    })
+    : Promise.resolve();
+  return Promise.all([cssLoaded, decorationComplete])
+    .then(([, api]) => api);
+}
+
+/**
  * Builds a block DOM Element from a two dimensional array, string, or object
  * @param {string} blockName name of the block
  * @param {*} content two dimensional array or string or object of content
