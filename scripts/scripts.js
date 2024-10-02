@@ -14,6 +14,40 @@ import {
   sampleRUM,
 } from './aem.js';
 
+const AUDIENCES = {
+  mobile: () => window.innerWidth < 600,
+  desktop: () => window.innerWidth >= 600,
+  'new-visitor': () => !localStorage.getItem('franklin-visitor-returning'),
+  'returning-visitor': () => !!localStorage.getItem('franklin-visitor-returning'),
+};
+
+window.hlx.plugins.add('experimentation', {
+  condition: () => document.head.querySelector('[name^="experiment"],[name^="campaign-"],[name^="audience-"]')
+    || document.head.querySelector('[property^="campaign:"],[property^="audience:"]')
+    || document.querySelector('.section[class*="experiment-"],.section[class*="audience-"],.section[class*="campaign-"]')
+    || [...document.querySelectorAll('.section-metadata div')].some((d) => d.textContent.match(/Experiment|Campaign|Audience/i)),
+  options: { audiences: AUDIENCES },
+  load: 'eager',
+  url: '/plugins/experimentation/src/index.js',
+});
+
+
+/**
+ * Gets all the metadata elements that are in the given scope.
+ * @param {String} scope The scope/prefix for the metadata
+ * @returns an array of HTMLElement nodes that match the given scope
+ */
+export function getAllMetadata(scope) {
+  return [...document.head.querySelectorAll(`meta[property^="${scope}:"],meta[name^="${scope}-"]`)]
+    .reduce((res, meta) => {
+      const id = toClassName(meta.name
+        ? meta.name.substring(scope.length + 1)
+        : meta.getAttribute('property').split(':')[1]);
+      res[id] = meta.getAttribute('content');
+      return res;
+    }, {});
+}
+
 const LANGUAGES = new Set(['en', 'es']);
 let language;
 
@@ -98,6 +132,8 @@ export function decorateMain(main) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+  await window.hlx.plugins.run('loadEager');
+
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
@@ -134,6 +170,10 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  // Mark customer as having viewed the page once
+  localStorage.setItem('franklin-visitor-returning', true);
+  window.hlx.plugins.run('loadLazy');
 }
 
 /**
@@ -147,7 +187,9 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  await window.hlx.plugins.load('eager');
   await loadEager(document);
+  await window.hlx.plugins.load('lazy');
   await loadLazy(document);
   loadDelayed();
 }

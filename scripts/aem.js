@@ -112,6 +112,98 @@ function sampleRUM(checkpoint, data) {
   }
 }
 
+// Define an execution context for plugins
+export const executionContext = {
+  createOptimizedPicture,
+  getAllMetadata,
+  getMetadata,
+  decorateBlock,
+  decorateButtons,
+  decorateIcons,
+  loadBlock,
+  loadCSS,
+  loadScript,
+  sampleRUM,
+  toCamelCase,
+  toClassName,
+};
+
+function parsePluginParams(id, config) {
+  const pluginId = !config
+    ? id.split('/').splice(id.endsWith('/') ? -2 : -1, 1)[0].replace(/\.js/, '')
+    : id;
+  const pluginConfig = {
+    load: 'eager',
+    ...(typeof config === 'string' || !config
+      ? { url: (config || id).replace(/\/$/, '') }
+      : config),
+  };
+  pluginConfig.options ||= {};
+  return { id: pluginId, config: pluginConfig };
+}
+
+class PluginsRegistry {
+  #plugins;
+
+  constructor() {
+    this.#plugins = new Map();
+  }
+
+  // Register a new plugin
+  add(id, config) {
+    const { id: pluginId, config: pluginConfig } = parsePluginParams(id, config);
+    this.#plugins.set(pluginId, pluginConfig);
+  }
+
+  // Get the plugin
+  get(id) { return this.#plugins.get(id); }
+
+  // Check if the plugin exists
+  includes(id) { return !!this.#plugins.has(id); }
+
+  // Load all plugins that are referenced by URL, and updated their configuration with the
+  // actual API they expose
+  async load(phase) {
+    [...this.#plugins.entries()]
+      .filter(([, plugin]) => plugin.condition
+      && !plugin.condition(document, plugin.options, executionContext))
+      .map(([id]) => this.#plugins.delete(id));
+    return Promise.all([...this.#plugins.entries()]
+      // Filter plugins that don't match the execution conditions
+      .filter(([, plugin]) => (
+        (!plugin.condition || plugin.condition(document, plugin.options, executionContext))
+        && phase === plugin.load && plugin.url
+      ))
+      .map(async ([key, plugin]) => {
+        try {
+          // If the plugin has a default export, it will be executed immediately
+          const pluginApi = (await loadModule(
+            key,
+            !plugin.url.endsWith('.js') ? `${plugin.url}/${key}.js` : plugin.url,
+            !plugin.url.endsWith('.js') ? `${plugin.url}/${key}.css` : null,
+            document,
+            plugin.options,
+            executionContext,
+          )) || {};
+          this.#plugins.set(key, { ...plugin, ...pluginApi });
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error('Could not load specified plugin', key);
+        }
+      }));
+  }
+    // Run a specific phase in the plugin
+    async run(phase) {
+      return [...this.#plugins.values()]
+        .reduce((promise, plugin) => ( // Using reduce to execute plugins sequencially
+          plugin[phase] && (!plugin.condition
+              || plugin.condition(document, plugin.options, executionContext))
+            ? promise.then(() => plugin[phase](document, plugin.options, executionContext))
+            : promise
+        ), Promise.resolve());
+    }
+}
+
 /**
  * Setup block utils.
  */
@@ -121,6 +213,7 @@ function setup() {
   window.hlx.RUM_MANUAL_ENHANCE = true;
   window.hlx.codeBasePath = '';
   window.hlx.lighthouse = new URLSearchParams(window.location.search).get('lighthouse') === 'on';
+  window.hlx.plugins = new PluginsRegistry();
 
   const scriptEl = document.querySelector('script[src$="/scripts/scripts.js"]');
   if (scriptEl) {
@@ -266,6 +359,22 @@ function getMetadata(name, doc = document) {
     .map((m) => m.content)
     .join(', ');
   return meta || '';
+}
+
+/**
+ * Gets all the metadata elements that are in the given scope.
+ * @param {String} scope The scope/prefix for the metadata
+ * @returns an array of HTMLElement nodes that match the given scope
+ */
+export function getAllMetadata(scope) {
+  return [...document.head.querySelectorAll(`meta[property^="${scope}:"],meta[name^="${scope}-"]`)]
+    .reduce((res, meta) => {
+      const id = toClassName(meta.name
+        ? meta.name.substring(scope.length + 1)
+        : meta.getAttribute('property').split(':')[1]);
+      res[id] = meta.getAttribute('content');
+      return res;
+    }, {});
 }
 
 /**
