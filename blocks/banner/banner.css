@@ -216,6 +216,10 @@
     text-decoration: underline;
   }
 
+  .banner.image .anchor:hover {
+    background-color: transparent;
+  }
+  
   .banner.no-image > div {
     margin: 0 2rem;
   }
