@@ -24,6 +24,53 @@ function wrapAncestryText(element) {
   traverseNodes(element);
 }
 
+function wrapImagesInContainer() {
+  const heroBannerWrappers = document.querySelectorAll('.hero-banner-wrapper');
+
+  heroBannerWrappers.forEach((wrapper) => {
+    const pictures = wrapper.querySelectorAll('picture');
+
+    pictures.forEach((picture) => {
+      if (!picture.parentElement.classList.contains('image-wrapper')) {
+        const wrapperDiv = document.createElement('div');
+        wrapperDiv.classList.add('image-wrapper');
+        picture.parentNode.insertBefore(wrapperDiv, picture);
+        wrapperDiv.appendChild(picture);
+      }
+    });
+  });
+}
+
+function setImageDimensions() {
+  const imageWrappers = document.querySelectorAll('.image-wrapper');
+
+  imageWrappers.forEach((wrapper) => {
+    const img = wrapper.querySelector('img');
+
+    if (img) {
+      const setAspectRatio = () => {
+        const width = img.naturalWidth;
+        const height = img.naturalHeight;
+
+        if (width && height) {
+          const aspectRatio = (height / width).toFixed(4);
+
+          // Only set aspect ratio if not on mobile
+          if (window.innerWidth > 600) {
+            wrapper.style.setProperty('--aspect-ratio', aspectRatio);
+          }
+        }
+      };
+
+      if (img.complete) {
+        setAspectRatio();
+      } else {
+        img.onload = setAspectRatio;
+      }
+    }
+  });
+}
+
 export default function decorate() {
   const heroBannerWrappers = document.querySelectorAll('.hero-banner-wrapper');
 
@@ -40,7 +87,11 @@ export default function decorate() {
         wrapper.classList.add('desktop-banner-wrapper');
       }
 
-      wrapAncestryText(heroBanner);
+      wrapAncestryText(heroBanner); // Your existing function
     }
   });
+
+  // Call the new functions after the DOM is manipulated
+  wrapImagesInContainer();
+  setImageDimensions();
 }
