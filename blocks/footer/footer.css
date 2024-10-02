@@ -19,6 +19,7 @@ footer li, ol, ul {
     list-style: none;
 }
 
+/* stylelint-disable selector-id-pattern */
 #infiniteFooterButton, #footerLanguage {
     display: none;
 }
