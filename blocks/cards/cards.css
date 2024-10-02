@@ -25,3 +25,221 @@
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+
+.section.cards-container{
+  background-color: var(--backgroung-black-color);
+  margin:0;
+  padding: 6rem;
+}
+
+.section.cards-container  .default-content-wrapper {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.section.cards-container .default-content-wrapper p {
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 1.5rem;
+  max-width:800px;
+}
+
+/* Text */
+.section.cards-container  .default-content-wrapper p, 
+.section.cards-container  .default-content-wrapper h2,
+.section.cards-container  .cards li,
+.section.cards-container  .cards-card-body {
+  font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
+  color:white;
+}
+
+.section.cards-container .default-content-wrapper p, 
+.section.cards-container .cards li,
+.section.cards-container .cards-card-body {
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.section.cards-container .ancestry::after{
+  content: "®";
+  font-size: 0.7em;
+  vertical-align: super;
+  margin-left: 0.1em;
+}
+
+
+/* Cards */
+.cards-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.cards-wrapper .cards > ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+}
+
+.cards-wrapper .cards div {
+  max-width: 240px;
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.cards-wrapper .cards > ul > li {
+  display: flex;
+  border: 0;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--backgroung-black-color);
+}
+
+.cards-wrapper .cards .cards-card-body {
+  text-align: center;
+  font-size: 1rem;
+}
+
+.cards-wrapper .cards .leaf-background img,
+.cards-wrapper .cards .dna-background img,
+.cards-wrapper .cards .tree-pedigree-background img{
+  display:none;
+}
+
+/* Button container */
+.cards .button-container {
+  margin-top: 16px;
+}
+
+.cards .button-container .button {
+  font-weight: 700;
+}
+
+/* Icons */
+.cards .icon {
+  display: inline-block;
+  margin: 0.5rem;
+}
+
+.icon-icon-leaf::before,
+.icon-icon-dna::before,
+.icon-icon-tree-pedigree::before {
+  font-family: ancestry-icon, sans-serif;
+  font-size: 15px;
+  color: var(--icon-font-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.icon-icon-leaf,
+.icon-icon-dna,
+.icon-icon-tree-pedigree {
+  background-color: var(--icon-background-color);
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Leaf icon */
+.icon-icon-leaf::before{
+  content: "\e610";
+}
+
+.icon-icon-leaf {
+  background-color: var(--icon-background-green-color);
+}
+
+.cards .leaf-background .button :hover{
+  background-color: var(--button-green-hover-color);
+}
+
+.cards .leaf-background .button :active{
+  background-color: var(--button-green-active-color);
+}
+
+/* DNA icon */
+.icon-icon-dna::before {
+  content: "\e607"; /* DNA icon content */
+  font-size: 20px; /* Adjust the font size if needed */
+}
+
+.icon-icon-dna {
+  background-color: var(--icon-background-blue-color);
+}
+
+.cards .dna-background .button {
+  background-color: var(--icon-background-blue-color);
+}
+
+.cards .dna-background .button:hover {
+  background-color: var(--button-blue-hover-color);
+}
+
+.cards .dna-background .button:active {
+  background-color: var(--button-blue-active-color);
+}
+
+/* Tree Pedigree icon */
+.icon-icon-tree-pedigree::before {
+  content: "\e674";
+  font-size: 15px;
+  color: var(--backgroung-black-color);
+}
+
+.icon-icon-tree-pedigree {
+  background-color: white;
+  color: var(--footer-text-color);
+}
+
+/* stylelint-disable-next-line no-descending-specificity */
+.cards .tree-pedigree-background .button {
+  background-color: white;
+  color: var(--footer-text-color);
+}
+
+.cards .tree-pedigree-background .button:hover {
+  background-color: var(--button-white-hover-color);
+}
+
+.cards .tree-pedigree-background .button:active {
+  background-color: var(--button-white-active-color);
+}
+
+@media (max-width: 900px) {
+  .section.cards-container .default-content-wrapper{
+    margin-bottom: 1rem;
+  }
+
+  .section.cards-container{
+    padding: 2rem 3rem;
+  }
+
+  .cards-container .default-content-wrapper h2 {
+    font-size: 1.8rem;
+  }
+
+  .cards-container .cards-wrapper {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .cards-container .cards > ul > li {
+    flex-direction: column;
+  }
+
+  .cards .button-container .button,
+  .cards .cards-card-body,
+  .cards-container p {
+    font-size: 1rem ;
+    margin:0.3rem;
+  }
+}

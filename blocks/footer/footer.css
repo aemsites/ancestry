@@ -15,13 +15,46 @@ footer .footer p {
   margin: 0;
 }
 
+footer #footer {
+    background-color: unset;
+}
+
 footer li, ol, ul {
     list-style: none;
+    padding-inline-start: unset;
+}
+
+footer .footerLinks {
+    display: flex;
+    justify-content: space-between;
+}
+
+footer .noDisplay {
+    display: none;
 }
 
 /* stylelint-disable selector-id-pattern */
 #infiniteFooterButton, #footerLanguage {
     display: none;
+}
+
+footer select {
+    white-space: nowrap;
+    height: 30px;
+    line-height: 28px;
+    padding: 0 6px;
+    border-bottom-left-radius: 1px;
+    border-bottom-right-radius: 1px;
+    border-color: rgb(204 204 204);
+    font-family: var(--body-font-family);
+    font-size: 15px;
+    font-weight: 400;
+}
+
+@media (min-width: 900px) {
+    footer .show480 {
+        display: none;
+    }
 }
 
 /*
