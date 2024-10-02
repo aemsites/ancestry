@@ -1,5 +1,4 @@
-import { getMetadata, loadCSS, loadScript } from '../../scripts/aem.js';
-import { loadFragment } from '../fragment/fragment.js';
+import { loadCSS, loadScript } from '../../scripts/aem.js';
 
 function fixFooter(oldFooter) {
   const ancFooter = oldFooter.querySelector('#footer');
@@ -20,7 +19,7 @@ export default async function decorate(block) {
   // const footerPath = footerMeta ? new URL(footerMeta, window.location).pathname : '/footer';
   // const fragment = await loadFragment(footerPath);
 
-  const ancResp = await fetch('https://navigation.ancestry.com/footer/0/3.0/standard/en-us/false', {
+  const ancResp = await fetch('https://navigation.ancestry.com/footer/0/1.0/standard/en-us/false', {
     mode: 'cors',
   });
 
@@ -36,7 +35,7 @@ export default async function decorate(block) {
   footer.id = 'FooterRegion';
   footer.innerHTML = ancJson[0].Views[0].Content;
   // while (fragment.firstElementChild) footer.append(fragment.firstElementChild);
-  fixFooter(footer.querySelector('ui-custom'));
+  fixFooter(footer);
 
   block.append(footer);
   await loadCSS(ancJson[0].Resources[0].Src);

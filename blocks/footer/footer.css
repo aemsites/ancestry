@@ -1,7 +1,6 @@
 footer {
-  background-color: var(--light-color);
-  font-size: 13px;
-    font-weight: 400;
+    background-color: var(--footer-background-color);
+    font-size: var(--footer-font-size-m);
 }
 
 /*
