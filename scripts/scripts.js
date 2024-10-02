@@ -18,8 +18,6 @@ const LANGUAGES = new Set(['en', 'es']);
 let language;
 
 export function getLanguageFromPath(pathname) {
-  if (language !== undefined) return language;
-
   const segs = pathname.split('/');
   if (segs.length > 1) {
     const l = segs[1];

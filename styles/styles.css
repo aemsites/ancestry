@@ -39,6 +39,9 @@
   --link-hover-color: #1d3ecf;
   --footer-background-color: #ece9e4;
   --footer-text-color: #262626;
+  --survey-text-color: #005c7d;
+  --survey-border-color: #117FA6;
+  --survey-background-color: #faf9f7;
 
   /* fonts */
   --body-font-family: ui-sans, helvetica neue, arial, sans-serif;
