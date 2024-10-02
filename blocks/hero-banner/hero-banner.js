@@ -55,7 +55,7 @@ function setImageDimensions() {
         if (width && height) {
           const aspectRatio = (height / width).toFixed(4);
 
-          // Only set aspect ratio if not on mobile
+          // Set aspect ratio if not on mobile
           if (window.innerWidth > 600) {
             wrapper.style.setProperty('--aspect-ratio', aspectRatio);
           }
@@ -78,7 +78,6 @@ export default function decorate() {
     const heroBanner = wrapper.querySelector('.hero-banner');
 
     if (heroBanner) {
-      // Check the class of the inner div and apply the corresponding class to the outer wrapper
       if (heroBanner.classList.contains('mobile-banner')) {
         wrapper.classList.add('mobile-banner-wrapper');
       } else if (heroBanner.classList.contains('tab-banner')) {
@@ -87,11 +86,10 @@ export default function decorate() {
         wrapper.classList.add('desktop-banner-wrapper');
       }
 
-      wrapAncestryText(heroBanner); // Your existing function
+      wrapAncestryText(heroBanner);
     }
   });
 
-  // Call the new functions after the DOM is manipulated
   wrapImagesInContainer();
   setImageDimensions();
 }
