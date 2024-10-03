@@ -7,6 +7,8 @@ import {
   decorateSections,
   decorateBlocks,
   decorateTemplateAndTheme,
+  getMetadata,
+  getAllMetadata,
   waitForFirstImage,
   loadSection,
   loadSections,
@@ -16,6 +18,22 @@ import {
 
 const LANGUAGES = new Set(['en', 'es']);
 let language;
+
+const AUDIENCES = {
+  mobile: () => window.innerWidth < 600,
+  desktop: () => window.innerWidth >= 600,
+  'new-visitor': () => !localStorage.getItem('franklin-visitor-returning'),
+  'returning-visitor': () => !!localStorage.getItem('franklin-visitor-returning'),
+};
+
+window.hlx.plugins.add('experimentation', {
+  condition: () => getMetadata('experiment')
+    || Object.keys(getAllMetadata('campaign')).length
+    || Object.keys(getAllMetadata('audience')).length,
+  options: { audiences: AUDIENCES },
+  load: 'eager',
+  url: '/plugins/experimentation/src/index.js',
+});
 
 export function getLanguageFromPath(pathname) {
   const segs = pathname.split('/');
@@ -98,6 +116,8 @@ export function decorateMain(main) {
 async function loadEager(doc) {
   document.documentElement.lang = 'en';
   decorateTemplateAndTheme();
+  await window.hlx.plugins.run('loadEager');
+
   const main = doc.querySelector('main');
   if (main) {
     decorateMain(main);
@@ -126,7 +146,7 @@ async function loadLazy(doc) {
   await loadSections(main);
 
   const { hash } = window.location;
-  const element = hash ? doc.getElementById(hash.substring(1)) : false;
+  const element = hash ? doc.getElementById(hash.substring(1)) : false;window.hlx.plugins.run('loadLazy');
   if (hash && element) element.scrollIntoView();
 
   loadHeader(doc.querySelector('header'));
@@ -134,6 +154,11 @@ async function loadLazy(doc) {
 
   loadCSS(`${window.hlx.codeBasePath}/styles/lazy-styles.css`);
   loadFonts();
+
+  // Mark customer as having viewed the page once
+  localStorage.setItem('franklin-visitor-returning', true);
+
+  window.hlx.plugins.run('loadLazy');
 }
 
 /**
@@ -147,7 +172,9 @@ function loadDelayed() {
 }
 
 async function loadPage() {
+  await window.hlx.plugins.load('eager');
   await loadEager(document);
+  await window.hlx.plugins.load('lazy');
   await loadLazy(document);
   loadDelayed();
 }
