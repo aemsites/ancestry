@@ -12,6 +12,7 @@ import {
   loadSections,
   loadCSS,
   sampleRUM,
+  toClassName,
 } from './aem.js';
 
 const AUDIENCES = {
@@ -30,7 +31,6 @@ window.hlx.plugins.add('experimentation', {
   load: 'eager',
   url: '/plugins/experimentation/src/index.js',
 });
-
 
 /**
  * Gets all the metadata elements that are in the given scope.
