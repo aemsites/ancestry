@@ -112,130 +112,6 @@ function sampleRUM(checkpoint, data) {
   }
 }
 
-// Define an execution context for plugins
-export const executionContext = {
-  createOptimizedPicture,
-  getAllMetadata,
-  getMetadata,
-  decorateBlock,
-  decorateButtons,
-  decorateIcons,
-  loadBlock,
-  loadCSS,
-  loadScript,
-  sampleRUM,
-  toCamelCase,
-  toClassName,
-};
-
-function parsePluginParams(id, config) {
-  const pluginId = !config
-    ? id.split('/').splice(id.endsWith('/') ? -2 : -1, 1)[0].replace(/\.js/, '')
-    : id;
-  const pluginConfig = {
-    load: 'eager',
-    ...(typeof config === 'string' || !config
-      ? { url: (config || id).replace(/\/$/, '') }
-      : config),
-  };
-  pluginConfig.options ||= {};
-  return { id: pluginId, config: pluginConfig };
-}
-
-class PluginsRegistry {
-  #plugins;
-
-  constructor() {
-    this.#plugins = new Map();
-  }
-
-  // Register a new plugin
-  add(id, config) {
-    const { id: pluginId, config: pluginConfig } = parsePluginParams(id, config);
-    this.#plugins.set(pluginId, pluginConfig);
-  }
-
-  // Get the plugin
-  get(id) { return this.#plugins.get(id); }
-
-  // Check if the plugin exists
-  includes(id) { return !!this.#plugins.has(id); }
-
-  // Load all plugins that are referenced by URL, and updated their configuration with the
-  // actual API they expose
-  async load(phase) {
-    [...this.#plugins.entries()]
-      .filter(([, plugin]) => plugin.condition
-      && !plugin.condition(document, plugin.options, executionContext))
-      .map(([id]) => this.#plugins.delete(id));
-    return Promise.all([...this.#plugins.entries()]
-      // Filter plugins that don't match the execution conditions
-      .filter(([, plugin]) => (
-        (!plugin.condition || plugin.condition(document, plugin.options, executionContext))
-        && phase === plugin.load && plugin.url
-      ))
-      .map(async ([key, plugin]) => {
-        try {
-          // If the plugin has a default export, it will be executed immediately
-          const pluginApi = (await loadModule(
-            key,
-            !plugin.url.endsWith('.js') ? `${plugin.url}/${key}.js` : plugin.url,
-            !plugin.url.endsWith('.js') ? `${plugin.url}/${key}.css` : null,
-            document,
-            plugin.options,
-            executionContext,
-          )) || {};
-          this.#plugins.set(key, { ...plugin, ...pluginApi });
-        } catch (err) {
-          // eslint-disable-next-line no-console
-          console.error('Could not load specified plugin', key);
-        }
-      }));
-  }
-
-  // Run a specific phase in the plugin
-  async run(phase) {
-    return [...this.#plugins.values()]
-      .reduce((promise, plugin) => ( // Using reduce to execute plugins sequencially
-        plugin[phase] && (!plugin.condition
-            || plugin.condition(document, plugin.options, executionContext))
-          ? promise.then(() => plugin[phase](document, plugin.options, executionContext))
-          : promise
-      ), Promise.resolve());
-  }
-}
-
-/**
- * Setup block utils.
- */
-function setup() {
-  window.hlx = window.hlx || {};
-  window.hlx.RUM_MASK_URL = 'full';
-  window.hlx.RUM_MANUAL_ENHANCE = true;
-  window.hlx.codeBasePath = '';
-  window.hlx.lighthouse = new URLSearchParams(window.location.search).get('lighthouse') === 'on';
-  window.hlx.plugins = new PluginsRegistry();
-
-  const scriptEl = document.querySelector('script[src$="/scripts/scripts.js"]');
-  if (scriptEl) {
-    try {
-      [window.hlx.codeBasePath] = new URL(scriptEl.src).pathname.split('/scripts/scripts.js');
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error);
-    }
-  }
-}
-
-/**
- * Auto initializiation.
- */
-
-function init() {
-  setup();
-  sampleRUM();
-}
-
 /**
  * Sanitizes a string for use as class name.
  * @param {string} name The unsanitized string
@@ -305,6 +181,25 @@ function readBlockConfig(block) {
 }
 
 /**
+ * Loads a CSS file.
+ * @param {string} href URL to the CSS file
+ */
+async function loadCSS(href) {
+  return new Promise((resolve, reject) => {
+    if (!document.querySelector(`head > link[href="${href}"]`)) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = href;
+      link.onload = resolve;
+      link.onerror = reject;
+      document.head.append(link);
+    } else {
+      resolve();
+    }
+  });
+}
+
+/**
  * Loads JS and CSS for a module and executes it's default export.
  * @param {string} name The module name
  * @param {string} jsPath The JS file to load
@@ -334,25 +229,6 @@ async function loadModule(name, jsPath, cssPath, ...args) {
     : Promise.resolve();
   return Promise.all([cssLoaded, decorationComplete])
     .then(([, api]) => api);
-}
-
-/**
- * Loads a CSS file.
- * @param {string} href URL to the CSS file
- */
-async function loadCSS(href) {
-  return new Promise((resolve, reject) => {
-    if (!document.querySelector(`head > link[href="${href}"]`)) {
-      const link = document.createElement('link');
-      link.rel = 'stylesheet';
-      link.href = href;
-      link.onload = resolve;
-      link.onerror = reject;
-      document.head.append(link);
-    } else {
-      resolve();
-    }
-  });
 }
 
 /**
@@ -827,6 +703,130 @@ async function loadSections(element) {
     // eslint-disable-next-line no-await-in-loop
     await loadSection(sections[i]);
   }
+}
+
+// Define an execution context for plugins
+export const executionContext = {
+  createOptimizedPicture,
+  getAllMetadata,
+  getMetadata,
+  decorateBlock,
+  decorateButtons,
+  decorateIcons,
+  loadBlock,
+  loadCSS,
+  loadScript,
+  sampleRUM,
+  toCamelCase,
+  toClassName,
+};
+
+function parsePluginParams(id, config) {
+  const pluginId = !config
+    ? id.split('/').splice(id.endsWith('/') ? -2 : -1, 1)[0].replace(/\.js/, '')
+    : id;
+  const pluginConfig = {
+    load: 'eager',
+    ...(typeof config === 'string' || !config
+      ? { url: (config || id).replace(/\/$/, '') }
+      : config),
+  };
+  pluginConfig.options ||= {};
+  return { id: pluginId, config: pluginConfig };
+}
+
+class PluginsRegistry {
+  #plugins;
+
+  constructor() {
+    this.#plugins = new Map();
+  }
+
+  // Register a new plugin
+  add(id, config) {
+    const { id: pluginId, config: pluginConfig } = parsePluginParams(id, config);
+    this.#plugins.set(pluginId, pluginConfig);
+  }
+
+  // Get the plugin
+  get(id) { return this.#plugins.get(id); }
+
+  // Check if the plugin exists
+  includes(id) { return !!this.#plugins.has(id); }
+
+  // Load all plugins that are referenced by URL, and updated their configuration with the
+  // actual API they expose
+  async load(phase) {
+    [...this.#plugins.entries()]
+      .filter(([, plugin]) => plugin.condition
+      && !plugin.condition(document, plugin.options, executionContext))
+      .map(([id]) => this.#plugins.delete(id));
+    return Promise.all([...this.#plugins.entries()]
+      // Filter plugins that don't match the execution conditions
+      .filter(([, plugin]) => (
+        (!plugin.condition || plugin.condition(document, plugin.options, executionContext))
+        && phase === plugin.load && plugin.url
+      ))
+      .map(async ([key, plugin]) => {
+        try {
+          // If the plugin has a default export, it will be executed immediately
+          const pluginApi = (await loadModule(
+            key,
+            !plugin.url.endsWith('.js') ? `${plugin.url}/${key}.js` : plugin.url,
+            !plugin.url.endsWith('.js') ? `${plugin.url}/${key}.css` : null,
+            document,
+            plugin.options,
+            executionContext,
+          )) || {};
+          this.#plugins.set(key, { ...plugin, ...pluginApi });
+        } catch (err) {
+          // eslint-disable-next-line no-console
+          console.error('Could not load specified plugin', key);
+        }
+      }));
+  }
+
+  // Run a specific phase in the plugin
+  async run(phase) {
+    return [...this.#plugins.values()]
+      .reduce((promise, plugin) => ( // Using reduce to execute plugins sequencially
+        plugin[phase] && (!plugin.condition
+            || plugin.condition(document, plugin.options, executionContext))
+          ? promise.then(() => plugin[phase](document, plugin.options, executionContext))
+          : promise
+      ), Promise.resolve());
+  }
+}
+
+/**
+ * Setup block utils.
+ */
+function setup() {
+  window.hlx = window.hlx || {};
+  window.hlx.RUM_MASK_URL = 'full';
+  window.hlx.RUM_MANUAL_ENHANCE = true;
+  window.hlx.codeBasePath = '';
+  window.hlx.lighthouse = new URLSearchParams(window.location.search).get('lighthouse') === 'on';
+  window.hlx.plugins = new PluginsRegistry();
+
+  const scriptEl = document.querySelector('script[src$="/scripts/scripts.js"]');
+  if (scriptEl) {
+    try {
+      [window.hlx.codeBasePath] = new URL(scriptEl.src).pathname.split('/scripts/scripts.js');
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(error);
+    }
+  }
+}
+
+/**
+ * Auto initializiation.
+ */
+
+function init() {
+  setup();
+  sampleRUM();
 }
 
 init();
