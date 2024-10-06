@@ -250,6 +250,11 @@
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
+  padding:3rem 1rem;
+}
+
+.section.dna .cards.mobile {
+  display:none;
 }
 
 main .section.dna > div{
@@ -257,8 +262,12 @@ main .section.dna > div{
 }
 
 .section.dna .cards-wrapper .cards div {
-  min-width:320px;
+  max-width:100%;
 }
+
+/* .section.dna .cards-wrapper .cards div {
+  min-width:320px;
+} */
 
 .cards-container.dna .default-content-wrapper:first-of-type {
   position: relative;
@@ -271,8 +280,8 @@ main .section.dna > div{
 /* Fix for the button container */
 .cards-container.dna .default-content-wrapper:first-of-type > p {
   position: absolute;
-  top: -40px;
-  right:80px;
+  top: -10px;
+  right:30px;
   display: flex;
   gap: 10px;
   margin: 0;
@@ -307,7 +316,6 @@ main .section.dna > div{
   font-weight: 400;
   font-size:3.5rem;
   padding-bottom:5rem;
-  -webkit-font-smoothing: antialiased;
 }
 
 .cards-container.dna .default-content-wrapper {
@@ -349,7 +357,7 @@ main .section.dna > div{
   background-color: white;
   border-radius: 10px;;
   color: var(--text-color);
-  padding: 1rem;
+  padding: 1rem 0;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -357,11 +365,13 @@ main .section.dna > div{
   align-items: center;
   flex-grow: 1;
   min-height: 100%;
+  margin: 8px;
 }
 
 .cards-container.dna .cards .cards-card-body .title {
-  margin:1rem;
-  min-height: 50px;
+  margin: 1rem 0.2rem 0 0.2rem;
+  min-height: 80px;
+  max-height:120px;
  }
 
 .cards-container.dna .cards .cards-card-body .title h2 {
@@ -382,7 +392,8 @@ main .section.dna > div{
 }
 
 .cards-container.dna .cards-card-body .product img {
-  width:70%;
+  aspect-ratio: auto;
+  width:75%;
   margin-bottom:1.5rem;
 }
 
@@ -472,24 +483,27 @@ main .section.dna > div{
 
 .cards-container.dna .cards-card-body .detail ul li {
   position: relative;
-  padding-right: 1.5rem;
-  margin-bottom: 0.5rem;
-  margin-left:2rem;
+  margin-bottom: 0.9rem;
+  margin-left: 2rem;
+  padding-right: 2rem;
+  max-width: 100%;
+  white-space: normal;
+  word-wrap: break-word;
 }
 
 .cards-container.dna .cards-card-body .detail ul li::after {
-  font-family: ancestry-icon;
   content: '\e656';
+  font-family: ancestry-icon;
   color: green;
-  font-weight:700;
   font-size: 1.2rem;
   position: absolute;
-  right: 2rem;
-  top: 0;
-  transform: translateY(-0.4rem);
+  padding-right:3rem;
+  right: 0;
+  bottom: 0;
+  transform: translateY(0%);
 }
 
-.cards-container.dna .cards-card-body .detail ul li strong{
+.cards-container.dna .cards-card-body .detail ul li strong {
   color:transparent;
 }
 
@@ -498,8 +512,8 @@ main .section.dna > div{
   color: green;
   font-size: 0.7rem;
   position: absolute;
-  right: 1.9rem;
-  bottom: 0;
+  right: 2.8rem;
+  bottom: -0.1rem;
 }
 
 /* Last default content */
@@ -534,23 +548,24 @@ main .section.dna > div{
   position: relative;
 }
 
-.cards-container .default-content-wrapper:last-of-type p:first-child::before {
+.cards-container .default-content-wrapper:last-of-type p:first-child strong::before {
   font-family: 'ancestry-icon';
   content: '\e656';
   color: green;
   font-size: 1.5rem;
-  margin-right: 10px;
   position: relative;
 }
 
-.cards-container .default-content-wrapper:last-of-type p:first-child::after {
+.cards-container .default-content-wrapper:last-of-type p:first-child strong {
+  color:transparent;
+}
+
+.cards-container .default-content-wrapper:last-of-type p:first-child strong::after {
   content: '+';
   color: green;
   font-size: 0.7rem;
-  position: absolute;
-  top: 0.6rem;
-  left: 3rem;
-  transform: translate(50%, 50%);
+  position: relative;
+  left:-1rem;
 }
 
 .cards-container .default-content-wrapper:last-of-type p:last-child {
@@ -559,4 +574,91 @@ main .section.dna > div{
   margin: 0 auto;
   padding-top: 1rem;
   position: relative;
+}
+
+@media(min-width:1200px){
+  .section.dna .cards-wrapper .cards div {
+    max-width:100%;
+  }
+}
+
+@media(max-width:1010px){
+  .section.dna.cards-container{
+    padding: 1.5rem;
+  }
+
+  /* .section.dna .cards-wrapper .cards .cards-card-body {
+    max-width:218px;
+    min-width:200px;
+
+  } */
+  .section.dna .cards-wrapper .cards div {
+    max-width:100%;
+  }
+  .cards-container.dna .default-content-wrapper h1 {
+   font-size: 2rem;
+   max-width:500px;
+   padding-bottom:2.8rem;
+  }
+
+  .cards-container.dna .cards .cards-card-body .title {
+    margin-bottom:0; 
+    min-height:90px;
+  }
+
+  .cards-container.dna .cards .cards-card-body .title h2:not(:first-of-type){
+    font-size: 1rem;
+   }
+
+   .cards-container .default-content-wrapper:last-of-type p + p::before {
+    left: 5%;
+    width: 90%; 
+  }
+
+  .cards-container.dna .cards-card-body .product p .dollar-sign {
+    font-size: 1.5rem;
+    top: -0.6rem; 
+  }
+  
+  .cards-container.dna .cards-card-body .product p .price {
+    font-size: 2.2rem;
+    top: -0.3rem; 
+  }
+  
+  .cards-container.dna .cards-card-body .product p .price-asterisk {
+    font-size: 1.3rem;
+    top: -0.6rem; 
+  }
+
+  .cards-container.dna .cards-card-body .product .button-container a {
+    padding:0.6rem 0;
+    width:60%;
+  }
+
+.cards-container.dna .cards-card-body .detail p,
+.cards-container.dna .cards-card-body .detail ul li {
+  margin-left:0.8rem;
+  margin-right:0.5rem;
+}
+
+.cards-container.dna .cards-card-body .detail ul li::after {
+  padding-right:0.5rem;
+}
+
+.cards-container.dna .cards-card-body .detail ul li strong::before {
+  right: 0.3rem;
+}
+
+.cards-container .default-content-wrapper:last-of-type p:first-child::after {
+  left: 1.3rem;
+}
+}
+
+@media(max-width:767px){
+  .section.dna.cards-container .cards.desktop {
+    display:none;
+  }
+  .section.dna.cards-container .cards.mobile {
+    display:block;
+  }
 }

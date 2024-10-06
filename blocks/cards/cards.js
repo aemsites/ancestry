@@ -5,6 +5,11 @@ function wrapAncestryText(element) {
   function traverseNodes(node) {
     node.childNodes.forEach((child) => {
       if (child.nodeType === Node.TEXT_NODE) {
+        const parent = child.parentNode;
+        if (parent && parent.classList && parent.classList.contains('ancestry')) {
+          return;
+        }
+
         const updatedText = child.textContent.replace(ancestryRegex, (match) => `<span class="ancestry">${match}</span>`);
         if (updatedText !== child.textContent) {
           const wrapper = document.createElement('span');
@@ -16,6 +21,7 @@ function wrapAncestryText(element) {
       }
     });
   }
+
   traverseNodes(element);
 }
 
