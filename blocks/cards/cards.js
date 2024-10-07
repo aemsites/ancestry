@@ -44,6 +44,99 @@ function formatPrice(element) {
   }
 }
 
+function setupAccordion(cardBody) {
+  const detailDiv = cardBody.querySelector('.detail');
+  if (!detailDiv) return;
+
+  const paragraphs = detailDiv.querySelectorAll('p');
+  let subscriptionParagraph = null;
+
+  paragraphs.forEach((paragraph) => {
+    const strongElement = paragraph.querySelector('strong');
+    if (strongElement && strongElement.textContent.trim().toLowerCase().includes('subscription offer')) {
+      subscriptionParagraph = paragraph;
+    }
+  });
+
+  if (subscriptionParagraph) {
+    console.log('Subscription offer found:', subscriptionParagraph);
+
+    const accordionWrapper = document.createElement('div');
+    accordionWrapper.classList.add('accordion');
+
+    const toggleText = document.createElement('div');
+    toggleText.classList.add('accordion-toggle');
+    toggleText.innerHTML = `<sup>§</sup> See offer details <span class="arrow"></span>`;
+
+    const accordionContent = document.createElement('div');
+    accordionContent.classList.add('accordion-content');
+    accordionContent.style.display = 'none';
+
+    accordionContent.appendChild(subscriptionParagraph.cloneNode(true));
+
+    let sibling = subscriptionParagraph.nextElementSibling;
+    const siblingsToMove = [];
+
+    while (sibling) {
+      siblingsToMove.push(sibling);
+      sibling = sibling.nextElementSibling;
+    }
+
+    siblingsToMove.forEach((sibling) => {
+      accordionContent.appendChild(sibling.cloneNode(true));
+      sibling.remove();
+    });
+
+    toggleText.addEventListener('click', () => {
+      if (accordionContent.style.display === 'none') {
+        accordionContent.style.display = 'block';
+        toggleText.classList.add('expanded'); 
+        toggleText.innerHTML = `<sup style="font-size: 0.55em;top: -0.9em;">§</sup> Hide offer details <span class="arrow"></span>`;
+      } else {
+        accordionContent.style.display = 'none';
+        toggleText.classList.remove('expanded'); 
+        toggleText.innerHTML = `<sup style="font-size: 0.55em;top: -0.9em;">§</sup> See offer details <span class="arrow"></span>`;
+      }
+    });
+
+    detailDiv.insertBefore(toggleText, subscriptionParagraph);
+    detailDiv.insertBefore(accordionContent, toggleText.nextElementSibling);
+
+    subscriptionParagraph.remove();
+  }
+}
+
+function openPopup(hiddenContent) {
+  const overlay = document.createElement('div');
+  overlay.classList.add('popup-overlay');
+
+  const popup = document.createElement('div');
+  popup.classList.add('popup-window');
+
+  const title = document.createElement('h2');
+  title.textContent = "What's included";
+  title.classList.add('popup-title');
+
+  const closeButton = document.createElement('span');
+  closeButton.innerHTML = '&times;';
+  closeButton.classList.add('popup-close');
+  closeButton.addEventListener('click', () => {
+    document.body.removeChild(overlay);
+    document.body.removeChild(popup);
+  });
+
+  hiddenContent.forEach((element) => {
+    popup.appendChild(element.cloneNode(true));
+  });
+
+  popup.prepend(closeButton);
+  popup.prepend(title);
+  document.body.appendChild(overlay);
+  document.body.appendChild(popup);
+
+  popup.addEventListener('click', (e) => e.stopPropagation());
+}
+
 export default function decorate(block) {
   const dnaSection = block.closest('.section.dna');
 
@@ -174,6 +267,7 @@ if (dnaSection) {
         });
       });
     }
+    setupAccordion(cardBody);
   });
 }
 
@@ -215,35 +309,4 @@ ul.appendChild(li);
       dialog.style.display = 'none';
     });
   }
-}
-
-function openPopup(hiddenContent) {
-  const overlay = document.createElement('div');
-  overlay.classList.add('popup-overlay');
-
-  const popup = document.createElement('div');
-  popup.classList.add('popup-window');
-
-  const title = document.createElement('h2');
-  title.textContent = "What's included";
-  title.classList.add('popup-title');
-
-  const closeButton = document.createElement('span');
-  closeButton.innerHTML = '&times;';
-  closeButton.classList.add('popup-close');
-  closeButton.addEventListener('click', () => {
-    document.body.removeChild(overlay);
-    document.body.removeChild(popup);
-  });
-
-  hiddenContent.forEach((element) => {
-    popup.appendChild(element.cloneNode(true));
-  });
-
-  popup.prepend(closeButton);
-  popup.prepend(title);
-  document.body.appendChild(overlay);
-  document.body.appendChild(popup);
-
-  popup.addEventListener('click', (e) => e.stopPropagation());
 }
