@@ -28,7 +28,7 @@ function wrapAncestryText(element) {
 function formatPrice(element) {
   const priceText = element.textContent.trim().toLowerCase();
   if (priceText.startsWith('only $')) {
-    const priceMatch = priceText.match(/only \$(\d+)/i);
+    const priceMatch = element.textContent.match(/only \$(\d+)/i);
     if (priceMatch) {
       const price = priceMatch[1];
 
@@ -45,13 +45,17 @@ function formatPrice(element) {
 }
 
 export default function decorate(block) {
-  // Check if the block is inside .section.dna
   const dnaSection = block.closest('.section.dna');
 
   const ul = document.createElement('ul');
-  [...block.children].forEach((row) => {
+
+  [...block.children].forEach((row, index) => {
     const li = document.createElement('li');
-    while (row.firstElementChild) li.append(row.firstElementChild);
+    li.classList.add(`item-${index + 1}`);
+
+    while (row.firstElementChild) {
+      li.append(row.firstElementChild);
+    }
 
     [...li.children].forEach((div) => {
       if (div.children.length === 1 && div.querySelector('picture')) {
@@ -73,55 +77,117 @@ export default function decorate(block) {
       }
     });
 
-    // Only apply to dna page
-    if (dnaSection) {
-      const cardBodies = li.querySelectorAll('.cards-card-body');
-      cardBodies.forEach((cardBody) => {
-        if (cardBody) {
-          const h2Group = document.createElement('div');
-          h2Group.className = 'title';
+if (dnaSection) {
+  const cardBodies = li.querySelectorAll('.cards-card-body');
 
-          const centeredGroup = document.createElement('div');
-          centeredGroup.className = 'product';
+  cardBodies.forEach((cardBody, idx) => {
+    const h2Group = document.createElement('div');
+    h2Group.className = 'title';
 
-          const leftAlignedGroup = document.createElement('div');
-          leftAlignedGroup.className = 'detail';
+    const productGroup = document.createElement('div');
+    productGroup.className = 'product';
 
-          const elements = [...cardBody.children];
-          elements.forEach((elem) => {
-            if (elem.matches('h2')) {
-              h2Group.appendChild(elem);
-            } else if (
-              (elem.matches('p') && elem.querySelector('picture')) ||
-              (elem.matches('p') && elem.textContent.trim().toLowerCase().startsWith('only $')) ||
-              elem.classList.contains('button-container') ||
-              (elem.matches('p') && elem.textContent.trim().toLowerCase() === "what’s included")
-            ) {
-              if (elem.textContent.trim().toLowerCase().startsWith('only $')) {
-                formatPrice(elem);
-              }
-              centeredGroup.appendChild(elem);
-            } else {
-              leftAlignedGroup.appendChild(elem);
-            }
-          });
+    const leftAlignedGroup = document.createElement('div');
+    leftAlignedGroup.className = 'detail';
 
-          cardBody.innerHTML = '';
-          cardBody.appendChild(h2Group);
-          cardBody.appendChild(centeredGroup);
-          cardBody.appendChild(leftAlignedGroup);
+    const expandGroup = document.createElement('div');
+    expandGroup.className = 'expand';
+
+    const elements = [...cardBody.children];
+
+    // Apply different structures based on the item index and context
+    if (index === 0) { // item-1: Handle title and product content
+      elements.forEach((elem) => {
+        if (elem.matches('h2')) {
+          h2Group.appendChild(elem);
+        } else {
+          productGroup.appendChild(elem);
+          formatPrice(elem);
         }
       });
-    }
+      cardBody.innerHTML = '';
+      cardBody.appendChild(h2Group);
+      cardBody.appendChild(productGroup);
+    } else if (index === 1) { // item-2: Handle "What's included" for mobile
+      const hiddenContent = [];
+      elements.forEach((elem) => {
+        if (elem.textContent.trim().toLowerCase() === "what’s included") {
+          const whatsIncluded = document.createElement('a');
+          whatsIncluded.href = "#";
+          whatsIncluded.textContent = elem.textContent;
+          whatsIncluded.classList.add('whats-included');
 
-    ul.append(li);
+          whatsIncluded.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            openPopup(hiddenContent);
+          });
+
+          expandGroup.appendChild(whatsIncluded);
+        } else {
+          hiddenContent.push(elem);
+        }
+      });
+
+      cardBody.innerHTML = '';
+      cardBody.appendChild(expandGroup);
+    } else if (index === 2) { // item-3: Handle <ul> and <u> elements as dialog components
+      elements.forEach((elem) => leftAlignedGroup.appendChild(elem));
+      cardBody.innerHTML = '';
+      cardBody.appendChild(leftAlignedGroup);
+
+      const ulElements = cardBody.querySelectorAll('ul');
+      const uElements = cardBody.querySelectorAll('p > u');
+
+      ulElements.forEach((ul, i) => {
+        const liElements = ul.querySelectorAll('li');
+
+        liElements.forEach((li) => {
+          const infoIcon = document.createElement('span');
+          infoIcon.classList.add('info-icon');
+          li.appendChild(infoIcon);
+
+          const dialogWrapper = document.createElement('div');
+          dialogWrapper.classList.add('dialog-wrapper');
+          dialogWrapper.style.display = 'none';
+
+          const dialogContent = document.createElement('div');
+          dialogContent.classList.add('dialog-content');
+
+          const clonedLi = li.cloneNode(true);
+          const clonedU = uElements[i] ? uElements[i].cloneNode(true) : null;
+
+          dialogContent.appendChild(clonedLi);
+          if (clonedU) {
+            dialogContent.appendChild(clonedU);
+            uElements[i].style.display = 'none';
+          }
+
+          dialogWrapper.appendChild(dialogContent);
+          ul.parentNode.insertBefore(dialogWrapper, ul.nextSibling);
+
+          ul.addEventListener('click', function (e) {
+            e.stopPropagation();
+            closeAllDialogs();
+            dialogWrapper.style.display = 'block';
+          });
+        });
+      });
+    }
+  });
+}
+
+ul.appendChild(li);
+
+    
   });
 
-  ul.querySelectorAll('picture > img').forEach((img) =>
+  ul.querySelectorAll('picture > img').forEach((img) => {
     img.closest('picture').replaceWith(
       createOptimizedPicture(img.src, img.alt, false, [{ width: '750' }])
-    )
-  );
+    );
+  });
+
   block.textContent = '';
   block.append(ul);
 
@@ -132,4 +198,52 @@ export default function decorate(block) {
     wrapAncestryText(defaultContentWrapper);
   }
   wrapAncestryText(block);
+
+  // Close dialog when clicking outside
+  document.addEventListener('click', function(e) {
+    const target = e.target;
+
+    if (!target.closest('.popup-window') && !target.closest('.whats-included')) {
+      closeAllDialogs();
+    }
+  });
+
+
+  function closeAllDialogs() {
+    const allDialogs = document.querySelectorAll('.dialog-wrapper');
+    allDialogs.forEach(dialog => {
+      dialog.style.display = 'none';
+    });
+  }
+}
+
+function openPopup(hiddenContent) {
+  const overlay = document.createElement('div');
+  overlay.classList.add('popup-overlay');
+
+  const popup = document.createElement('div');
+  popup.classList.add('popup-window');
+
+  const title = document.createElement('h2');
+  title.textContent = "What's included";
+  title.classList.add('popup-title');
+
+  const closeButton = document.createElement('span');
+  closeButton.innerHTML = '&times;';
+  closeButton.classList.add('popup-close');
+  closeButton.addEventListener('click', () => {
+    document.body.removeChild(overlay);
+    document.body.removeChild(popup);
+  });
+
+  hiddenContent.forEach((element) => {
+    popup.appendChild(element.cloneNode(true));
+  });
+
+  popup.prepend(closeButton);
+  popup.prepend(title);
+  document.body.appendChild(overlay);
+  document.body.appendChild(popup);
+
+  popup.addEventListener('click', (e) => e.stopPropagation());
 }
