@@ -26,6 +26,9 @@
   --button-blue-active-color:#0b5170;
   --button-white-hover-color:#ffffff99;
   --button-white-active-color:#ffffff4d;
+  --button-gray-color:#e2e0dd;
+  --button-gray-hover-color:#cfccca;
+  --button-gray-active-color:#aeabaa;
   --light-color: #f8f8f8;
   --dark-color: #505050;
   --hero-banner-background-color: #21201d;
@@ -35,8 +38,9 @@
   --text-color: #131313;
   --text-gray-color:#999;
   --text-h1-color:white;
-  --link-color: #3b63fb;
-  --link-hover-color: #1d3ecf;
+  --link-color: #0e7194;
+  --link-hover-color: #07536e;
+  --link-active-color: #086383;
   --footer-background-color: #ece9e4;
   --footer-text-color: #262626;
   --survey-text-color: #005c7d;
