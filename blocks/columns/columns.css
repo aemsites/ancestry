@@ -222,6 +222,10 @@ main .section.columns-container > div{
     flex-direction: row;
   }
 
+  .section.row .columns.homepage.block.columns-2-cols > div {
+    flex-direction: row;
+  }
+
   .columns.homepage.block.columns-2-cols > div > .text-content {
     flex: 2;
     display: flex;
