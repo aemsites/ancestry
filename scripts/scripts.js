@@ -77,6 +77,20 @@ function buildAutoBlocks(main) {
   }
 }
 
+function addBackgroundImageToSections(main) {
+  main.querySelectorAll(':scope > div').forEach((section) => {
+    const meta = section.dataset;
+    Object.keys(meta).forEach((key) => {
+      if (key.startsWith('backgroundImage')) {
+        const url = meta[key];
+        if (url) {
+          section.style.backgroundImage = `url(${url})`;
+        }
+      }
+    });
+  });
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
@@ -88,6 +102,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  addBackgroundImageToSections(main);
   decorateBlocks(main);
 }
 
