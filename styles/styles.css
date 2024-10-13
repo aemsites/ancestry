@@ -18,6 +18,8 @@
   --backgroung-blue-ligher-color:#f2f7f8;
   --background-isabelline-color: #f6f3f0;
   --backgroung-black-color:#21201d;
+  --banner-black-background-color: #262626;
+  --banner-green-background-color: #328800;
   --button-green-color: #328800;
   --button-green-hover-color: #276b00;
   --button-green-active-color: #205503;
@@ -37,6 +39,7 @@
   --icon-background-blue-color:#117fa6;
   --text-color: #131313;
   --text-gray-color:#999;
+  --text-green-color:#328800;
   --text-h1-color:white;
   --link-color: #0e7194;
   --link-hover-color: #07536e;

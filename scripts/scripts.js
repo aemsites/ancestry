@@ -17,6 +17,44 @@ import {
 const LANGUAGES = new Set(['en', 'es']);
 let language;
 
+export function decorateTrademarks(container) {
+  const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§]|\(\d+\)|✓\s*ᐩ|✓|ᐩ)/g;
+  [...container.querySelectorAll('p, li, h1, h2, h3, h4, h5, h6')]
+    .filter((el) => !el.closest('.button-container') && !el.querySelector('.button'))
+    .forEach((el) => {
+      const nodes = Array.from(el.childNodes);
+      nodes.forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          const modifiedContent = node.textContent.replace(REFERENCE_TOKENS, (token) => {
+            switch (token) {
+              case '✓':
+                /* eslint-disable quotes */
+                return `<span class='tick'></span>`;
+              case '✓ᐩ':
+                /* eslint-disable quotes */
+                return `<span class='tickplus'></span>`;
+              case 'ᐩ':
+                /* eslint-disable quotes */
+                return `<span class='plus'></span>`;
+              default:
+                if (/®|™|℠/.test(token)) {
+                  const keyword = token.slice(0, -1);
+                  const symbol = token.slice(-1);
+                  return `<span class='keyword'>${keyword}<sup class="trademark">${symbol}</sup></span>`;
+                }
+                return `<sup class='superscript'>${token}</sup>`;
+            }
+          });
+          if (modifiedContent !== node.textContent) {
+            const wrapper = document.createElement('span');
+            wrapper.innerHTML = modifiedContent;
+            node.replaceWith(...wrapper.childNodes);
+          }
+        }
+      });
+    });
+}
+
 export function getLanguageFromPath(pathname) {
   const segs = pathname.split('/');
   if (segs.length > 1) {
@@ -77,6 +115,20 @@ function buildAutoBlocks(main) {
   }
 }
 
+function addBackgroundImageToSections(main) {
+  main.querySelectorAll(':scope > div').forEach((section) => {
+    const meta = section.dataset;
+    Object.keys(meta).forEach((key) => {
+      if (key.startsWith('backgroundImage')) {
+        const url = meta[key];
+        if (url) {
+          section.style.backgroundImage = `url(${url})`;
+        }
+      }
+    });
+  });
+}
+
 /**
  * Decorates the main element.
  * @param {Element} main The main element
@@ -84,10 +136,12 @@ function buildAutoBlocks(main) {
 // eslint-disable-next-line import/prefer-default-export
 export function decorateMain(main) {
   // hopefully forward compatible button decoration
+  decorateTrademarks(main);
   decorateButtons(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  addBackgroundImageToSections(main);
   decorateBlocks(main);
 }
 

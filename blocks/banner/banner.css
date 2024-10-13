@@ -8,6 +8,20 @@
   width: 100%;
 }
 
+.banner.large p {
+  padding: 0.5rem;
+  font-size : 1.8rem;
+  margin: 1rem 0;
+}
+
+.section.banner-container .banner.green-bg {
+  background-color: var(--banner-green-background-color);
+}
+
+.section.banner-container .banner-wrapper .banner.black-bg {
+  background-color: var(--banner-black-background-color);
+}
+
 .section.banner-container > div {
   max-width: 100%;
   line-height: 1rem;
@@ -25,6 +39,16 @@
   position: relative;
   display: block;
   background-color: inherit;
+}
+
+.banner.large{
+  padding: 0.2rem 0;
+  font-size: 1.4rem;;
+}
+
+.banner.medium{
+  padding: 0.3rem 0;
+  font-size: 1.2rem;
 }
 
 /* Image banner styles */
@@ -116,6 +140,14 @@
 .banner.no-image p {
   margin: 0.5rem 0;
   line-height:2rem;
+}
+
+/* inline */
+.banner.inline a {
+  background-color: transparent;
+  padding:0 1rem;
+  margin:0;
+  text-decoration: underline;
 }
 
 /* Mobile styles */
