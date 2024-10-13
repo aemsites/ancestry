@@ -326,6 +326,7 @@
   background-position: center;
   background-repeat: no-repeat;
   background-attachment: fixed;
+  background-color: #f5f5f5;
 }
 
 .section.dna .cards.mobile {
@@ -382,11 +383,6 @@
   top: -0.4em;
   left: 0;
 }
-
-/* .section.dna.cards-container .default-content-wrapper:first-of-type p {
-  font-size: 1.6rem;
-  text-align: center;
-} */
 
 .section.dna.cards-container .default-content-wrapper p {
   color:var(--text-color);
@@ -498,8 +494,7 @@
 }
 
 .section.dna.cards-container .cards-wrapper .cards-card-body .product .button-container{
-  margin-top:0.5rem;
-  margin-bottom:1rem;
+  margin: 1rem 0;
 }
 
 .section.dna.cards-container .cards-wrapper .cards-card-body .product .button-container a {
@@ -519,37 +514,32 @@
   font-weight: 700;
 }
 
-.section.dna.cards-container .cards-card-body .prdocut .formatted-price strong {
-  display: inline-block;
-  margin-bottom: 0.2em;
-}
-
-.section.dna.cards-container .cards-card-body .product .price-amount {
-  display:flex;
-  margin: 0 0.3em;
+.section.dna.cards-container .cards-card-body .product .formatted-price .price-amount {
+  display: flex;
   align-items: flex-start;
+  margin: 0 0.3em;
 }
 
 .section.dna.cards-container .cards-card-body .product .formatted-price .dollar-sign {
-  font-size: 2.2rem;
-  align-self: flex-start;
+  font-size: 1.8rem;
+  vertical-align: top;
+  line-height: 1;
   display: inline-block;
-  position: relative;
-  transform: translateY(50%);
 }
 
 .section.dna.cards-container .cards-card-body .product .formatted-price .price {
   font-size: 3.6rem;
   font-weight: bold;
   line-height: 1;
-  position: relative;
-  transform: translateY(-10%);
+  vertical-align: top;
+  margin-top: -0.3rem;
 }
 
 .section.dna.cards-container .cards-card-body .product .price-asterisk {
-  font-size: 2rem;
-  position: relative;
-  transform: translateY(10%);
+  font-size: 1.5rem;
+  vertical-align: top;
+  line-height: 1;
+  margin-left: 0.1rem;
 }
 
 /* sale */
@@ -558,7 +548,6 @@
   flex-direction: column;
   align-items: flex-start;
   line-height: 1.2;
-  transform: translateY(5%);
 }
 
 .section.dna.cards-container .cards-card-body .product .formatted-price .sale .original-price {
@@ -576,6 +565,10 @@
   display: none;
 }
 
+.section.dna.cards-container .cards-wrapper .cards .cards-card-body .expand{
+  margin: 0 0 2rem;
+}
+
 .section.dna.cards-container .cards-wrapper .cards .cards-card-body .expand a {
   font-weight: 600;
   text-decoration:underline;
@@ -585,6 +578,7 @@
 .section.dna.cards-container .cards-card-body .detail {
   text-align: left;
   width: 100%;
+  margin-left: 1.2rem;
 }
 
 .section.dna.cards-container .cards-card-body .detail p:not(:has(strong)) {
@@ -593,12 +587,24 @@
 }
 
 .section.dna.cards-container .cards-wrapper .cards .cards-card-body .detail p {
-  margin-top: 1.5rem;
+  margin-top: 1rem;
+  padding-left: 0;
+}
+
+.section.dna.cards-container .cards-wrapper .cards .cards-card-body .detail .button {
+  background-color: transparent;
+  border: none;
+  padding: 0;
+  box-shadow: none;
+  color: inherit;
+  text-decoration: underline;
+  font-weight: normal;
+  display: inline;
+  text-align:center;
 }
 
 .section.dna.cards-container .cards-wrapper .cards .cards-card-body .detail p strong {
   color:var(--button-green-hover-color);
-  margin-left:2rem;
   font-size: 0.9rem;
 }
 
@@ -619,7 +625,6 @@
 .section.dna.cards-container .cards-card-body .detail ul li {
   position: relative;
   margin-bottom: 0.9rem;
-  margin-left: 2rem;
   padding-right: 2rem;
   max-width: 100%;
   white-space: normal;
@@ -723,7 +728,7 @@ box-sizing: border-box;
 .section.dna.cards-container .default-content-wrapper .tickplus {
   display: inline-block;
   position: absolute;
-  right: 1rem;
+  right: 3rem;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -731,7 +736,7 @@ box-sizing: border-box;
 .cards-card-body .tick{
   display: inline-block;
   position: absolute;
-  right: 1.5rem;
+  right: 3.5rem;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -817,17 +822,17 @@ box-sizing: border-box;
   .section.dna.cards-container .cards .cards-card-body .title h2:not(:first-of-type) {
     font-size: 1rem;
   }
-  
-  .section.dna.cards-container .cards-card-body .detail ul li {
-    margin-left: 0.6rem;
-  }
 
-  .section.dna.cards-container .cards-card-body .detail p strong {
-    margin-left:0.5rem;
+  .section.dna.cards-container .cards-card-body .detail {
+    margin-left: 0;
   }
 
   .section.dna.cards-container .default-content-wrapper:first-of-type > p {
     font-size :1.2rem;
+  }
+
+  .section.dna.cards-container .cards-card-body .product img {
+    min-height:auto;
   }
 
   .section.dna.cards-container .cards-card-body .product .formatted-price {
@@ -878,7 +883,6 @@ box-sizing: border-box;
 
   .section.dna.mobile.cards-container {
     display:block;
-    background-color: #f5f5f5;
     padding: 0;
   }
   
