@@ -31,6 +31,10 @@ function appendOptions(select, subItems) {
     const newHref = `/${selectedLanguage}/${pathAfterLanguage}`;
     opt.value = newHref;
     opt.textContent = link.textContent;
+    // mark opt as selected if it matches the current page language
+    if (selectedLanguage === getLanguageFromPath(currentPath)) {
+      opt.selected = true;
+    }
     select.appendChild(opt);
   });
 }
