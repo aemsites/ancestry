@@ -156,7 +156,7 @@ function openDialog(triggerElement, contentElement) {
 
   triangle.style.position = 'absolute';
   triangle.style.top = `${top + 10}px`;
-  triangle.style.left = `${left + 130}px`;
+  triangle.style.left = `${left + 110}px`;
 
   // close dialog when clicking on the overlay
   overlay.addEventListener('click', () => {

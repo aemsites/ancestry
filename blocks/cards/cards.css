@@ -117,7 +117,8 @@
 .section.cards-container .default-content-wrapper p {
   text-align: center;
   margin: 0 auto;
-  color: var(--text-color);
+  margin-top: 1.5rem;
+  max-width:800px;
 }
 
 /* Text */
@@ -147,7 +148,6 @@
 .cards-wrapper .cards > ul {
   list-style: none;
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
 }
 
@@ -578,7 +578,7 @@
 .section.dna.cards-container .cards-card-body .detail {
   text-align: left;
   width: 100%;
-  margin-left: 1.2rem;
+  padding: 0 2rem;
 }
 
 .section.dna.cards-container .cards-card-body .detail p:not(:has(strong)) {
@@ -728,7 +728,7 @@ box-sizing: border-box;
 .section.dna.cards-container .default-content-wrapper .tickplus {
   display: inline-block;
   position: absolute;
-  right: 3rem;
+  right: 1rem;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -736,7 +736,7 @@ box-sizing: border-box;
 .cards-card-body .tick{
   display: inline-block;
   position: absolute;
-  right: 3.5rem;
+  right: 1.5rem;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -825,6 +825,7 @@ box-sizing: border-box;
 
   .section.dna.cards-container .cards-card-body .detail {
     margin-left: 0;
+    padding: 0;
   }
 
   .section.dna.cards-container .default-content-wrapper:first-of-type > p {
