@@ -37,13 +37,8 @@ export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
   block.classList.add(`columns-${cols.length}-cols`);
 
-  /* Altenate color pattern */
-  const backgroundClasses = ['bg-color-1', 'bg-color-2', 'bg-color-3', 'bg-color-2'];
-
-  [...block.children].forEach((row, index) => {
+  [...block.children].forEach((row) => {
     const contentBlocks = [...row.children];
-    const bgClass = backgroundClasses[index % backgroundClasses.length];
-    row.classList.add(bgClass);
 
     // Apply classes to text and image columns
     contentBlocks.forEach((col) => {

@@ -6,10 +6,8 @@
 
   .accordion-item-label p {
     color: var(--button-blue-color);
-  }
-  
-  .accordion details p {
-    margin-bottom: 0.8em;
+    font-size: 18px;
+    text-align: left !important;
   }
 
   .accordion-item-label p:hover {
@@ -52,4 +50,5 @@
 
   .accordion details[open] .accordion-item-body p {
     font-size: 16px;
+    text-align: left !important;
   }

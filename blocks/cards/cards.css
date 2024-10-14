@@ -61,13 +61,49 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.cards-wrapper .cards .cards-card-body {
+  text-align: center;
+  font-size: 1rem;
+}
+
+.section.section-getting-started.cards-container {
+  padding: 2rem 0;
+}
+
+.cards-wrapper .cards.getting-started > ul > li {
+  background-color: transparent;
+}
+
+.cards.getting-started .cards-card-body {
+  background-color: #fff;
+  border-style: none;
+  border-width: 0;
+  border-color: transparent;
+  box-shadow: 0 4px 24px color(srgb 0 0 0 / 12%);
+  max-width: 250px;
+  min-height: 240px;
+  margin-bottom: 20px;
+  border-radius: 10px;
+}
+
+.cards.getting-started .cards-card-body p {
+  padding: 32px 25px 30px;
+}
+
+.section.section-getting-started.cards-container  .default-content-wrapper p, 
+.section.section-getting-started.cards-container  .default-content-wrapper h2,
+.section.section-getting-started.cards-container  .cards li,
+.section.section-getting-started.cards-container  .cards-card-body {
+  font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
+  color: #000;
+}
+
 .section.cards-container .ancestry::after{
   content: "®";
   font-size: 0.7em;
   vertical-align: super;
   margin-left: 0.1em;
 }
-
 
 /* Cards */
 .cards-wrapper {
@@ -95,11 +131,6 @@
   justify-content: center;
   align-items: center;
   background-color: var(--backgroung-black-color);
-}
-
-.cards-wrapper .cards .cards-card-body {
-  text-align: center;
-  font-size: 1rem;
 }
 
 .cards-wrapper .cards .leaf-background img,
