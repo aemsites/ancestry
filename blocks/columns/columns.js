@@ -22,7 +22,5 @@ export default function decorate(block) {
         img.parentElement.parentElement.classList.add('icon-wrapper');
       }
     });
-
-    const textContent = row.querySelector('.text-content');
   });
 }
