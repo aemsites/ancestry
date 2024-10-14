@@ -767,7 +767,7 @@ box-sizing: border-box;
 .section.dna.cards-container .default-content-wrapper .tickplus {
   display: inline-block;
   position: absolute;
-  right: 0rem;
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
 }
