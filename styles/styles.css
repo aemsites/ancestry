@@ -278,7 +278,7 @@ main > .section {
 main > .section.center {
   width: 100%;
   background-repeat: no-repeat;
-  background-size: 75% auto;
+  background-size: 65% auto;
   background-position: center;
   padding-top: 3rem;
 }
