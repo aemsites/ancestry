@@ -119,7 +119,7 @@ header {
   height: var(--nav-height);
 }
 
-@media (width >= 768px) {
+@media (width >= 900px) {
     header {
         height: 55px;
     }
@@ -276,17 +276,31 @@ main > .section {
 }
 
 main > .section.center {
-  text-align: center;
-  padding: 4rem 2rem;
   width: 100%;
   background-repeat: no-repeat;
   background-size: 75% auto;
   background-position: center;
+  padding-top: 3rem;
+}
+
+main > .section.section-learn-more {
   margin: 0;
 }
 
+main > .section.section-learn-more p {
+  padding-top: 30px;
+}
+
+main > .section.center h2 {
+  font-size: 29px;
+  text-align: center;
+  line-height: 1.2;
+  margin-bottom: 24px;
+}
+
 main > .section.center p {
-  padding: 0 17rem;
+  text-align: center;
+  font-size: 16.5px;
 }
 
 main > .section.section-biege {
@@ -318,6 +332,24 @@ main > .section:first-of-type {
 @media (width >= 900px) {
   main > .section > div {
     padding: 0 32px;
+  }
+
+  main > .section.section-learn-more h2 {
+    margin: 0 11rem;
+  }
+  
+  main > .section.section-learn-more p {
+    margin: 0 11rem;
+  }
+}
+
+@media (width >= 1200px) {
+  main > .section.section-learn-more h2 {
+    margin: 0 18rem;
+  }
+  
+  main > .section.section-learn-more p {
+    margin: 0 18rem;
   }
 }
 
