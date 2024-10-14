@@ -749,7 +749,7 @@ box-sizing: border-box;
   max-height: 400px;
   overflow: auto;
   border-radius: 5px;
-  box-shadow: -1px 4px 10px #1313134f;
+  box-shadow: -1px 3px 5px #1313134f;
   margin-top: 19px;
 }
 
@@ -835,16 +835,10 @@ box-sizing: border-box;
 }
 
 @media(max-width:1200px) {
-  .section.dna.cards-container .cards-card-body .detail ul .dialog-container > li::after{
-    padding-right: 1rem;
+  .section.dna.cards-container .cards > ul {
+    margin: 0;
   }
 
-  .section.dna.cards-container .cards-card-body .detail ul .dialog-container > li > strong::before{
-    right: 1rem;
-  }
-}
-
-@media(max-width:1000px) {
   .section.dna.cards-container .cards-wrapper .cards div {
     max-width: 100%;
   }
@@ -862,6 +856,10 @@ box-sizing: border-box;
     font-size: 1rem;
   }
 
+  .section.dna.cards-container .cards-wrapper .cards .cards-card-body .expand {
+    margin: 0;
+  }
+
   .section.dna.cards-container .cards-card-body .detail {
     margin-left: 0;
     padding: 0;
@@ -869,6 +867,10 @@ box-sizing: border-box;
 
   .section.dna.cards-container .default-content-wrapper:first-of-type > p {
     font-size :1.2rem;
+  }
+
+  .section.dna.cards-container .cards-wrapper .cards .cards-card-body .detail p {
+    margin: 1.5rem 0;
   }
 
   .section.dna.cards-container .cards-card-body .product img {
@@ -908,7 +910,7 @@ box-sizing: border-box;
   }
 }
   
-@media(max-width:767px) {
+@media(max-width:900px) {
   .section.dna.desktop.cards-container {
     display:none;
   }
@@ -1002,7 +1004,7 @@ box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    width: 95%;
+    width: 100%;
     padding: 0.5rem;
     font-weight: 700;
     position: relative;
