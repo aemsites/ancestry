@@ -310,12 +310,20 @@ main > .section.center p {
   font-size: 16.5px;
 }
 
+main > .section.section-white {
+  background-color: var(--background-color);
+}
+
 main > .section.section-biege {
   background-color: #FAF9F7;
 }
 
 main > .section.section-pale-blue {
   background-color: #E5F0F1;
+}
+
+main > .section.section-pale-blue-lighter {
+  background-color: var(--backgroung-blue-ligher-color);
 }
 
 main > .section.section-warm-gray {

@@ -46,6 +46,11 @@ main .section.columns-container > div{
   margin-bottom: 0;
 }
 
+.columns .text-content .trademark {
+  font-size: 0.4em;
+  position: relative;
+}
+
 /* Last h2 in .text-content: margin-bottom only, no margin-top */
 .text-content h2:last-of-type {
   margin-bottom: 1rem;
@@ -62,14 +67,6 @@ main .section.columns-container > div{
   font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
   font-size: 0.95rem;
   margin-bottom: 1rem;
-}
-
-/* Trademark Symbol */
-.columns.homepage.block.columns-2-cols .ancestry::after {
-  content: "®";
-  font-size: 0.5em;
-  vertical-align: super;
-  font-family: Arial, sans-serif;
 }
 
 /* Block styleing */
@@ -120,37 +117,16 @@ main .section.columns-container > div{
   z-index: -1;
 }
 
-/* Assign column with different color */
-.columns.homepage.block.columns-2-cols > div.bg-color-1::before {
-  background-color: var(--background-isabelline-color);
-}
-
-.columns.homepage.block.columns-2-cols > div.bg-color-2::before {
-  background-color: var(--background-color);
-}
-
-.columns.homepage.block.columns-2-cols > div.bg-color-3::before {
-  background-color:  var(--backgroung-blue-ligher-color);
-}
-
-.columns.homepage.block.columns-2-cols > div.big-color-1,
-.columns.homepage.block.columns-2-cols > div.big-color-2,
-.columns.homepage.block.columns-2-cols > div.big-color-3 {
-  margin-left: calc(-50vw + 50%);
-  margin-right: calc(-50vw + 50%);
-  width: 100vw;
-}
-
-/* DNA button with blue background */
-.columns.homepage.block.columns-2-cols .dna-button{
+/* Button with blue background in blue bg */
+.section.section-pale-blue-lighter .columns.homepage.block .button{
  background-color: var(--button-blue-color);
 }
 
-.columns.homepage.block.columns-2-cols .dna-button:hover {
+.section.section-pale-blue-lighter .columns.homepage.block .button:hover {
   background-color: var(--button-blue-hover-color);
 }
 
-.columns.homepage.block.columns-2-cols .dna-button:active {
+.section.section-pale-blue-lighter .columns.homepage.block .button:active {
   background-color: var(--button-blue-active-color);
 }
 
