@@ -1,29 +1,3 @@
-// Wrap 'Ancestry' in a span with class 'ancestry' within a given element
-function wrapAncestryText(element) {
-  const ancestryRegex = /AncestryDNA|Ancestry/g;
-  function traverseNodes(node) {
-    node.childNodes.forEach((child) => {
-      if (child.nodeType === Node.TEXT_NODE) {
-        const updatedText = child.textContent.replace(ancestryRegex, (match) => {
-          if (child.parentElement && child.parentElement.classList.contains('ancestry')) {
-            return match;
-          }
-          return `<span class="ancestry">${match}</span>`;
-        });
-        if (updatedText !== child.textContent) {
-          const wrapper = document.createElement('span');
-          wrapper.innerHTML = updatedText;
-          child.replaceWith(...wrapper.childNodes);
-        }
-      } else if (child.nodeType === Node.ELEMENT_NODE && child.nodeName !== 'SCRIPT' && child.nodeName !== 'STYLE') {
-        traverseNodes(child);
-      }
-    });
-  }
-
-  traverseNodes(element);
-}
-
 function wrapImagesInContainer() {
   const heroBannerWrappers = document.querySelectorAll('.hero-banner-wrapper');
 
@@ -85,8 +59,6 @@ export default function decorate() {
       } else if (heroBanner.classList.contains('desktop-banner')) {
         wrapper.classList.add('desktop-banner-wrapper');
       }
-
-      wrapAncestryText(heroBanner);
     }
   });
 

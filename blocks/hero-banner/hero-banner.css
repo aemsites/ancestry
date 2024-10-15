@@ -22,6 +22,11 @@ main .section.hero-banner-container {
     line-height: 1.33;
 }
 
+.hero-banner .trademark {
+    font-size: 0.4em;
+    position: relative;
+}
+  
 .hero-banner > div {
     display: flex;
     flex-direction: column;
@@ -51,6 +56,9 @@ main .section.hero-banner-container {
 .hero-banner h1:only-of-type {
     margin-top: 2rem;
     margin-bottom: 1.5rem;
+    min-height: 1.8em;
+    text-align: center;
+    line-height: 1.2;
 }
 
 /* Apply to h1s that are neither first nor last, when there's more than one h1 */
@@ -106,15 +114,6 @@ main .section.hero-banner-container {
     padding: 0.7em 1.5em;
     font-size: 1rem;
     line-height: 1.25;
-}
-
-/* Ancestry Trademark Symbol */
-.hero-banner .ancestry::after {
-    content: "®";
-    font-size: 0.6em;
-    vertical-align: top;
-    position: relative;
-    top: -0.1em;
 }
 
 /* Responsive Styles */
