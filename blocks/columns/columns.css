@@ -300,7 +300,7 @@ main .section.columns-container > div{
   margin: 0;
 }
 
-.section.homepage .columns.footer.block.columns-3-cols .button-container .button {
+.section .columns.footer.block.columns-3-cols .button-container .button {
   background-color: transparent;
   border: none;
   padding: 0;
@@ -312,9 +312,9 @@ main .section.columns-container > div{
   -webkit-font-smoothing: antialiased;
 }
 
-.section.homepage .columns.footer.block.columns-3-cols .button:hover,
-.section.homepage .columns.footer.block.columns-3-cols .button:active,
-.section.homepage .columns.footer.block.columns-3-cols .button:focus {
+.section .columns.footer.block.columns-3-cols .button:hover,
+.section .columns.footer.block.columns-3-cols .button:active,
+.section .columns.footer.block.columns-3-cols .button:focus {
   background-color: transparent;
   color: var(--button-blue-active-color);
   text-decoration: underline;
