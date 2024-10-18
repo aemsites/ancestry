@@ -359,6 +359,41 @@
   }
 }
 
+.section.cards-container .cards.banner-bottom li {
+  gap: 0;
+  background-color: var(--cards-bottom-banner) !important;
+}
+
+.section.cards-container .cards.banner-bottom .button-container{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+.section .cards.banner-bottom .cards-card-body:nth-of-type(2) p:nth-of-type(2),
+.section .cards.banner-bottom .cards-card-body:nth-of-type(4) p:nth-of-type(2) {
+  font-size: 72px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.section .cards.banner-bottom .cards-card-body:nth-of-type(2) p:nth-of-type(2) em,
+.section .cards.banner-bottom .cards-card-body:nth-of-type(4) p:nth-of-type(2) em {
+  font-style: normal;
+    font-size: 38px;
+    position: relative;
+    top: -30px;
+}
+
+.section .cards.banner-bottom .cards-card-body:nth-of-type(2) p:nth-of-type(2) sup,
+.section .cards.banner-bottom .cards-card-body:nth-of-type(4) p:nth-of-type(2) sup {
+  font-size: 38px;
+}
+
+.section .cards.banner-bottom .cards-card-body:nth-of-type(2) p:nth-of-type(2) del,
+.section .cards.banner-bottom .cards-card-body:nth-of-type(4) p:nth-of-type(2) del {
+  font-size: 26px;
+}
+
 /* DNA */
 .section.dna{
   background-size: cover;
