@@ -284,6 +284,10 @@ main > .section {
   margin: 40px 0;
 }
 
+main > .section.hide{
+  display:none;
+}
+
 main > .section.center {
   width: 100%;
   background-repeat: no-repeat;

@@ -47,17 +47,9 @@ function formatPrice(element) {
 // normalize text
 function normalizeText(text) {
   return text
-    .replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, "'")
+    .replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, '\'')
     .trim()
     .toLowerCase();
-}
-
-function generateIdFromText(text) {
-  return text
-    .trim()
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .replace(/[^a-z0-9\-]/g, '');
 }
 
 function setupAccordion(cardBody) {
@@ -106,12 +98,10 @@ function setupAccordion(cardBody) {
       if (accordionContent.style.display === 'none') {
         accordionContent.style.display = 'block';
         toggleText.classList.add('expanded');
-        // eslint-disable-next-line quotes
         toggleText.innerHTML = `<sup style='font-size: 0.55em; top: -0.9em;'>§</sup> Hide offer details <span class='arrow'></span>`;
       } else {
         accordionContent.style.display = 'none';
         toggleText.classList.remove('expanded');
-        // eslint-disable-next-line quotes
         toggleText.innerHTML = `<sup style='font-size: 0.55em; top: -0.9em;'>§</sup> See offer details <span class='arrow'></span>`;
       }
     });
@@ -184,40 +174,6 @@ function decorateDnaCards(block) {
     if (detailGroup.children.length > 0) {
       productContainer.appendChild(detailGroup);
     }
-
-    const detailUls = detailGroup.querySelectorAll('ul');
-    detailUls.forEach((detailUl) => {
-      const lis = detailUl.querySelectorAll(':scope > li');
-
-      // Process elements that should trigger tooltips
-      lis.forEach((li) => {
-        const linkElement = li.querySelector('a[href^="#"]');
-        if (linkElement) {
-          linkElement.classList.add('tooltip-trigger');
-          const tooltipId = generateIdFromText(linkElement.textContent);
-          linkElement.setAttribute('data-tooltip-id', tooltipId);
-
-          const infoIcon = document.createElement('span');
-          infoIcon.classList.add('icon-infor');
-          li.appendChild(infoIcon);
-        }
-      });
-    });
-
-    // Handle expand links
-    const expandLinks = productContainer.querySelectorAll('a[href^="#"]');
-    expandLinks.forEach((linkElement) => {
-      const href = linkElement.getAttribute('href');
-      const id = href.substring(1);
-
-      if (linkElement.classList.contains('button')) {
-        linkElement.classList.add('popup-link');
-      } else {
-        linkElement.classList.add('tooltip-link');
-        linkElement.setAttribute('data-tooltip-id', id);
-      }
-    });
-
     ul.appendChild(productContainer);
 
     if (block.classList.contains('accordion')) {

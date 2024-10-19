@@ -1,105 +1,83 @@
-/* Tooltip Block */
 .tooltips.block {
     display: none;
-  }
+}
   
-  /* Dialog Window */
-  .dialog-window {
+/* Dialog Window */
+.dialog-window {
     position: fixed;
     background-color: #fff;
     border-radius: 5px;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16);
+    box-shadow: 0 4px 24px #0000001a;
     padding: 10px;
     z-index: 1002;
     width: 300px;
     max-width: 90%;
     max-height: 400px;
     overflow: auto;
-  }
-  
-/* Align h3 and remove list-style */
-.dialog-window h3 {
-    font-size: 0.9rem;
-    font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
-    margin: 0.5rem 0.3rem; /* Add margin for spacing */
-    line-height: 1.4;
-  }
-  
-  /* Remove list points and adjust margins */
-  .dialog-window ul {
-    list-style: none; /* Remove bullet points */
-    margin: 0;
-    padding: 0;
-  }
-  
-  /* Adjust the first list item's margin and padding */
-  .dialog-window ul li {
-    display: block;
-    margin:0; /* Add margin for spacing */
-    padding: 0 0.2rem; /* Add padding to align with h3 */
-    border-top: none; /* No top border for the first item */
-    align-items: flex-start;
-    color: var(--text-secondary-color);
-    font-size:0.9rem;
-  }
-  
-  /* Apply flex layout only to <li> containing a <strong> element */
-.dialog-window ul li:has(strong) {
-    display: flex;
-    align-items: center; /* Align items vertically in the middle */
-    justify-content: space-between; /* Ensure the <strong> and text are separated */
-    align-items: flex-start;
-  }
-
-/* Styling for the <strong> element (the left side) */
-.dialog-window ul li strong {
-    font-size: 0.9rem;
-    margin-right: 0.5rem; /* Space between the strong and the text */
-  }
-  
-  /* Apply specific styling for the second <li> */
-  .dialog-window ul li:nth-child(2) {
-    margin-left: 0; /* Align it with h3 */
-    padding-left: 1rem; /* Adjust padding */
-    border-top: 1px solid #ccc; /* Add border between first and second items */
-  }
-  
-  /* Remove unnecessary inner <ul> */
-  .dialog-window ul ul {
-    list-style: none; /* Remove nested bullet points */
-    padding: 0; /* Remove padding */
-  }
-  
-  
- /* Triangle Styling */
-.dialog-triangle {
-    position: absolute;
-    width: 16px; /* Size of the triangle */
-    height: 16px; /* Size of the triangle */
-    background-color: #fff;
-    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.033); /* Shadow for triangle */
-    transform: rotate(45deg); /* Rotate the square to make it a triangle */
-    top: 0px; /* Adjust the position to align it above the dialog */
-    left: calc(50% - 8px); /* Center the triangle horizontally relative to the dialog */
-    z-index: 1001; /* Ensure it stays above the dialog */
-  }
-  
-  
-  .dialog-window hr {
-    border: 0;
-    border-bottom: 1px solid #ccc; /* Customize the color as needed */
-    height: 0;
-    margin: 20px 0.2rem; /* Add space above and below the line */
 }
 
-
-  /* Dialog Overlay */
-  .dialog-overlay {
+/* Dialog Overlay */
+.dialog-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background: transparent; /* No background for the overlay */
+    background: transparent;
     z-index: 999;
+}
+  
+.dialog-triangle {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    background-color: #fff;
+    box-shadow: 0 4px 24px #0000001a;
+    transform: rotate(45deg);
+    z-index: 1001;
+  }
+  
+.dialog-window h3 {
+    font-size: 0.9rem;
+    font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
+    margin: 0.5rem 0.3rem;
+    line-height: 1.4;
+}
+
+.dialog-window ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.dialog-window ul li {
+    margin:0;
+    padding: 0 0.2rem;
+    border-top: none;
+    align-items: flex-start;
+    color: var(--text-secondary-color);
+    font-size:0.9rem;
+}
+
+.dialog-window ul li:has(strong) {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+.dialog-window ul li strong {
+    font-size: 0.9rem;
+    margin-right: 0.5rem;
+}
+
+.dialog-window hr {
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    height: 0;
+    margin: 20px 0.2rem;
+}
+
+.dialog-window.list ul {
+    list-style-type: disc;
+    padding-left: 20px;
   }

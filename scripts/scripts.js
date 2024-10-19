@@ -17,6 +17,25 @@ import {
 const LANGUAGES = new Set(['en', 'es']);
 let language;
 
+export function decorateTooltipAndModalLinks(main) {
+  const links = main.querySelectorAll('a[href^="#"]');
+
+  links.forEach((linkElement) => {
+    const href = linkElement.getAttribute('href');
+    const id = href.substring(1);
+
+    // Determine if it's a tooltip or modal
+    if (linkElement.classList.contains('popup-link') || linkElement.classList.contains('button')) {
+      // a modal link
+      linkElement.classList.add('popup-link');
+    } else {
+      // a tooltip link
+      linkElement.classList.add('tooltip-link');
+      linkElement.setAttribute('data-tooltip-id', id);
+    }
+  });
+}
+
 export function decorateTrademarks(container) {
   const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§]|\(\d+\)|✓\s*ᐩ|✓|ᐩ)/g;
   [...container.querySelectorAll('p, a, li, h1, h2, h3, h4, h5, h6, strong')]
@@ -138,6 +157,7 @@ export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateTrademarks(main);
   decorateButtons(main);
+  decorateTooltipAndModalLinks(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
