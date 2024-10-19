@@ -19,7 +19,7 @@ let language;
 
 export function decorateTrademarks(container) {
   const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§]|\(\d+\)|✓\s*ᐩ|✓|ᐩ)/g;
-  [...container.querySelectorAll('p, li, h1, h2, h3, h4, h5, h6')]
+  [...container.querySelectorAll('p, a, li, h1, h2, h3, h4, h5, h6, strong')]
     .filter((el) => !el.closest('.button-container') && !el.querySelector('.button'))
     .forEach((el) => {
       const nodes = Array.from(el.childNodes);
