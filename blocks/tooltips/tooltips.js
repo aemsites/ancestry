@@ -1,5 +1,6 @@
 export default function decorate(block) {
   let currentDialog = null;
+  let previousScreenWidth = window.innerWidth;
 
   function closeExistingDialogs() {
     if (currentDialog) {
@@ -12,7 +13,7 @@ export default function decorate(block) {
     }
   }
 
-  function openDialog(triggerElement, contentElement) {
+  function openDialog(triggerElement, contentElement, tooltipId) {
     closeExistingDialogs();
 
     const dialog = document.createElement('div');
@@ -87,13 +88,25 @@ export default function decorate(block) {
 
     updatePosition();
 
-    window.addEventListener('resize', updatePosition);
+    window.addEventListener('resize', () => {
+      const currentScreenWidth = window.innerWidth;
+
+      // close dialog when screen size change from desktop to mobile or vice versa
+      const screenChanged = (previousScreenWidth >= 900 && currentScreenWidth < 900)
+                            || (previousScreenWidth < 900 && currentScreenWidth >= 900);
+
+      if (screenChanged) {
+        closeExistingDialogs();
+      } else {
+        updatePosition();
+      }
+      previousScreenWidth = currentScreenWidth;
+    });
+
     window.addEventListener('scroll', updatePosition);
 
     function outsideClickListener(event) {
-      if (
-        !dialog.contains(event.target) && !triggerElement.contains(event.target)
-      ) {
+      if (!dialog.contains(event.target) && !triggerElement.contains(event.target)) {
         closeExistingDialogs();
       }
     }
@@ -107,6 +120,7 @@ export default function decorate(block) {
       triangle,
       updatePosition,
       outsideClickListener,
+      tooltipId,
     };
   }
 
@@ -123,7 +137,10 @@ export default function decorate(block) {
       }
 
       if (tooltipContentElement) {
-        openDialog(triggerElement, tooltipContentElement.parentElement);
+        if (currentDialog && currentDialog.tooltipId !== tooltipId) {
+          closeExistingDialogs();
+        }
+        openDialog(triggerElement, tooltipContentElement.parentElement, tooltipId);
       } else {
         /* eslint-disable no-console */
         console.error(`Tooltip content not found for id: ${tooltipId}`);
