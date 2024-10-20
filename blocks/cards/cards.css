@@ -480,6 +480,7 @@
   display: flex;
   align-items: flex-start;
   margin: 0 0.3em;
+  gap: 0.1em;
 }
 
 .section.dna.cards-container .cards-card-body .product .formatted-price .dollar-sign {
@@ -720,30 +721,12 @@ box-sizing: border-box;
     font-size :1.2rem;
   }
 
-  .section.dna.cards-container .cards-wrapper .cards .cards-card-body .detail p {
-    margin: 1.5rem 0;
-  }
-
   .section.dna.cards-container .cards-card-body .product img {
     min-height:auto;
   }
 
   .section.dna.cards-container .cards-card-body .product .formatted-price {
     font-size: 1em;
-  }
-
-  .section.dna.cards-container .cards-card-body .product .formatted-price .dollar-sign {
-    font-size:1.2em;
-    top:-0.5rem;
-  }
-
-  .section.dna.cards-container .cards-card-body .product .formatted-price .price {
-    font-size: 2.2em;
-    top: 0;
-  }
-
-  .section.dna.cards-container .cards-card-body .product .formatted-price .price-asterisk {
-    font-size: 1.3rem;
   }
 
   .section.dna.cards-container .cards-card-body .product .formatted-price .sale .savings-off-style {
