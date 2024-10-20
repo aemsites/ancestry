@@ -24,14 +24,23 @@ export function decorateTooltipAndModalLinks(main) {
     const href = linkElement.getAttribute('href');
     const id = href.substring(1);
 
-    // Determine if it's a tooltip or modal
-    if (linkElement.classList.contains('popup-link') || linkElement.classList.contains('button')) {
-      // a modal link
-      linkElement.classList.add('popup-link');
+    const targetElement = document.getElementById(id);
+
+    if (targetElement) {
+      const modalParent = targetElement.closest('.modal');
+      const tooltipParent = targetElement.closest('.tooltips');
+      if (modalParent) {
+        linkElement.classList.add('popup-link');
+      } else if (tooltipParent) {
+        linkElement.classList.add('tooltip-link');
+        linkElement.setAttribute('data-tooltip-id', id);
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(`No matching container for link: ${linkElement}`);
+      }
     } else {
-      // a tooltip link
-      linkElement.classList.add('tooltip-link');
-      linkElement.setAttribute('data-tooltip-id', id);
+      // eslint-disable-next-line no-console
+      console.error(`Target element with ID ${id} not found for link: ${linkElement}`);
     }
   });
 }
