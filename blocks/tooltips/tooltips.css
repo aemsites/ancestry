@@ -44,13 +44,8 @@
     line-height: 1.4;
 }
 
-.dialog-window ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.dialog-window ul li {
+.dialog-window ul li,
+.dialog-window p {
     margin:0;
     padding: 0 0.2rem;
     border-top: none;
@@ -59,13 +54,13 @@
     font-size:0.9rem;
 }
 
-.dialog-window ul li:has(strong) {
+.dialog-window p:has(strong) {
     display: flex;
     justify-content: space-between;
     align-items: flex-start;
 }
 
-.dialog-window ul li strong {
+.dialog-window p strong {
     font-size: 0.9rem;
     margin-right: 0.5rem;
 }
@@ -77,7 +72,7 @@
     margin: 20px 0.2rem;
 }
 
-.dialog-window.list ul {
+.dialog-window ul {
     list-style-type: disc;
     padding-left: 20px;
   }
