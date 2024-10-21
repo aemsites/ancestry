@@ -1,0 +1,75 @@
+.embed-container {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+}
+
+.section .embed-wrapper {
+  flex: 1;
+  max-width: 460px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  margin: 2rem 0;
+}
+
+.embed {
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.embed.biege {
+  background-color: #FAF9F7;
+}
+
+.embed.warm-gray {
+  background-color: #F6F3F0;
+}
+
+.section.two-columns.embed-container .embed-wrapper:nth-of-type(1) {
+  max-width: 515px;
+}
+
+.section.two-columns.embed-container .embed-wrapper:nth-of-type(2) {
+  max-width: 415px;
+}
+
+
+.embed-wrapper img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+
+.embed-wrapper h2, 
+.embed-wrapper p {
+  text-align: center;
+  padding: 0 1.2em;
+  font-family: var(--font-family);
+}
+
+.embed-wrapper h2 {
+  font-size: 1.5em;
+  margin-bottom: 1rem;
+}
+
+.embed-wrapper p {
+  font-size: 0.8em;
+}
+
+.embed-wrapper picture {
+  align-self: flex-end; /* Ensures the image stays at the bottom */
+  margin-top: auto; /* Pushes the image to the bottom */
+}
+
+.embed-wrapper .button-container {
+  margin-top: auto; /* Pushes the button to the bottom */
+}

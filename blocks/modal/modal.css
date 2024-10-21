@@ -40,7 +40,7 @@
   
   .popup-window ul {
     list-style-position: outside;
-    padding-left: 10px;
+    padding-left: 20px;
     margin-left: 0;
     font-size: 1rem;
   }
@@ -77,6 +77,24 @@
     font-size: 1rem;
     line-height: 1.5;
   }
+
+  .popup-window iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+    box-shadow: none;
+  }
+  
+  .popup-window.iframe-popup {
+    width:600px;
+    height:378px;
+  }
+
+  .popup-window.iframe-popup .popup-close{
+    top: -12px;
+    right: 2px;
+    color: var(--text-secondary-color);
+  }
   
   .popup-window:has(img) p,
   .popup-window:has(img) h1,
@@ -84,4 +102,3 @@
   .popup-window:has(img) h3 {
     text-align: center;
   }
-  

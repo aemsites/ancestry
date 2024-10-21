@@ -19,6 +19,13 @@ let language;
 
 export function decorateTooltipAndModalLinks(main) {
   const links = main.querySelectorAll('a[href^="#"]');
+  const embedYoutubeModal = main.querySelectorAll('a[href*="youtube"]');
+
+  embedYoutubeModal.forEach((linkElement) => {
+    const href = linkElement.getAttribute('href');
+    linkElement.setAttribute('data-popup', 'true');
+    linkElement.setAttribute('data-youtube-video-url', href);
+  });
 
   links.forEach((linkElement) => {
     const href = linkElement.getAttribute('href');
@@ -104,6 +111,46 @@ export function getLanguageFromPath(pathname) {
 
 export function isHomepageUrl(curPath = window.location.pathname) {
   return curPath === `/${getLanguageFromPath(curPath)}/`;
+}
+
+export function createVideoIframe(videoUrl) {
+  try {
+    const url = new URL(videoUrl);
+    let embedUrl = videoUrl;
+    const videoParams = new URLSearchParams({
+      controls: 1,
+      rel: 0,
+      modestbranding: 1,
+    });
+
+    function getEmbedUrl(videoId) {
+      return `https://www.youtube.com/embed/${videoId}?${videoParams.toString()}`;
+    }
+
+    if (url.hostname === 'youtu.be') {
+      const videoId = url.pathname.slice(1);
+      if (!videoId) throw new Error('Invalid video ID in youtu.be URL');
+      embedUrl = getEmbedUrl(videoId);
+
+    } else if (url.hostname.includes('youtube.com') && url.searchParams.has('v')) {
+      const videoId = url.searchParams.get('v');
+      if (!videoId) throw new Error('Invalid video ID in youtube.com URL');
+      embedUrl = getEmbedUrl(videoId);
+    }
+
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('src', embedUrl);
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+
+    return iframe;
+
+  } catch (error) {
+    console.error(`Error in createVideoIframe: ${error.message}`);
+    return null;
+  }
 }
 
 /**
