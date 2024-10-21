@@ -386,4 +386,5 @@ main .section.highlight {
 .section.section-banner-bottom .default-content-wrapper p {
   margin-top: 0!important;
   font-size: 13px;
+  padding-bottom: 20px;
 }
