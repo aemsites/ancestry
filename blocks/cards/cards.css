@@ -282,6 +282,48 @@
   }
 }
 
+.section.cards-container .cards.banner-bottom {
+  margin-top: 15px;
+}
+
+.section.dna.cards-container .cards-card-body {
+  grid-column: span 1;
+  display: flex;
+  flex-direction: column;
+  background-color: white;
+  color:var(--text-color);
+  border-radius: 10px;
+  padding: 1rem;
+  margin: 0;
+  min-height: 100%;
+}
+
+.section.dna.cards-container .default-content-wrapper p {
+  color:var(--text-color);
+  font-size:0.8rem;
+  margin-bottom: 1.5rem;
+}
+
+.section.cards-container .cards.banner-bottom .cards-card-body {
+  margin: 0!important;
+  line-height: 30px;
+}
+
+.section.cards-container .cards.banner-bottom .cards-card-body p {
+  margin: 0!important;
+  font-size: 14.5px;
+}
+
+.section.cards-container .cards.banner-bottom li {
+  gap: 0;
+  background-color: var(--cards-bottom-banner) !important;
+}
+
+.section.cards-container .cards.banner-bottom .button-container{
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
 /* DNA */
 .section.dna{
   background-size: cover;
@@ -297,18 +339,6 @@
 
 .section.dna.cards-container{
   padding:0;
-}
-
-.section.dna.cards-container .cards-card-body {
-  grid-column: span 1;
-  display: flex;
-  flex-direction: column;
-  background-color: white;
-  color:var(--text-color);
-  border-radius: 10px;
-  padding: 1rem;
-  margin: 0;
-  min-height: 100%;
 }
 
 .section.dna > div {
@@ -344,12 +374,6 @@
   position: relative;
   top: -0.4em;
   left: 0;
-}
-
-.section.dna.cards-container .default-content-wrapper p {
-  color:var(--text-color);
-  font-size:0.8rem;
-  margin-bottom: 1.5rem;
 }
 
 .section.dna.cards-container .default-content-wrapper p:last-child {
@@ -538,6 +562,18 @@
 .section.dna.cards-container .cards-wrapper .cards-card-body .detail .button-container {
   margin: 3rem 0;
   text-align: center;
+}
+
+.section .cards.banner-bottom .cards-card-body:nth-of-type(2) p:nth-of-type(2),
+.section .cards.banner-bottom .cards-card-body:nth-of-type(4) p:nth-of-type(2) {
+  font-size: 65px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.section.dna.cards-container .cards-wrapper .cards .cards-card-body .detail p {
+  margin-top: 1rem;
+  padding-left: 0;
 }
 
 .section.dna.cards-container .cards-wrapper .cards .cards-card-body .detail .button {
@@ -903,4 +939,22 @@ box-sizing: border-box;
     text-align: left;
     margin-left:0;
   }
+}
+
+.section .cards.banner-bottom .cards-card-body:nth-of-type(2) p:nth-of-type(2) em,
+.section .cards.banner-bottom .cards-card-body:nth-of-type(4) p:nth-of-type(2) em {
+  font-style: normal;
+    font-size: 38px;
+    position: relative;
+    top: -18px;
+}
+
+.section .cards.banner-bottom .cards-card-body:nth-of-type(2) p:nth-of-type(2) sup,
+.section .cards.banner-bottom .cards-card-body:nth-of-type(4) p:nth-of-type(2) sup {
+  font-size: 38px;
+}
+
+.section .cards.banner-bottom .cards-card-body:nth-of-type(2) p:nth-of-type(2) del,
+.section .cards.banner-bottom .cards-card-body:nth-of-type(4) p:nth-of-type(2) del {
+  font-size: 26px;
 }
