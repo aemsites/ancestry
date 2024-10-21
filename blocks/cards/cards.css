@@ -571,11 +571,6 @@
   margin: 0;
 }
 
-.section.dna.cards-container .cards-wrapper .cards .cards-card-body .detail p {
-  margin-top: 1rem;
-  padding-left: 0;
-}
-
 .section.dna.cards-container .cards-wrapper .cards .cards-card-body .detail .button {
   background-color: transparent;
   border: none;
