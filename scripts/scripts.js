@@ -46,7 +46,7 @@ export function decorateTooltipAndModalLinks(main) {
 }
 
 export function decorateTrademarks(container) {
-  const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§]|\(\d+\)|✓\s*ᐩ|✓|ᐩ)/g;
+  const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§ⓘ]|\(\d+\)|✓\s*ᐩ|✓|ᐩ)/g;
   [...container.querySelectorAll('p, a, li, h1, h2, h3, h4, h5, h6, strong')]
     .filter((el) => !el.closest('.button-container') && !el.querySelector('.button'))
     .forEach((el) => {
@@ -64,6 +64,9 @@ export function decorateTrademarks(container) {
               case 'ᐩ':
                 /* eslint-disable quotes */
                 return `<span class='plus'></span>`;
+              case 'ⓘ':
+                /* eslint-disable quotes */
+                return `<span class='icon-infor'></span>`;
               default:
                 if (/®|™|℠/.test(token)) {
                   const keyword = token.slice(0, -1);

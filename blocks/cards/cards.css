@@ -603,9 +603,9 @@ box-sizing: border-box;
 .section.dna.cards-container .cards-card-body .detail .icon-infor::after{
   content: '\e63f';
   font-family: ancestry-icon, sans-serif;
-  color: var(--link-active-color);
+  color: var(--text-secondary-color);
   font-size: 0.7rem;
-  padding:0.3rem;
+  top:-0.12em;
   position: relative;
 }
 
