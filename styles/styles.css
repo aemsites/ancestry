@@ -269,6 +269,11 @@ main img {
   height: auto;
 }
 
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
+}
+
 .icon {
   display: inline-block;
   height: 24px;

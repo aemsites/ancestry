@@ -30,9 +30,9 @@ export function decorateTooltipAndModalLinks(main) {
       const modalParent = targetElement.closest('.modal');
       const tooltipParent = targetElement.closest('.tooltips');
       if (modalParent) {
-        linkElement.classList.add('popup-link');
+        linkElement.setAttribute('data-popup', 'true');
       } else if (tooltipParent) {
-        linkElement.classList.add('tooltip-link');
+        linkElement.setAttribute('data-tooltip', 'true');
         linkElement.setAttribute('data-tooltip-id', id);
       } else {
         // eslint-disable-next-line no-console

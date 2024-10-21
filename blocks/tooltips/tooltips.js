@@ -27,16 +27,9 @@ export default function decorate(block) {
     document.body.appendChild(dialog);
     document.body.appendChild(triangle);
 
-    let position = 'below';
     const closestTooltip = contentElement.closest('.tooltips.top');
-
     if (closestTooltip) {
-      closestTooltip.classList.forEach((className) => {
-        if (className !== 'tooltips' && className !== 'top') {
-          dialog.classList.add(className);
-        }
-      });
-      position = 'above';
+      dialog.setAttribute('data-tooltip-position', 'top');
     }
 
     // update the position of the dialog
@@ -56,18 +49,18 @@ export default function decorate(block) {
         left = viewportWidth - dialogRect.width - 10;
       }
 
-      if (position === 'below') {
-        top = triggerRect.bottom + 10;
-        triangle.style.borderTop = 'none';
-        triangle.style.borderBottom = '10px solid #fff';
-        triangle.style.left = `${triggerRect.left + triggerRect.width / 2 - 10}px`;
-        triangle.style.top = `${top - 7}px`;
-      } else {
+      if (dialog.getAttribute('data-tooltip-position') === 'top') {
         top = triggerRect.top - dialogRect.height - 10;
         triangle.style.borderBottom = 'none';
         triangle.style.borderTop = '10px solid #fff';
         triangle.style.left = `${triggerRect.left + triggerRect.width / 2 - 10}px`;
         triangle.style.top = `${top + dialogRect.height - 8}px`;
+      } else {
+        top = triggerRect.bottom + 10;
+        triangle.style.borderTop = 'none';
+        triangle.style.borderBottom = '10px solid #fff';
+        triangle.style.left = `${triggerRect.left + triggerRect.width / 2 - 10}px`;
+        triangle.style.top = `${top - 7}px`;
       }
 
       const triangleRect = triangle.getBoundingClientRect();
@@ -126,7 +119,7 @@ export default function decorate(block) {
 
   // Event listener for tooltip triggers and links
   document.addEventListener('click', (event) => {
-    const triggerElement = event.target.closest('.tooltip-trigger, .tooltip-link');
+    const triggerElement = event.target.closest('a[data-tooltip="true"]');
     if (triggerElement) {
       event.preventDefault();
       const tooltipId = triggerElement.getAttribute('data-tooltip-id');

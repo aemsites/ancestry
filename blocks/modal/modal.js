@@ -4,10 +4,14 @@ export default function decorate(block) {
     const existingOverlay = document.querySelector('.popup-overlay');
     if (existingPopup) existingPopup.remove();
     if (existingOverlay) existingOverlay.remove();
+
+    document.body.classList.remove('no-scroll');
   }
 
   function openPopup(content) {
     closeExistingPopups();
+
+    document.body.classList.add('no-scroll');
 
     const overlay = document.createElement('div');
     overlay.classList.add('popup-overlay');
@@ -31,7 +35,7 @@ export default function decorate(block) {
   }
 
   document.addEventListener('click', (event) => {
-    const linkElement = event.target.closest('a.popup-link');
+    const linkElement = event.target.closest('a[data-popup="true"]');
     if (linkElement) {
       event.preventDefault();
       event.stopPropagation();
