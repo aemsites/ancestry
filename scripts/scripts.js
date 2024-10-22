@@ -114,12 +114,17 @@ export function isHomepageUrl(curPath = window.location.pathname) {
 }
 
 export function createVideoIframe(videoUrl) {
+  function getYouTubeVideoId(url) {
+    const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[1].length === 11) ? match[1] : null;
+  }
+
   function getEmbedUrl(videoId, videoParams) {
     return `https://www.youtube.com/embed/${videoId}?${videoParams.toString()}`;
   }
 
   try {
-    const url = new URL(videoUrl);
     let embedUrl = videoUrl;
     const videoParams = new URLSearchParams({
       controls: 1,
@@ -127,15 +132,8 @@ export function createVideoIframe(videoUrl) {
       modestbranding: 1,
     });
 
-    if (url.hostname === 'youtu.be') {
-      const videoId = url.pathname.slice(1);
-      if (!videoId) throw new Error('Invalid video ID in youtu.be URL');
-      embedUrl = getEmbedUrl(videoId, videoParams);
-    } else if (url.hostname.includes('youtube.com') && url.searchParams.has('v')) {
-      const videoId = url.searchParams.get('v');
-      if (!videoId) throw new Error('Invalid video ID in youtube.com URL');
-      embedUrl = getEmbedUrl(videoId, videoParams);
-    }
+    const videoId = getYouTubeVideoId(videoUrl);
+    embedUrl = getEmbedUrl(videoId, videoParams);
 
     const iframe = document.createElement('iframe');
     iframe.setAttribute('src', embedUrl);
