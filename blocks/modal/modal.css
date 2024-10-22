@@ -31,11 +31,12 @@
   
   .popup-close {
     position: absolute;
-    top: 5px;
-    right: 20px;
+    top: -10px;
+    right: 2px;
     font-optical-sizing: auto;
     font-size: 30px;
     cursor: pointer;
+    z-index: 1001;
   }
   
   .popup-window ul {
@@ -85,3 +86,7 @@
     text-align: center;
   }
   
+  .popup-window[data-popup-content="section carousel-container"] {
+    width: 80%;
+    max-width: 800px;
+  }

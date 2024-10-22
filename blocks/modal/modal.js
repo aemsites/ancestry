@@ -1,3 +1,6 @@
+import appendCarouselActions from '../../blocks/carousel/carousel.js';
+import appendCarouselIndicators from '../../blocks/carousel/carousel.js';
+
 export default function decorate(block) {
   function closeExistingPopups() {
     const existingPopup = document.querySelector('.popup-window');
@@ -8,17 +11,19 @@ export default function decorate(block) {
     document.body.classList.remove('no-scroll');
   }
 
-  function openPopup(content) {
+  function openPopup(content, attr='') {
     closeExistingPopups();
 
     document.body.classList.add('no-scroll');
 
     const overlay = document.createElement('div');
+    overlay.setAttribute('data-popup-overlay', attr);
     overlay.classList.add('popup-overlay');
     overlay.addEventListener('click', closeExistingPopups);
 
     const popup = document.createElement('div');
     popup.classList.add('popup-window');
+    popup.setAttribute('data-popup-content', attr);
 
     const closeButton = document.createElement('span');
     closeButton.innerHTML = '&times;';
@@ -32,6 +37,8 @@ export default function decorate(block) {
     document.body.appendChild(popup);
 
     popup.addEventListener('click', (e) => e.stopPropagation());
+
+    reinitializeCarousel(popup);
   }
 
   document.addEventListener('click', (event) => {
@@ -44,13 +51,36 @@ export default function decorate(block) {
       const id = href.substring(1);
 
       const popupContentElement = block.querySelector(`#${id}`);
-      if (popupContentElement) {
+      const condition = `[data-fragment-id="${id}"][data-popup-content="true"]`;
+      const popupContentFragmentElement = document.querySelector(condition);
+      if (popupContentFragmentElement) {
+        const fragmentContent = popupContentFragmentElement.querySelector('div .section').cloneNode(true);
+        console.log("Fragment content:", fragmentContent);
+        openPopup(fragmentContent, fragmentContent.classList);
+      } else if(popupContentElement) {
         const content = popupContentElement.parentElement.cloneNode(true);
-        openPopup(content);
+        openPopup(content)
       } else {
-        /* eslint-disable no-console */
         console.error(`Popup content not found for id: ${id}`);
       }
+    }
+  });
+}
+
+function reinitializeCarousel(popup) {
+  const carouselBlocks = popup.querySelectorAll('.carousel.block');
+
+  carouselBlocks.forEach((carousel) => {
+    const slides = [...carousel.children];
+    const slideCount = slides.length;
+
+    if (slideCount > 0) {
+      slides[0].classList.add('active');
+    }
+
+    if (slideCount > 1) {
+      appendCarouselActions(carousel);
+      appendCarouselIndicators(carousel);
     }
   });
 }

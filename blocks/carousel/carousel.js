@@ -27,7 +27,7 @@ function handleCarouselAction(block, direction, targetIndex = null) {
 }
 
 // Add navigation buttons (Previous/Next) to the carousel
-function appendCarouselActions(block) {
+export function appendCarouselActions(block) {
   const carouselWrapper = block.parentElement;
   const carouselActions = document.createElement('div');
   carouselActions.classList.add('carousel-actions');
@@ -53,7 +53,7 @@ function appendCarouselActions(block) {
 }
 
 // Add indicators for each slide in the carousel
-function appendCarouselIndicators(block) {
+export function appendCarouselIndicators(block) {
   [...block.children].forEach((child, i) => {
     const indicatorContainer = document.createElement('ol');
     indicatorContainer.classList.add('indicators');
