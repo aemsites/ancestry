@@ -39,7 +39,7 @@ export default function decorate(block) {
 
     popup.addEventListener('click', (e) => e.stopPropagation());
   }
-  
+
   document.addEventListener('click', (event) => {
     const linkElement = event.target.closest('a[data-popup="true"]');
     if (linkElement) {
@@ -58,6 +58,7 @@ export default function decorate(block) {
           const content = popupContentElement.parentElement.cloneNode(true);
           openPopup(content);
         } else {
+          // eslint-disable-next-line no-console
           console.error(`Popup content not found for id: ${id}`);
         }
       }

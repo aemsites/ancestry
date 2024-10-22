@@ -114,6 +114,10 @@ export function isHomepageUrl(curPath = window.location.pathname) {
 }
 
 export function createVideoIframe(videoUrl) {
+  function getEmbedUrl(videoId, videoParams) {
+    return `https://www.youtube.com/embed/${videoId}?${videoParams.toString()}`;
+  }
+
   try {
     const url = new URL(videoUrl);
     let embedUrl = videoUrl;
@@ -123,19 +127,14 @@ export function createVideoIframe(videoUrl) {
       modestbranding: 1,
     });
 
-    function getEmbedUrl(videoId) {
-      return `https://www.youtube.com/embed/${videoId}?${videoParams.toString()}`;
-    }
-
     if (url.hostname === 'youtu.be') {
       const videoId = url.pathname.slice(1);
       if (!videoId) throw new Error('Invalid video ID in youtu.be URL');
-      embedUrl = getEmbedUrl(videoId);
-
+      embedUrl = getEmbedUrl(videoId, videoParams);
     } else if (url.hostname.includes('youtube.com') && url.searchParams.has('v')) {
       const videoId = url.searchParams.get('v');
       if (!videoId) throw new Error('Invalid video ID in youtube.com URL');
-      embedUrl = getEmbedUrl(videoId);
+      embedUrl = getEmbedUrl(videoId, videoParams);
     }
 
     const iframe = document.createElement('iframe');
@@ -144,10 +143,9 @@ export function createVideoIframe(videoUrl) {
     iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
     iframe.style.width = '100%';
     iframe.style.height = '100%';
-
     return iframe;
-
   } catch (error) {
+    // eslint-disable-next-line no-console
     console.error(`Error in createVideoIframe: ${error.message}`);
     return null;
   }
