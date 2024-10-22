@@ -151,6 +151,27 @@ export function createVideoIframe(videoUrl) {
   }
 }
 
+export function getYoutubeThumbnail(videoUrl) {
+  try {
+    const url = new URL(videoUrl);
+    let videoId = '';
+    if (url.hostname === 'youtu.be') {
+      videoId = url.pathname.slice(1);
+    } else if (url.hostname.includes('youtube.com') && url.searchParams.has('v')) {
+      videoId = url.searchParams.get('v');
+    } else if (url.pathname.includes('/embed/')) {
+      [, videoId] = url.pathname.split('/embed/');
+    }
+
+    if (!videoId) throw new Error('Invalid video ID');
+    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error in getYoutubeThumbnail: ${error.message}`);
+    return null;
+  }
+}
+
 /**
  * Builds hero block and prepends to main in a new section.
  * @param {Element} main The container element

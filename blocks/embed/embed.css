@@ -42,7 +42,6 @@
   max-width: 415px;
 }
 
-
 .embed-wrapper img {
   max-width: 100%;
   height: auto;
@@ -66,10 +65,26 @@
 }
 
 .embed-wrapper picture {
-  align-self: flex-end; /* Ensures the image stays at the bottom */
-  margin-top: auto; /* Pushes the image to the bottom */
+  align-self: flex-end;
+  margin-top: auto;
 }
 
 .embed-wrapper .button-container {
-  margin-top: auto; /* Pushes the button to the bottom */
+  margin-top: auto;
+}
+
+.embed img {
+  border-radius: 20px;
+  padding: 1rem;
+  object-fit: cover;
+}
+
+.embed .youtube-thumbnail {
+  border-radius: 20px;
+  padding: 1rem;
+  width: 90%;
+  height: 200px;
+  object-fit: cover;
+  margin: 0 auto;
+  display: block;
 }
