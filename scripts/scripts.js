@@ -35,7 +35,7 @@ export function decorateTooltipAndModalLinks(main) {
       } else if (tooltipParent) {
         linkElement.setAttribute('data-tooltip', 'true');
         linkElement.setAttribute('data-tooltip-id', id);
-      } else if(fragmentModalParent) {
+      } else if (fragmentModalParent) {
         linkElement.setAttribute('data-popup', 'true');
         linkElement.setAttribute('data-fragment-id', id);
         fragmentModalParent.setAttribute('data-fragment-id', id);
@@ -165,8 +165,6 @@ function addBackgroundImageToSections(main) {
     });
   });
 }
-
-
 
 /**
  * Decorates the main element.

@@ -1,5 +1,22 @@
-import appendCarouselActions from '../../blocks/carousel/carousel.js';
-import appendCarouselIndicators from '../../blocks/carousel/carousel.js';
+import { appendCarouselActions, appendCarouselIndicators } from '../carousel/carousel.js';
+
+function reinitializeCarousel(popup) {
+  const carouselBlocks = popup.querySelectorAll('.carousel.block');
+
+  carouselBlocks.forEach((carousel) => {
+    const slides = [...carousel.children];
+    const slideCount = slides.length;
+
+    if (slideCount > 0) {
+      slides[0].classList.add('active');
+    }
+
+    if (slideCount > 1) {
+      appendCarouselActions(carousel);
+      appendCarouselIndicators(carousel);
+    }
+  });
+}
 
 export default function decorate(block) {
   function closeExistingPopups() {
@@ -11,7 +28,7 @@ export default function decorate(block) {
     document.body.classList.remove('no-scroll');
   }
 
-  function openPopup(content, attr='') {
+  function openPopup(content, attr = '') {
     closeExistingPopups();
 
     document.body.classList.add('no-scroll');
@@ -55,32 +72,14 @@ export default function decorate(block) {
       const popupContentFragmentElement = document.querySelector(condition);
       if (popupContentFragmentElement) {
         const fragmentContent = popupContentFragmentElement.querySelector('div .section').cloneNode(true);
-        console.log("Fragment content:", fragmentContent);
         openPopup(fragmentContent, fragmentContent.classList);
-      } else if(popupContentElement) {
+      } else if (popupContentElement) {
         const content = popupContentElement.parentElement.cloneNode(true);
-        openPopup(content)
+        openPopup(content);
       } else {
+        // eslint-disable-next-line no-console
         console.error(`Popup content not found for id: ${id}`);
       }
-    }
-  });
-}
-
-function reinitializeCarousel(popup) {
-  const carouselBlocks = popup.querySelectorAll('.carousel.block');
-
-  carouselBlocks.forEach((carousel) => {
-    const slides = [...carousel.children];
-    const slideCount = slides.length;
-
-    if (slideCount > 0) {
-      slides[0].classList.add('active');
-    }
-
-    if (slideCount > 1) {
-      appendCarouselActions(carousel);
-      appendCarouselIndicators(carousel);
     }
   });
 }
