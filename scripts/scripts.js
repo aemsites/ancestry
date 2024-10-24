@@ -17,9 +17,43 @@ import {
 const LANGUAGES = new Set(['en', 'es']);
 let language;
 
+export function decorateTooltipAndModalLinks(main) {
+  const links = main.querySelectorAll('a[href^="#"]');
+
+  links.forEach((linkElement) => {
+    const href = linkElement.getAttribute('href');
+    const id = href.substring(1);
+
+    const targetElement = document.getElementById(id);
+
+    if (targetElement) {
+      const modalParent = targetElement.closest('.modal');
+      const tooltipParent = targetElement.closest('.tooltips');
+      const fragmentModalParent = targetElement.closest('.fragment');
+      if (modalParent) {
+        linkElement.setAttribute('data-popup', 'true');
+      } else if (tooltipParent) {
+        linkElement.setAttribute('data-tooltip', 'true');
+        linkElement.setAttribute('data-tooltip-id', id);
+      } else if (fragmentModalParent) {
+        linkElement.setAttribute('data-popup', 'true');
+        linkElement.setAttribute('data-fragment-id', id);
+        fragmentModalParent.setAttribute('data-fragment-id', id);
+        fragmentModalParent.setAttribute('data-popup-content', true);
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(`No matching container for link: ${linkElement}`);
+      }
+    } else {
+      // eslint-disable-next-line no-console
+      console.error(`Target element with ID ${id} not found for link: ${linkElement}`);
+    }
+  });
+}
+
 export function decorateTrademarks(container) {
-  const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§]|\(\d+\)|✓\s*ᐩ|✓|ᐩ)/g;
-  [...container.querySelectorAll('p, li, h1, h2, h3, h4, h5, h6')]
+  const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§ⓘ]|\(\d+\)|✓\s*ᐩ|✓|ᐩ)/g;
+  [...container.querySelectorAll('p, a, li, h1, h2, h3, h4, h5, h6, strong')]
     .filter((el) => !el.closest('.button-container') && !el.querySelector('.button'))
     .forEach((el) => {
       const nodes = Array.from(el.childNodes);
@@ -36,6 +70,9 @@ export function decorateTrademarks(container) {
               case 'ᐩ':
                 /* eslint-disable quotes */
                 return `<span class='plus'></span>`;
+              case 'ⓘ':
+                /* eslint-disable quotes */
+                return `<span class='icon-infor'></span>`;
               default:
                 if (/®|™|℠/.test(token)) {
                   const keyword = token.slice(0, -1);
@@ -138,6 +175,7 @@ export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateTrademarks(main);
   decorateButtons(main);
+  decorateTooltipAndModalLinks(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);

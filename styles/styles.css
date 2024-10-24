@@ -43,6 +43,7 @@
   --text-gray-color:#999;
   --text-green-color:#328800;
   --text-h1-color:white;
+  --text-secondary-color:#666;
   --link-color: #0e7194;
   --link-hover-color: #07536e;
   --link-active-color: #086383;
@@ -268,6 +269,11 @@ main img {
   height: auto;
 }
 
+.no-scroll {
+  overflow: hidden;
+  height: 100%;
+}
+
 .icon {
   display: inline-block;
   height: 24px;
@@ -282,6 +288,10 @@ main img {
 /* sections */
 main > .section {
   margin: 40px 0;
+}
+
+main > .section.hide{
+  display:none;
 }
 
 main > .section.center {
@@ -334,6 +344,14 @@ main > .section.section-warm-gray {
 
 main > .section.section-pale-green {
   background-color: #E4EFE7;
+}
+
+main > .section.section-dark-green {
+  background-color: #CEDCCA;
+}
+
+main > .section.section-dark-gray {
+  background-color: #2d3136;
 }
 
 main > .section > div {
