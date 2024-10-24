@@ -28,6 +28,11 @@
     z-index: 1000;
     box-shadow: none;
   }
+
+  .popup-window[data-popup-content*="carousel-container"] {
+    width: 100%;
+    max-width: 920px;
+  }
   
   .popup-close {
     position: absolute;

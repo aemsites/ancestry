@@ -1,4 +1,4 @@
-import { appendCarouselActions, appendCarouselIndicators } from '../carousel/carousel.js';
+import { appendCarouselActions } from '../carousel/carousel.js';
 
 function reinitializeCarousel(popup) {
   const carouselBlocks = popup.querySelectorAll('.carousel.block');
@@ -13,7 +13,6 @@ function reinitializeCarousel(popup) {
 
     if (slideCount > 1) {
       appendCarouselActions(carousel);
-      appendCarouselIndicators(carousel);
     }
   });
 }

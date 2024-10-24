@@ -1,32 +1,46 @@
-// Helper function to ensure wrapping with modulus
 function mod(n, m) {
   return ((n % m) + m) % m;
 }
 
-// Handle carousel action for navigation or specific slide selection
-function handleCarouselAction(block, direction, targetIndex = null) {
-  const itemCount = block.children.length;
-  let currentActiveIndex = 0;
+function handleCarouselAction(block, direction) {
+  const slides = Array.from(block.children);
+  const itemCount = slides.length;
+  const currentActiveIndex = slides.findIndex((slide) => slide.classList.contains('active'));
 
-  for (let i = 0; i < itemCount; i += 1) {
-    if (block.children[i].classList.contains('active')) {
-      currentActiveIndex = i;
-      break;
+  const nextActiveIndex = mod(currentActiveIndex + direction, itemCount);
+
+  slides.forEach((slide) => {
+    slide.classList.remove('active', 'previous', 'next');
+    slide.style.transition = 'transform 0.2s ease-in-out';
+  });
+
+  const positions = {
+    active: 'translateX(0%)',
+    previous: 'translateX(-90%)',
+    next: 'translateX(90%)',
+  };
+
+  // Update classes and transforms
+  slides.forEach((slide, index) => {
+    if (index === nextActiveIndex) {
+      slide.classList.add('active');
+      slide.style.transform = positions.active;
+      slide.style.zIndex = 2;
+    } else if (index === mod(nextActiveIndex - 1, itemCount)) {
+      slide.classList.add('previous');
+      slide.style.transform = positions.previous;
+      slide.style.zIndex = 1;
+    } else if (index === mod(nextActiveIndex + 1, itemCount)) {
+      slide.classList.add('next');
+      slide.style.transform = positions.next;
+      slide.style.zIndex = 1;
+    } else {
+      slide.style.transform = `translateX(${direction * 200}%)`;
+      slide.style.zIndex = -1;
     }
-  }
-
-  block.children[currentActiveIndex].classList.remove('active');
-
-  const nextActive = targetIndex !== null
-    ? targetIndex
-    : mod(currentActiveIndex + direction, itemCount);
-
-  if (block.children[nextActive]) {
-    block.children[nextActive].classList.add('active');
-  }
+  });
 }
 
-// Add navigation buttons (Previous/Next) to the carousel
 export function appendCarouselActions(block) {
   const carouselWrapper = block.parentElement;
   const carouselActions = document.createElement('div');
@@ -44,7 +58,6 @@ export function appendCarouselActions(block) {
   nextButton.setAttribute('type', 'button');
   nextButton.innerHTML = '<span class="next-icon"></span>';
 
-  // Add event listeners to buttons
   prevButton.addEventListener('click', () => handleCarouselAction(block, -1));
   nextButton.addEventListener('click', () => handleCarouselAction(block, 1));
 
@@ -52,38 +65,33 @@ export function appendCarouselActions(block) {
   carouselWrapper.append(carouselActions);
 }
 
-// Add indicators for each slide in the carousel
-export function appendCarouselIndicators(block) {
-  [...block.children].forEach((child, i) => {
-    const indicatorContainer = document.createElement('ol');
-    indicatorContainer.classList.add('indicators');
-
-    [...block.children].forEach((_, index) => {
-      const indicator = document.createElement('li');
-      if (index === i) indicator.classList.add('active');
-      indicator.setAttribute('aria-label', `Slide ${index + 1}`);
-
-      indicator.addEventListener('click', () => handleCarouselAction(block, 0, index));
-
-      indicatorContainer.append(indicator);
-    });
-    const contentContainer = child.querySelector('div');
-    if (contentContainer) {
-      contentContainer.appendChild(indicatorContainer);
-    }
-  });
-}
-
 export default function decorate(block) {
-  const slides = [...block.children];
+  const slides = Array.from(block.children);
   const slideCount = slides.length;
 
   if (slideCount > 0) {
-    slides[0].classList.add('active');
+    slides.forEach((slide, index) => {
+      slide.style.transition = 'none';
+      if (index === 0) {
+        slide.classList.add('active');
+        slide.style.transform = 'translateX(0%)';
+        slide.style.zIndex = 2;
+      } else if (index === 1) {
+        slide.classList.add('next');
+        slide.style.transform = 'translateX(90%)';
+        slide.style.zIndex = 1;
+      } else if (index === slideCount - 1) {
+        slide.classList.add('previous');
+        slide.style.transform = 'translateX(-90%)';
+        slide.style.zIndex = 1;
+      } else {
+        slide.style.transform = 'translateX(200%)';
+        slide.style.zIndex = -1;
+      }
+    });
   }
 
   if (slideCount > 1) {
     appendCarouselActions(block);
-    appendCarouselIndicators(block);
   }
 }
