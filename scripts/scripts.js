@@ -29,11 +29,17 @@ export function decorateTooltipAndModalLinks(main) {
     if (targetElement) {
       const modalParent = targetElement.closest('.modal');
       const tooltipParent = targetElement.closest('.tooltips');
+      const fragmentModalParent = targetElement.closest('.fragment');
       if (modalParent) {
         linkElement.setAttribute('data-popup', 'true');
       } else if (tooltipParent) {
         linkElement.setAttribute('data-tooltip', 'true');
         linkElement.setAttribute('data-tooltip-id', id);
+      } else if (fragmentModalParent) {
+        linkElement.setAttribute('data-popup', 'true');
+        linkElement.setAttribute('data-fragment-id', id);
+        fragmentModalParent.setAttribute('data-fragment-id', id);
+        fragmentModalParent.setAttribute('data-popup-content', true);
       } else {
         // eslint-disable-next-line no-console
         console.log(`No matching container for link: ${linkElement}`);

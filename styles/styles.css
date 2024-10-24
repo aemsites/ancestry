@@ -346,6 +346,14 @@ main > .section.section-pale-green {
   background-color: #E4EFE7;
 }
 
+main > .section.section-dark-green {
+  background-color: #CEDCCA;
+}
+
+main > .section.section-dark-gray {
+  background-color: #2d3136;
+}
+
 main > .section > div {
   max-width: 1200px;
   margin: auto;
