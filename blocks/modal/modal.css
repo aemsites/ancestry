@@ -28,14 +28,20 @@
     z-index: 1000;
     box-shadow: none;
   }
+
+  .popup-window[data-popup-content*="carousel-container"] {
+    width: 100%;
+    max-width: 920px;
+  }
   
   .popup-close {
     position: absolute;
-    top: 5px;
-    right: 20px;
+    top: -10px;
+    right: 2px;
     font-optical-sizing: auto;
     font-size: 30px;
     cursor: pointer;
+    z-index: 1001;
   }
   
   .popup-window ul {
@@ -101,4 +107,9 @@
   .popup-window:has(img) h2,
   .popup-window:has(img) h3 {
     text-align: center;
+  }
+  
+  .popup-window[data-popup-content="section carousel-container"] {
+    width: 80%;
+    max-width: 800px;
   }

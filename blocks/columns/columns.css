@@ -69,6 +69,69 @@ main .section.columns-container > div{
   margin-bottom: 1rem;
 }
 
+.columns.testimonial{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 5rem 10rem;
+  width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.columns.testimonial p:nth-of-type(2)::before {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 80px;
+  background-image: url("/icons/quote-left.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  top: -10px;
+  left: -40px;
+  z-index: 1;
+}
+
+.columns.testimonial p:nth-of-type(2)::after {
+  content: "";
+  display: block;
+  width: 80px;
+  height: 80px;
+  background-image: url("/icons/quote-right.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  position: absolute;
+  bottom: -10px;
+  right: -40px;
+  z-index: 1;
+}
+
+.columns.testimonial p {
+  padding :0 3rem;
+  font-size: 1.8rem;
+  font-weight: 700;
+  max-width :1200px;
+  color:var(--text-gray-dark-color);
+}
+
+.columns.testimonial p:nth-of-type(2) {
+  padding-left: 50px;;
+  padding-right: 50px;
+  position: relative;
+}
+
+.columns.testimonial .columns-img-col{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.columns.testimonial > div > .columns-img-col img {
+  min-width: 120px;
+}
+
 /* Block styleing */
 .columns.homepage.columns-2-cols > div {
   position: relative;
@@ -217,6 +280,22 @@ main .section.columns-container > div{
 
 /* Mobile-specific adjustments */
 @media (max-width: 899px) {
+  .columns.testimonial{
+    padding: 5rem;
+  }
+
+  .columns.testimonial::before {
+    width: 80px;
+    height: 80px;
+    top: 8rem;
+    left: 3rem;
+  }
+  
+  .columns.testimonial::after {
+    bottom: 8rem;
+    right: 3rem;
+  }
+
   .columns.homepage.block.columns-2-cols > div {
     display: flex;
     flex-direction: column;
@@ -416,6 +495,10 @@ main .section.columns-container > div{
 }
 
 @media (max-width: 750px) {
+  .columns.testimonial {
+    display:none;
+  }
+
   .columns.footer.block.columns-3-cols > div {
     flex-direction: column;
     align-items: center;
