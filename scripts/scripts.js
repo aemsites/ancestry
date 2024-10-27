@@ -19,6 +19,13 @@ let language;
 
 export function decorateTooltipAndModalLinks(main) {
   const links = main.querySelectorAll('a[href^="#"]');
+  const embedYoutubeModal = main.querySelectorAll('a[href*="youtube"]');
+
+  embedYoutubeModal.forEach((linkElement) => {
+    const href = linkElement.getAttribute('href');
+    linkElement.setAttribute('data-popup', 'true');
+    linkElement.setAttribute('data-youtube-video-url', href);
+  });
 
   links.forEach((linkElement) => {
     const href = linkElement.getAttribute('href');
@@ -110,6 +117,63 @@ export function getLanguageFromPath(pathname) {
 
 export function isHomepageUrl(curPath = window.location.pathname) {
   return curPath === `/${getLanguageFromPath(curPath)}/`;
+}
+
+export function createVideoIframe(videoUrl) {
+  function getYouTubeVideoId(url) {
+    const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[1].length === 11) ? match[1] : null;
+  }
+
+  function getEmbedUrl(videoId, videoParams) {
+    return `https://www.youtube.com/embed/${videoId}?${videoParams.toString()}`;
+  }
+
+  try {
+    let embedUrl = videoUrl;
+    const videoParams = new URLSearchParams({
+      controls: 1,
+      rel: 0,
+      modestbranding: 1,
+    });
+
+    const videoId = getYouTubeVideoId(videoUrl);
+    embedUrl = getEmbedUrl(videoId, videoParams);
+
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('src', embedUrl);
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    return iframe;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error in createVideoIframe: ${error.message}`);
+    return null;
+  }
+}
+
+export function getYoutubeThumbnail(videoUrl) {
+  try {
+    const url = new URL(videoUrl);
+    let videoId = '';
+    if (url.hostname === 'youtu.be') {
+      videoId = url.pathname.slice(1);
+    } else if (url.hostname.includes('youtube.com') && url.searchParams.has('v')) {
+      videoId = url.searchParams.get('v');
+    } else if (url.pathname.includes('/embed/')) {
+      [, videoId] = url.pathname.split('/embed/');
+    }
+
+    if (!videoId) throw new Error('Invalid video ID');
+    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error in getYoutubeThumbnail: ${error.message}`);
+    return null;
+  }
 }
 
 /**
