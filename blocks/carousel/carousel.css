@@ -29,6 +29,13 @@
   overflow: hidden;
 }
 
+.section.small .carousel {
+  position: relative;
+  width: 100%;
+  min-height: 400px;
+  overflow: hidden;
+}
+
 .carousel > div {
   position: absolute;
   top: 0;
@@ -50,14 +57,14 @@
 }
 
 .carousel > div.previous {
-  transform: translateX(-100%);
+  transform: translateX(-90%);
   opacity: 0.9;
   visibility: visible;
   z-index: 1;
 }
 
 .carousel > div.next {
-  transform: translateX(100%);
+  transform: translateX(90%);
   opacity: 0.9;
   visibility: visible;
   z-index: 1;
@@ -66,6 +73,14 @@
 .carousel > div.active > * {
   opacity: 1;
   visibility: visible;
+}
+
+.section.small .carousel > div.previous{
+  transform: translateX(-100%);
+}
+
+.section.small .carousel > div.next{
+  transform: translateX(100%);
 }
 
 .carousel picture img {
@@ -239,11 +254,24 @@
   padding: 0 2rem;
 }
 
+.section.section-dark-blue {
+  background-color: #022e50;
+}
+
 .section.section-dark-gray .carousel h2 {
   font-family: ui-sans, 'Helvetica Neue', Arial, sans-serif;
   color: #a9a9a9;
   font-size: 2rem;
   margin-bottom: 2rem;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.section.section-dark-blue .carousel h2 {
+  font-family: ui-sans, 'Helvetica Neue', Arial, sans-serif;
+  color: white;
+  font-size: 1rem;
+  margin: 0.5rem 0;
   font-weight: 400;
   -webkit-font-smoothing: antialiased;
 }
@@ -256,6 +284,16 @@
   -webkit-font-smoothing: antialiased;
 }
 
+.section.section-dark-blue .carousel p {
+  color: white;
+  font-size: 1rem;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  max-width: 80%;
+  margin: auto;
+  padding:0.5rem 0;
+}
+
 .section.section-dark-gray .carousel p:not(:has(picture)) {
   color: white;
   font-size: 0.6em;
@@ -263,6 +301,28 @@
   -webkit-font-smoothing: antialiased;
   max-width: 80%;
   margin: auto;
+}
+
+.section.carousel-container.small .carousel-indicators {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.section.carousel-container.small .carousel-indicators .dot {
+  width: 10px;
+  height: 10px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.section.carousel-container.small .carousel-indicators .dot.active {
+  background-color: #b8d94c;
 }
 
 @media (max-width: 900px) {
@@ -296,6 +356,10 @@
 @media (max-width: 600px) {
   .carousel.block {
     min-height: 430px;
+  }
+
+  .section.small .carousel.block {
+    min-height: 330px;
   }
 
   .section.section-dark-gray .carousel p:not(:has(picture)) {

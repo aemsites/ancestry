@@ -39,7 +39,6 @@ function openPopup(content, attr = '') {
   if (content instanceof HTMLIFrameElement) popup.classList.add('iframe-popup');
 
   const closeButton = document.createElement('span');
-  closeButton.innerHTML = '&times;';
   closeButton.classList.add('popup-close');
   closeButton.addEventListener('click', closeExistingPopups);
 

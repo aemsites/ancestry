@@ -33,17 +33,46 @@
     width: 100%;
     max-width: 920px;
   }
+
+  .popup-window[data-popup-content*="carousel-container"][data-popup-content*="small"] {
+    width: 100%;
+    max-width: 600px;
+    padding :0;
+}
   
   .popup-close {
-    position: absolute;
-    top: -10px;
-    right: 2px;
-    font-optical-sizing: auto;
-    font-size: 30px;
+    background: transparent;
+    border: 0;
+    border-radius: 5px;
     cursor: pointer;
-    z-index: 1001;
+    height: 28px;
+    width: 28px;
+    padding: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  
+
+  .popup-window .popup-close::before {
+    font-family: ancestry-icon, sans-serif;
+    content: "\e657";
+    color: var(--text-color);
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 1;
+    display: inline-block;
+    text-align: center;
+  }
+
+  .popup-window[data-popup-content*="small"] .popup-close::before {
+    color: white;
+    font-size: 10px;
+  }
+
   .popup-window ul {
     list-style-position: outside;
     padding-left: 20px;
