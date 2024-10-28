@@ -125,12 +125,6 @@
     height:378px;
   }
 
-  .popup-window.iframe-popup .popup-close{
-    top: -12px;
-    right: 2px;
-    color: var(--text-secondary-color);
-  }
-  
   .popup-window:has(img) p,
   .popup-window:has(img) h1,
   .popup-window:has(img) h2,
