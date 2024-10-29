@@ -161,23 +161,34 @@
       border-right: none;
   }
 
-  .tick::before,
-  .plus::before {
-      content: "\e656";
-      font-size: 21.5px;
-      color: rgb(50 136 0);
-      font-family: ancestry-icon, sans-serif;
+  .tickplus, .tick {
+    display: inline-block;
+    position: relative;
+    right: 0;
+    top: 0%;
+    transform: translateY(0%);
+  }
+
+  .tickplus::before, .tick::before {
+    font-family: ancestry-icon,sans-serif;
+    content: '\e656';
+    color: green;
+    font-size: 1.3rem;
+    position: relative;
+  }
+  
+  .tickplus::after {
+    content: '+';
+    color: green;
+    font-size: 0.7rem;
+    position: relative;
+    left:-0.4rem;
+    font-weight: 700;
   }
 
   .cross::before {
-      content: "\e657";
-      font-size: 21.5px;
-      color: rgb(207 204 202);
-      font-family: ancestry-icon, sans-serif;
-  }
-
-  .plus {
-      display: flex !important;
-      align-items: center;
-      color: rgb(50 136 0);
-  }
+    content: "\e657";
+    font-size: 21.5px;
+    color: rgb(207 204 202);
+    font-family: ancestry-icon, sans-serif;
+}

@@ -19,16 +19,6 @@ export default async function decorate(block) {
     [...child.children].forEach((col) => {
       const cell = buildCell(header ? i : i + 1);
       cell.innerHTML = col.innerHTML;
-      if (cell.innerText === 'Y') {
-        cell.classList.add('tick');
-        cell.innerText = '';
-      } else if (cell.innerText === 'N') {
-        cell.classList.add('cross');
-        cell.innerText = '';
-      } else if (cell.innerText === 'Y+') {
-        cell.classList.add('plus');
-        cell.innerText = '+';
-      }
       row.append(cell);
     });
   });
