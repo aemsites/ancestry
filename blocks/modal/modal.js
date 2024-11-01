@@ -1,55 +1,33 @@
 import { createVideoIframe } from '../../scripts/scripts.js';
-import { appendCarouselActions } from '../carousel/carousel.js';
+import { appendCarouselActions, createIndicators } from '../carousel/carousel.js';
+import { constants as ArialModal } from './aria-modal.js';
 
-function reinitializeCarousel(popup) {
-  const carouselBlocks = popup.querySelectorAll('.carousel.block');
+function reinitializeCarousel(dialog, callback) {
+  const carouselBlocks = dialog.querySelectorAll('.carousel.block');
 
   carouselBlocks.forEach((carousel) => {
     const slides = [...carousel.children];
     const slideCount = slides.length;
 
-    if (slideCount > 0) {
-      slides[0].classList.add('active');
-    }
-
     if (slideCount > 1) {
       appendCarouselActions(carousel);
+      createIndicators(carousel, slideCount);
     }
   });
-}
 
-function closeExistingPopups() {
-  document.querySelectorAll('.popup-window, .popup-overlay').forEach((element) => element.remove());
-  document.body.classList.remove('no-scroll');
-}
-
-function openPopup(content, attr = '') {
-  closeExistingPopups();
-  document.body.classList.add('no-scroll');
-
-  const overlay = document.createElement('div');
-  overlay.classList.add('popup-overlay');
-  if (attr) overlay.setAttribute('data-popup-overlay', attr);
-  overlay.addEventListener('click', closeExistingPopups);
-
-  const popup = document.createElement('div');
-  popup.classList.add('popup-window');
-  if (attr) popup.setAttribute('data-popup-content', attr);
-
-  if (content instanceof HTMLIFrameElement) popup.classList.add('iframe-popup');
-
-  const closeButton = document.createElement('span');
-  closeButton.classList.add('popup-close');
-  closeButton.addEventListener('click', closeExistingPopups);
-
-  popup.append(closeButton, content);
-
-  document.body.appendChild(overlay);
-  document.body.appendChild(popup);
-
-  if (popup.getAttribute('data-popup-content')?.includes('carousel-container')) {
-    reinitializeCarousel(popup);
+  if (typeof callback === 'function') {
+    callback();
   }
+}
+
+function closeExistingModals() {
+  document.querySelectorAll(ArialModal.tagName).forEach((modal) => {
+    if (modal.close) {
+      modal.close();
+    } else {
+      modal.parentNode.removeChild(modal);
+    }
+  });
 }
 
 export default function decorate(block) {
@@ -58,10 +36,16 @@ export default function decorate(block) {
     if (linkElement) {
       event.preventDefault();
       event.stopPropagation();
+
+      closeExistingModals();
+
       const videoUrl = linkElement.getAttribute('data-youtube-video-url');
+      let content;
+      let attr = '';
+
       if (videoUrl) {
-        const iframe = createVideoIframe(videoUrl);
-        openPopup(iframe);
+        content = createVideoIframe(videoUrl);
+        attr = 'iframe-popup';
       } else {
         const href = linkElement.getAttribute('href');
         const id = href.substring(1);
@@ -69,17 +53,40 @@ export default function decorate(block) {
         const popupContentElement = block.querySelector(`#${id}`);
         const condition = `[data-fragment-id="${id}"][data-popup-content="true"]`;
         const popupContentFragmentElement = document.querySelector(condition);
+
         if (popupContentFragmentElement) {
-          const fragmentContent = popupContentFragmentElement.querySelector('div .section').cloneNode(true);
-          openPopup(fragmentContent, fragmentContent.classList);
+          content = popupContentFragmentElement.querySelector('div .section').cloneNode(true);
+          attr = content.classList.value;
         } else if (popupContentElement) {
-          const content = popupContentElement.parentElement.cloneNode(true);
-          openPopup(content);
+          content = popupContentElement.parentElement.cloneNode(true);
         } else {
-          // eslint-disable-next-line no-console
-          console.error(`Popup content not found for id: ${id}`);
+          return;
         }
       }
+
+      const dialog = document.createElement(ArialModal.tagName);
+      dialog.setAttribute('modal', 'true');
+      if (attr) dialog.setAttribute('data-popup-content', attr);
+
+      const dialogContent = document.createElement('div');
+      dialogContent.classList.add('popup-content');
+      dialogContent.appendChild(content);
+      dialog.appendChild(dialogContent);
+
+      dialog.addEventListener('modalContentLoaded', () => {
+        if (attr.includes('carousel-container')) {
+          reinitializeCarousel(dialog, () => {
+            const focusables = dialog.getFocusables();
+            if (focusables.length > 0) focusables[0].focus();
+          });
+        } else {
+          const focusables = dialog.getFocusables();
+          if (focusables.length > 0) focusables[0].focus();
+        }
+      });
+
+      document.body.appendChild(dialog);
+      dialog.open();
     }
   });
 }
