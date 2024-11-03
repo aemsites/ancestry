@@ -146,7 +146,7 @@ export default function decorate(block) {
     );
 
     slide.classList.add('slide');
-    slide.style.transition = 'none';
+    // slide.style.transition = 'transform 0.5s ease-in-out';
 
     if (index === 0) {
       slide.classList.add('active');

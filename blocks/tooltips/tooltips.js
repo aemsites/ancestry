@@ -1,6 +1,12 @@
+let isTooltipInitialized = false;
+let currentDialog = null;
+let previousScreenWidth = window.innerWidth;
+
 export default function decorate(block) {
-  let currentDialog = null;
-  let previousScreenWidth = window.innerWidth;
+  if (isTooltipInitialized) {
+    return;
+  }
+  isTooltipInitialized = true;
 
   function closeExistingDialogs() {
     if (currentDialog) {
@@ -39,18 +45,17 @@ export default function decorate(block) {
 
       const viewportWidth = window.innerWidth;
 
-      let top = triggerRect.left + triggerRect.width / 2 - dialogRect.width / 2;
+      let top = triggerRect.top - dialogRect.height - 10;
       let left = triggerRect.left + triggerRect.width / 2 - dialogRect.width / 2;
 
-      if (left < 0) {
+      if (left < 10) {
         left = 10;
       }
-      if (left + dialogRect.width > viewportWidth) {
+      if (left + dialogRect.width > viewportWidth - 10) {
         left = viewportWidth - dialogRect.width - 10;
       }
 
       if (dialog.getAttribute('data-tooltip-position') === 'top') {
-        top = triggerRect.top - dialogRect.height - 10;
         triangle.style.borderBottom = 'none';
         triangle.style.borderTop = '10px solid #fff';
         triangle.style.left = `${triggerRect.left + triggerRect.width / 2 - 10}px`;
@@ -64,9 +69,9 @@ export default function decorate(block) {
       }
 
       const triangleRect = triangle.getBoundingClientRect();
-      if (triangleRect.left < 0) {
+      if (triangleRect.left < 10) {
         triangle.style.left = `10px`;
-      } else if (triangleRect.right > viewportWidth) {
+      } else if (triangleRect.right > viewportWidth - 10) {
         triangle.style.left = `${viewportWidth - 20}px`;
       }
 
@@ -117,7 +122,6 @@ export default function decorate(block) {
     };
   }
 
-  // Event listener for tooltip triggers and links
   document.addEventListener('click', (event) => {
     const triggerElement = event.target.closest('a[data-tooltip="true"]');
     if (triggerElement) {

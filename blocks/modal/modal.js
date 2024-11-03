@@ -1,6 +1,6 @@
 import { createVideoIframe } from '../../scripts/scripts.js';
 import { appendCarouselActions, createIndicators } from '../carousel/carousel.js';
-import { constants as ArialModal } from './aria-modal.js';
+import { constants as AriaModal } from './aria-modal.js';
 
 function reinitializeCarousel(dialog, callback) {
   const carouselBlocks = dialog.querySelectorAll('.carousel.block');
@@ -21,7 +21,7 @@ function reinitializeCarousel(dialog, callback) {
 }
 
 function closeExistingModals() {
-  document.querySelectorAll(ArialModal.tagName).forEach((modal) => {
+  document.querySelectorAll(AriaModal.tagName).forEach((modal) => {
     if (modal.close) {
       modal.close();
     } else {
@@ -64,7 +64,7 @@ export default function decorate(block) {
         }
       }
 
-      const dialog = document.createElement(ArialModal.tagName);
+      const dialog = document.createElement(AriaModal.tagName);
       dialog.setAttribute('modal', 'true');
       if (attr) dialog.setAttribute('data-popup-content', attr);
 
