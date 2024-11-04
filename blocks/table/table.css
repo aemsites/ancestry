@@ -55,6 +55,7 @@
   .table.product-compare tr {
       display: flex;
       flex-direction: row;
+      overflow-x: auto;
   }
 
   .table-general tbody tr:nth-of-type(3n) {
