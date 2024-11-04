@@ -17,9 +17,50 @@ import {
 const LANGUAGES = new Set(['en', 'es']);
 let language;
 
+export function decorateTooltipAndModalLinks(main) {
+  const links = main.querySelectorAll('a[href^="#"]');
+  const embedYoutubeModal = main.querySelectorAll('a[href*="youtube"]');
+
+  embedYoutubeModal.forEach((linkElement) => {
+    const href = linkElement.getAttribute('href');
+    linkElement.setAttribute('data-popup', 'true');
+    linkElement.setAttribute('data-youtube-video-url', href);
+  });
+
+  links.forEach((linkElement) => {
+    const href = linkElement.getAttribute('href');
+    const id = href.substring(1);
+
+    const targetElement = document.getElementById(id);
+
+    if (targetElement) {
+      const modalParent = targetElement.closest('.modal');
+      const tooltipParent = targetElement.closest('.tooltips');
+      const fragmentModalParent = targetElement.closest('.fragment');
+      if (modalParent) {
+        linkElement.setAttribute('data-popup', 'true');
+      } else if (tooltipParent) {
+        linkElement.setAttribute('data-tooltip', 'true');
+        linkElement.setAttribute('data-tooltip-id', id);
+      } else if (fragmentModalParent) {
+        linkElement.setAttribute('data-popup', 'true');
+        linkElement.setAttribute('data-fragment-id', id);
+        fragmentModalParent.setAttribute('data-fragment-id', id);
+        fragmentModalParent.setAttribute('data-popup-content', true);
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(`No matching container for link: ${linkElement}`);
+      }
+    } else {
+      // eslint-disable-next-line no-console
+      console.error(`Target element with ID ${id} not found for link: ${linkElement}`);
+    }
+  });
+}
+
 export function decorateTrademarks(container) {
-  const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§]|\(\d+\)|✓\s*ᐩ|✓|ᐩ)/g;
-  [...container.querySelectorAll('p, li, h1, h2, h3, h4, h5, h6')]
+  const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§ⓘ]|\(\d+\)|✓\s*ᐩ|✓|ᐩ)/g;
+  [...container.querySelectorAll('p, a, li, h1, h2, h3, h4, h5, h6, strong')]
     .filter((el) => !el.closest('.button-container') && !el.querySelector('.button'))
     .forEach((el) => {
       const nodes = Array.from(el.childNodes);
@@ -36,6 +77,9 @@ export function decorateTrademarks(container) {
               case 'ᐩ':
                 /* eslint-disable quotes */
                 return `<span class='plus'></span>`;
+              case 'ⓘ':
+                /* eslint-disable quotes */
+                return `<span class='icon-infor'></span>`;
               default:
                 if (/®|™|℠/.test(token)) {
                   const keyword = token.slice(0, -1);
@@ -73,6 +117,63 @@ export function getLanguageFromPath(pathname) {
 
 export function isHomepageUrl(curPath = window.location.pathname) {
   return curPath === `/${getLanguageFromPath(curPath)}/`;
+}
+
+export function createVideoIframe(videoUrl) {
+  function getYouTubeVideoId(url) {
+    const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|shorts\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[1].length === 11) ? match[1] : null;
+  }
+
+  function getEmbedUrl(videoId, videoParams) {
+    return `https://www.youtube.com/embed/${videoId}?${videoParams.toString()}`;
+  }
+
+  try {
+    let embedUrl = videoUrl;
+    const videoParams = new URLSearchParams({
+      controls: 1,
+      rel: 0,
+      modestbranding: 1,
+    });
+
+    const videoId = getYouTubeVideoId(videoUrl);
+    embedUrl = getEmbedUrl(videoId, videoParams);
+
+    const iframe = document.createElement('iframe');
+    iframe.setAttribute('src', embedUrl);
+    iframe.setAttribute('allowfullscreen', '');
+    iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+    iframe.style.width = '100%';
+    iframe.style.height = '100%';
+    return iframe;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error in createVideoIframe: ${error.message}`);
+    return null;
+  }
+}
+
+export function getYoutubeThumbnail(videoUrl) {
+  try {
+    const url = new URL(videoUrl);
+    let videoId = '';
+    if (url.hostname === 'youtu.be') {
+      videoId = url.pathname.slice(1);
+    } else if (url.hostname.includes('youtube.com') && url.searchParams.has('v')) {
+      videoId = url.searchParams.get('v');
+    } else if (url.pathname.includes('/embed/')) {
+      [, videoId] = url.pathname.split('/embed/');
+    }
+
+    if (!videoId) throw new Error('Invalid video ID');
+    return `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`;
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error(`Error in getYoutubeThumbnail: ${error.message}`);
+    return null;
+  }
 }
 
 /**
@@ -138,6 +239,7 @@ export function decorateMain(main) {
   // hopefully forward compatible button decoration
   decorateTrademarks(main);
   decorateButtons(main);
+  decorateTooltipAndModalLinks(main);
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);

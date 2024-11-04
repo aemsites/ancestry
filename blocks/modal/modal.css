@@ -1,0 +1,130 @@
+.modal.block {
+  display: none;
+}
+
+hlx-aria-modal {
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 999;
+}
+
+hlx-aria-modal .popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #262626dd;
+  z-index: 999;
+}
+
+hlx-aria-modal h1,
+hlx-aria-modal h2,
+hlx-aria-modal h3 {
+  font-family: ui-sans, "Helvetica Neue", Arial, sans-serif;
+  font-size: 1.5rem;
+  margin-bottom:1rem;
+}
+
+hlx-aria-modal p {
+  font-size: 1rem;
+}
+
+hlx-aria-modal [role="modal"]:has(img) p,
+hlx-aria-modal [role="modal"]:has(img) h1,
+hlx-aria-modal [role="modal"]:has(img) h2,
+hlx-aria-modal [role="modal"]:has(img) h3 {
+  text-align: center;
+}
+
+hlx-aria-modal .popup-window .popup-content {
+  flex: 1;
+}
+
+hlx-aria-modal [role="modal"] {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  width: 340px;
+  text-align: left;
+  z-index: 1000;
+  box-shadow: none;
+}
+
+hlx-aria-modal [role="modal"] ul {
+  margin-left: 0;
+  padding-left: 1rem; 
+}
+
+hlx-aria-modal [role="modal"] .popup-close,
+hlx-aria-modal [role="modal"] button[aria-label="close modal"] {
+  background: transparent;
+  border: 0;
+  border-radius: 5px;
+  cursor: pointer;
+  height: 28px;
+  width: 28px;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+hlx-aria-modal [role="modal"] .popup-close::before,
+hlx-aria-modal [role="modal"] button[aria-label="close modal"]::before {
+  font-family: ancestry-icon, sans-serif;
+  content: "\e657";
+  color: var(--text-color);
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 1;
+  display: inline-block;
+  text-align: center;
+}
+
+hlx-aria-modal [role="modal"][data-popup-content*="small"] .popup-close::before,
+hlx-aria-modal [role="modal"][data-popup-content*="small"] button[aria-label="close modal"]::before {
+  color: white;
+}
+
+hlx-aria-modal [data-popup-content="iframe-popup"]{
+  width:600px;
+  height:378px;
+  display: flex;
+}
+
+hlx-aria-modal [data-popup-content="iframe-popup"] iframe{
+  width: 100%;
+  height: 100%;
+  border: none;
+  box-shadow: none;
+}
+
+hlx-aria-modal [role="modal"][data-popup-content*="carousel-container"] {
+  width: 100%;
+  max-width: 920px;
+}
+
+hlx-aria-modal [role="modal"][data-popup-content*="carousel-container"][data-popup-content*="small"] {
+  width: 100%;
+  max-width: 600px;
+  padding: 0;
+}
+
+hlx-aria-modal[data-popup-content="section carousel-container"] [role="modal"] {
+  width: 80%;
+  max-width: 800px;
+}

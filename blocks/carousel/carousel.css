@@ -1,19 +1,17 @@
-/* Base styling for the carousel container and wrapper */
 .section.carousel-container {
   display: flex;
   justify-content: center;
   align-items: center;
   text-align: center;
-  width: 100%;
-  background-color: #d9e7d4;
-  font-size: 1.8rem;
   position: relative;
   padding: 2rem;
   margin: 0;
   box-sizing: border-box;
   overflow: hidden;
-  height: auto;
-  min-height: 300px;
+}
+
+.section.modal.carousel-container {
+  padding: 0;
 }
 
 .carousel-wrapper {
@@ -24,71 +22,52 @@
   align-items: center;
 }
 
-.carousel.block {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
+.carousel {
   position: relative;
-  max-width: 100%;
+  width: 100%;
+  min-height: 600px;
   overflow: hidden;
-  min-height: 500px; /* Set a minimum height */
 }
 
-/* Carousel items (individual slides) */
-.carousel.block > div {
-  display: none;
-  transition: opacity 0.5s ease;
+.section.small .carousel {
+  min-height: 400px;
+}
+
+.carousel > div {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: transform 0.2s ease-in-out, opacity 0.2s ease-in-out;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.carousel > div.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 2;
+}
+
+.carousel > div.previous,
+.carousel > div.next {
+  opacity: 0.9;
+  visibility: visible;
   z-index: 1;
 }
 
-.carousel.block > div.active {
+.carousel picture img {
+  width: auto;
+  height: auto;
+  max-width: 90%;
   display: block;
-  opacity: 1;
-  transition: opacity 0.5s ease;
+  margin: 0 auto;
+  object-fit: cover;
 }
 
-/* Content within each carousel slide */
-.carousel.block > div > div {
-  min-height: 500px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  max-width: 100%;
-  padding: 3rem;
-  position: relative;
-}
-
-.carousel.block > div > div::before,
-.carousel.block > div > div::after {
-  content: none;
-}
-
-/* Add left and right quotes to the carousel block */
-.carousel.block::before {
-  content: url('../../icons/quote-left.png');
-  position: absolute;
-  top: 20%;
-  left: 5%;
-  width: 50px;
-  height: auto;
-  z-index: 2;
-}
-
-.carousel.block::after {
-  content: url('../../icons/quote-right.png');
-  position: absolute;
-  bottom: 20%;
-  right: 5%;
-  width: 50px;
-  height: auto;
-  z-index: 2;
-}
-
-/* Icon styling */
 .carousel .icon {
   display: inline-block;
   margin: 0.5rem;
@@ -101,7 +80,6 @@
   max-width: 100%;
 }
 
-/* Paragraph styling */
 .carousel.block p {
   text-align: center;
   margin: 0.5rem 1rem;
@@ -116,39 +94,36 @@
   font-size: 1.1rem;
 }
 
-/* Indicators styling */
-.carousel.block .indicators {
-  position: absolute;
-  bottom: 5%;
-  left: 50%;
-  transform: translateX(-50%);
-  display: flex;
-  justify-content: center;
-  padding: 0;
-  margin: 0;
-  z-index: 3;
+.carousel .button-container {
+  text-align: center;
+  width: 100%;
+  white-space: normal;
+  overflow: visible;
+  margin-top: auto;
 }
 
-.carousel.block .indicators li {
-  list-style: none;
-  width: 12px;
-  height: 12px;
-  background-color: var(--dark-color);
-  border-radius: 1rem;
-  margin: 0 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease;
+.carousel .button-container .button {
+  margin: auto;
+  font-weight: 700;
+  overflow: visible;
+  white-space: wrap;
+  width: auto;
+  word-break: keep-all;
+  margin-bottom: 0.5rem;
 }
 
-.carousel.block .indicators li.active {
-  background-color: var(--text-color);
+.carousel.block .button-container a {
+  background-color: var(--button-blue-color);
 }
 
-.carousel.block .indicators li:hover {
-  background-color: var(--light-color);
+.carousel.block .button-container a:hover {
+  background-color: var(--button-blue-hover-color);
 }
 
-/* Carousel navigation buttons (Previous/Next) */
+.carousel.block .button-container a:active {
+  background-color: var(--button-blue-active-color);
+}
+
 .carousel-actions {
   position: absolute;
   top: 50%;
@@ -157,46 +132,183 @@
   justify-content: space-between;
   align-items: center;
   transform: translateY(-50%);
-  pointer-events: none;
   z-index: 4;
 }
 
 .carousel-actions button {
-  background-color: transparent;
+  background-color: #e2e0dd;
   border: none;
   padding: 0;
   cursor: pointer;
   pointer-events: all;
+  border-radius: 50%;
+  height: 50px;
+  width: 50px;
 }
 
 .carousel-actions .previous::before,
 .carousel-actions .next::before {
-  content: '';
-  display: inline-block;
-  width: 50px;
-  height: 50px;
-  mask-size: contain;
-  mask-repeat: no-repeat;
-  background-color: var(--light-color);
+  font-family: ancestry-icon, sans-serif;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #383838;
+  background-color: transparent;
 }
 
 .carousel-actions .previous::before {
-  mask-image: url('../../icons/arrow-prev.svg');
+  content: "\e620";
 }
 
 .carousel-actions .next::before {
-  mask-image: url('../../icons/arrow-next.svg');
+  content: "\e61f";
 }
 
-/* Hide navigation buttons and indicators when there's only one slide */
-.carousel-wrapper.single-slide .carousel-actions,
-.carousel-wrapper.single-slide .indicators {
+.carousel-indicators {
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 3;
+}
+
+.carousel-indicators .dot {
+  display: block;
+  width: 12px;
+  height: 12px;
+  background-color: #ccc;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+hlx-aria-modal .carousel-indicators .dot {
   display: none;
 }
 
-/* Hide carousel container on smaller screens */
+[data-popup-content*="small"] .carousel-indicators .dot {
+  display: block;
+}
+
+.carousel-indicators .dot.active,
+.carousel-indicators .dot:focus {
+  background-color: #b8d94c;
+}
+
+.carousel-wrapper.single-slide .carousel-actions,
+.carousel-wrapper.single-slide .carousel-indicators {
+  display: none;
+}
+
+.section .carousel .next h1,
+.section .carousel .previous h1,
+.section .carousel .next h2,
+.section .carousel .previous h2 {
+  color: transparent;
+}
+
+.section.section-dark-gray {
+  background-color: #2d3136;
+  padding: 0 2rem;
+}
+
+.section.section-dark-blue {
+  background-color: #022e50;
+}
+
+.section.section-dark-gray .carousel h2 {
+  font-family: ui-sans, 'Helvetica Neue', Arial, sans-serif;
+  color: #a9a9a9;
+  font-size: 2rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.section.section-dark-blue .carousel h2 {
+  font-family: ui-sans, 'Helvetica Neue', Arial, sans-serif;
+  color: white;
+  font-size: 1rem;
+  margin: 0.5rem 0;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+.section.section-dark-gray .carousel strong {
+  color: white;
+  font-size: 1.4rem;
+  margin-bottom: 2rem;
+  font-weight: 700;
+  -webkit-font-smoothing: antialiased;
+}
+
+.section.section-dark-blue .carousel p {
+  color: white;
+  font-size: 1rem;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  max-width: 80%;
+  margin: auto;
+  padding: 0.5rem 0;
+}
+
+.section.section-dark-gray .carousel p:not(:has(picture)) {
+  color: white;
+  font-size: 0.6em;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  max-width: 80%;
+  margin: auto;
+}
+
 @media (max-width: 900px) {
- .section.carousel-container {
-  display:none;
- }
+  .section.carousel-container.desktop {
+    display: none;
+  }
+
+  .section.carousel-container.mobile {
+    display: block;
+  }
+
+  .section.section-dark-gray .carousel h2 {
+    font-size: 1.2em;
+    margin: 2rem;
+  }
+
+  .carousel {
+    min-height: 580px;
+  }
+
+  .section.section-dark-gray .carousel p strong {
+    font-size: 1.5em;
+  }
+
+  .section.section-dark-gray .carousel p:not(:has(picture)) {
+    font-size: 0.6em;
+    max-width: 80%;
+  }
+}
+
+@media (max-width: 600px) {
+  .carousel {
+    min-height: 430px;
+  }
+
+  .section.small .carousel {
+    min-height: 330px;
+  }
+
+  .section.section-dark-gray .carousel p:not(:has(picture)) {
+    font-size: 0.5em;
+    max-width: 80%;
+    line-height: 1.3;
+  }
+
+  .section.section-dark-gray .carousel h2 {
+    font-size: 1rem;
+    margin: 2rem;
+  }
 }
