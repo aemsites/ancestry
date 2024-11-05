@@ -117,7 +117,7 @@ function isCTAButton(element) {
   if (!linkElement || !linkElement.classList.contains('button')) return false;
 
   const buttonText = normalizeText(linkElement.textContent);
-  const ctaPhrases = ['buy', 'comprar', 'acheter', 'kaufen', 'acquista'];
+  const ctaPhrases = ['buy', 'comprar'];
   return ctaPhrases.some((phrase) => buttonText.includes(phrase));
 }
 

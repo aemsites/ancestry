@@ -116,6 +116,12 @@ hlx-aria-modal [data-popup-content="iframe-popup"] iframe {
   box-shadow: none;
 }
 
+hlx-aria-modal [data-popup-content="iframe-popup"] .youtube-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
 hlx-aria-modal [role="modal"][data-popup-content*="carousel-container"] {
   width: 100%;
   max-width: 920px;
