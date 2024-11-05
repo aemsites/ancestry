@@ -118,7 +118,7 @@ function isCTAButton(element) {
 
   const buttonText = normalizeText(linkElement.textContent);
   const ctaPhrases = ['buy', 'comprar', 'acheter', 'kaufen', 'acquista'];
-  return ctaPhrases.some(phrase => buttonText.includes(phrase));
+  return ctaPhrases.some((phrase) => buttonText.includes(phrase));
 }
 
 function decorateDnaCards(block) {
