@@ -310,6 +310,10 @@ main > .section.center {
   padding-top: 3rem;
 }
 
+main > .section.large-padding-top {
+  padding-top: 8rem;
+ }
+ 
 main > .section.section-learn-more {
   margin: 0;
 }
