@@ -1,3 +1,8 @@
+  .section.table-container.center {
+    margin:0;
+    padding-top:1rem;
+  }
+
   .table table {
       font-size: var(--body-font-size-xs);
   }
@@ -60,6 +65,7 @@
   .table-general tbody tr:nth-of-type(3n) {
       display: flex;
       justify-content: center;
+      padding: 1rem 0;
   }
 
   /* no header variant */

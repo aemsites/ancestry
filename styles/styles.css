@@ -343,16 +343,20 @@ main > .section.section-warm-gray {
   background-color: #F6F3F0;
 }
 
+main > .section.section-dark-gray {
+  background-color: #2d3136;
+}
+
+main > .section.section-light-gray {
+  background-color:#f5f5f5
+}
+
 main > .section.section-pale-green {
   background-color: #E4EFE7;
 }
 
 main > .section.section-dark-green {
   background-color: #CEDCCA;
-}
-
-main > .section.section-dark-gray {
-  background-color: #2d3136;
 }
 
 main > .section > div {
@@ -431,6 +435,7 @@ main .section.highlight {
 .section.offer-details h3 {
   font-size: 14.5px;
   text-align: center;
+  font-family: var(--body-font-family);
 }
 
 main > .section.section-learn-more p:last-child {
