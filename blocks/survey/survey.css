@@ -32,7 +32,7 @@
     max-height: 0;
     overflow: hidden;
     animation: show-container 1s forwards, expand-height 1s ease-in-out;
-    animation-delay: 4s;
+    animation-delay: 5s;
     animation-fill-mode: forwards;
     clear: both;
     background-color: var(--survey-background-color);
