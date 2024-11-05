@@ -57,13 +57,14 @@ footer .footer-select select {
 }
 
 footer .footer-legal li {
-  padding: 0;
+  padding: 10px;
 }
 
 footer .footer-legal li:not(:first-child)::before {
   content: "·";
   font-weight: 700;
-  margin: 0 4px;
+  left: -10px;
+  position: relative;
 }
 
 footer .footer-legal li a, footer .footer-legal li:first-child {
