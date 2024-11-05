@@ -59,6 +59,7 @@
     height: 22px;
     display: flex;
     align-items: center;
+    padding-right: 10px;
   }
   
   header nav .nav-hamburger button {
@@ -213,6 +214,11 @@
     display: none;
   }
 
+  header .product-homepage .nav-brand a {
+    position: relative;
+    top: 3px;
+  }
+
   header .product-homepage nav .nav-sections ul a {
     text-transform: none;
     margin-left: 15px;
@@ -235,10 +241,11 @@
   }
   
   /* product header CSS */
+
   header .product-homepage .nav-brand img {
     width: 115px;
     height: 21px;
-    margin: 16px 34px 0 12px;
+    margin: 0 10px;
   }
   
   header .product-homepage nav .nav-tools ul > li a {
