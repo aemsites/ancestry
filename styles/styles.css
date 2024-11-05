@@ -286,6 +286,13 @@ main img {
   width: 100%;
 }
 
+.trademark{
+  font-size: 0.35em;
+  position: relative;
+  top: -0.5em;
+  left: -0.3em;
+}
+
 /* sections */
 main > .section {
   margin: 40px 0;
