@@ -42,10 +42,17 @@ function appendOptions(select, subItems) {
 function wrapAndReplace(listWrapper, select, className, isHideLanguageDropdown) {
   const div = document.createElement('div');
   div.classList.add(`${className}-div`);
+  const firstChild = listWrapper.previousElementSibling;
+  const label = document.createElement('label');
+  // add for attribute to label
+  label.setAttribute('for', select.className);
+  label.textContent = firstChild.textContent;
+  div.appendChild(label);
   div.appendChild(select);
   div.insertBefore(listWrapper.previousElementSibling, select);
 
   listWrapper.replaceWith(div);
+  firstChild.remove();
 
   if (className === 'select-language' && isHideLanguageDropdown) {
     div.style.display = 'none';
@@ -83,6 +90,7 @@ function convertListToDropdown(listWrappers, isHideLanguageDropdown) {
 
     if (className) {
       select.classList.add(className);
+      select.id = className;
       wrapAndReplace(listWrapper, select, className, isHideLanguageDropdown);
       addChangeEvent(select);
     }

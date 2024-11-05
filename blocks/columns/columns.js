@@ -1,5 +1,4 @@
 import { getYoutubeThumbnail } from '../../scripts/scripts.js';
-import { createOptimizedPicture } from '../../scripts/aem.js';
 
 export default function decorate(block) {
   const cols = [...block.firstElementChild.children];
@@ -12,7 +11,6 @@ export default function decorate(block) {
       const pic = col.querySelector('picture');
       if (pic) {
         col.classList.add('columns-img-col');
-        pic.replaceWith(createOptimizedPicture(pic.querySelector('img').src, pic.querySelector('img').alt, false, [{ width: '750' }]));
       } else {
         col.classList.add('text-content');
       }

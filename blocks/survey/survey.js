@@ -22,15 +22,13 @@ function createRadioFromList() {
     label.innerText = value;
 
     listItems[i].innerHTML = '';
-    const outerLabel = document.createElement('label');
-    outerLabel.appendChild(radioInput);
-    outerLabel.appendChild(label);
-    listItems[i].appendChild(outerLabel);
+    listItems[i].appendChild(label);
+    listItems[i].appendChild(radioInput);
   }
 }
 
 export default async function decorate(block) {
-  // create a dix with a cross button when clicked do same as close button
+  // create a div with a cross button when clicked do same as close button
   if (block.classList.contains('animate')) {
     const closeDiv = document.createElement('div');
     closeDiv.classList.add('close-div');
@@ -38,6 +36,11 @@ export default async function decorate(block) {
     block.prepend(closeDiv);
 
     createRadioFromList();
+
+    const dismissButton = block.querySelector('p a[title=Dismiss]');
+    if (dismissButton) {
+      dismissButton.setAttribute('href', '#');
+    }
   }
 
   document.querySelectorAll('.survey-container').forEach((container) => {
@@ -96,7 +99,6 @@ export default async function decorate(block) {
 
   const buttons = [dismissButton, closeButton].filter((button) => button !== null);
   buttons.forEach((button) => {
-    button.removeAttribute('href');
     button.addEventListener('click', () => {
       surveyContainer.classList.add('hidden');
     });
