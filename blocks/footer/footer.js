@@ -90,6 +90,7 @@ function convertListToDropdown(listWrappers, isHideLanguageDropdown) {
 
     if (className) {
       select.classList.add(className);
+      select.id = className;
       wrapAndReplace(listWrapper, select, className, isHideLanguageDropdown);
       addChangeEvent(select);
     }
