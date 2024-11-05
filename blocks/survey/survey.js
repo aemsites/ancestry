@@ -38,6 +38,11 @@ export default async function decorate(block) {
     block.prepend(closeDiv);
 
     createRadioFromList();
+
+    const dismissButton = block.querySelector('p a[title=Dismiss]');
+    if (dismissButton) {
+      dismissButton.setAttribute('href', '#');
+    }
   }
 
   document.querySelectorAll('.survey-container').forEach((container) => {
@@ -96,7 +101,7 @@ export default async function decorate(block) {
 
   const buttons = [dismissButton, closeButton].filter((button) => button !== null);
   buttons.forEach((button) => {
-    button.removeAttribute('href');
+    // button.removeAttribute('href');
     button.addEventListener('click', () => {
       surveyContainer.classList.add('hidden');
     });
