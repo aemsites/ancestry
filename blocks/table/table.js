@@ -1,9 +1,6 @@
 function buildCell(rowIndex) {
   const cell = rowIndex ? document.createElement('td') : document.createElement('th');
-  if (!rowIndex) {
-    cell.setAttribute('scope', 'col');
-    cell.setAttribute('role', 'columnheader');
-  }
+  if (!rowIndex) cell.setAttribute('scope', 'col');
   return cell;
 }
 
