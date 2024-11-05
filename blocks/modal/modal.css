@@ -100,13 +100,16 @@ hlx-aria-modal [role="modal"][data-popup-content*="small"] button[aria-label="cl
   color: white;
 }
 
-hlx-aria-modal [data-popup-content="iframe-popup"]{
-  width:600px;
-  height:378px;
+hlx-aria-modal [data-popup-content="iframe-popup"] {
+  width: min(90vw, 760px);
+  height: 450px;
+  min-width: 260px;
+  max-width: 100%;
+  margin: auto;
   display: flex;
 }
 
-hlx-aria-modal [data-popup-content="iframe-popup"] iframe{
+hlx-aria-modal [data-popup-content="iframe-popup"] iframe {
   width: 100%;
   height: 100%;
   border: none;
@@ -127,4 +130,11 @@ hlx-aria-modal [role="modal"][data-popup-content*="carousel-container"][data-pop
 hlx-aria-modal[data-popup-content="section carousel-container"] [role="modal"] {
   width: 80%;
   max-width: 800px;
+}
+
+@media (max-width: 600px) {
+  hlx-aria-modal [data-popup-content="iframe-popup"] {
+    width: 95vw;
+    height: min(40vh, 350px);
+  }
 }
