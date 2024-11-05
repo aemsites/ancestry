@@ -44,6 +44,8 @@ function wrapAndReplace(listWrapper, select, className, isHideLanguageDropdown) 
   div.classList.add(`${className}-div`);
   const firstChild = listWrapper.previousElementSibling;
   const label = document.createElement('label');
+  // add for attribute to label
+  label.setAttribute('for', select.className);
   label.textContent = firstChild.textContent;
   div.appendChild(label);
   div.appendChild(select);
