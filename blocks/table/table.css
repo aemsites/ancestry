@@ -1,5 +1,4 @@
   .table table {
-      display: block;
       font-size: var(--body-font-size-xs);
   }
 
@@ -137,6 +136,16 @@
       position: relative;
       top: -0.5em;
       font-weight: 700 !important;
+  }
+
+  @media (max-width: 410px) {
+      .table.product-compare th p {
+          font-size: 14px;
+      }
+
+      .table.product-compare th p:nth-child(1) {
+        min-height: 90px;
+      }
   }
 
   .table-general {
