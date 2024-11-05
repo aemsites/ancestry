@@ -99,7 +99,6 @@ export default async function decorate(block) {
 
   const buttons = [dismissButton, closeButton].filter((button) => button !== null);
   buttons.forEach((button) => {
-    // button.removeAttribute('href');
     button.addEventListener('click', () => {
       surveyContainer.classList.add('hidden');
     });
