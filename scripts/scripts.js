@@ -60,46 +60,63 @@ export function decorateTooltipAndModalLinks(main) {
 
 export function decorateTrademarks(container) {
   const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§ⓘ]|\(\d+\)|✓\s*ᐩ|✓|ᐩ|✕)/g;
-  [...container.querySelectorAll('p, a, li, h1, h2, h3, h4, h5, h6, strong, div')]
-    .filter((el) => !el.closest('.button-container') && !el.querySelector('.button'))
-    .forEach((el) => {
-      const nodes = Array.from(el.childNodes);
-      nodes.forEach((node) => {
-        if (node.nodeType === Node.TEXT_NODE) {
-          const modifiedContent = node.textContent.replace(REFERENCE_TOKENS, (token) => {
-            switch (token) {
-              case '✓':
-                /* eslint-disable quotes */
-                return `<span class='tick'></span>`;
-              case '✓ᐩ':
-                /* eslint-disable quotes */
-                return `<span class='tickplus'></span>`;
-              case 'ᐩ':
-                /* eslint-disable quotes */
-                return `<span class='plus'></span>`;
-              case 'ⓘ':
-                /* eslint-disable quotes */
-                return `<span class='icon-infor'></span>`;
-              case '✕':
-                /* eslint-disable quotes */
-                return `<span class='cross'></span>`;
-              default:
-                if (/®|™|℠/.test(token)) {
-                  const keyword = token.slice(0, -1);
-                  const symbol = token.slice(-1);
-                  return `<span class='keyword'>${keyword}<sup class="trademark">${symbol}</sup></span>`;
-                }
-                return `<sup class='superscript'>${token}</sup>`;
-            }
-          });
-          if (modifiedContent !== node.textContent) {
-            const wrapper = document.createElement('span');
-            wrapper.innerHTML = modifiedContent;
-            node.replaceWith(...wrapper.childNodes);
+
+  const elements = [...container.querySelectorAll('p, a, li, h1, h2, h3, h4, h5, h6, strong, div')]
+    .filter((el) => !el.closest('.button-container') && !el.querySelector('.button') && !el.querySelector('sup')
+      && REFERENCE_TOKENS.test(el.innerHTML));
+
+  const processElement = (el) => {
+    el.innerHTML = el.innerHTML.replace(REFERENCE_TOKENS, (token) => {
+      switch (token) {
+        case '✓':
+          return '<span class="tick"></span>';
+        case '✓ᐩ':
+          return '<span class="tickplus"></span>';
+        case 'ᐩ':
+          return '<span class="plus"></span>';
+        case 'ⓘ':
+          return '<span class="icon-infor"></span>';
+        case '✕':
+          return '<span class="cross"></span>';
+        default:
+          if (/®|™|℠/.test(token)) {
+            const keyword = token.slice(0, -1);
+            const symbol = token.slice(-1);
+            return `<span class="keyword">${keyword}<sup class="trademark">${symbol}</sup></span>`;
           }
-        }
-      });
+          return `<sup class="superscript">${token}</sup>`;
+      }
     });
+  };
+
+  const scheduleProcessing = (elementsToProcess, index = 0) => {
+    if (index >= elementsToProcess.length) return;
+
+    const CHUNK_SIZE = 10;
+    const slice = elementsToProcess.slice(index, index + CHUNK_SIZE);
+
+    slice.forEach((el) => processElement(el));
+    const callback = () => scheduleProcessing(elementsToProcess, index + CHUNK_SIZE);
+
+    if ('requestIdleCallback' in window) {
+      requestIdleCallback(callback);
+    } else {
+      setTimeout(callback, 0);
+    }
+  };
+  scheduleProcessing(elements);
+}
+
+if (!window.requestIdleCallback) {
+  window.requestIdleCallback = function requestIdleCallback(handler) {
+    return setTimeout(() => {
+      const start = Date.now();
+      handler({
+        didTimeout: false,
+        timeRemaining: () => Math.max(0, 50 - (Date.now() - start)),
+      });
+    }, 1);
+  };
 }
 
 export function getLanguageFromPath(pathname) {
