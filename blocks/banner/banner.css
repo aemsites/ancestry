@@ -75,6 +75,10 @@
   background-color: var(--banner-green-background-color);
 }
 
+.section.banner-container .banner-wrapper .banner.dark-green-bg {
+  background-color: var(--banner-green-dark-background-color);
+}
+
 .section.banner-container .banner-wrapper .banner.black-bg {
   background-color: var(--banner-black-background-color);
 }
