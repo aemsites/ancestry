@@ -129,28 +129,53 @@ export function createVideoIframe(videoUrl) {
     return (match && match[1].length === 11) ? match[1] : null;
   }
 
-  function getEmbedUrl(videoId, videoParams) {
-    return `https://www.youtube.com/embed/${videoId}?${videoParams.toString()}`;
-  }
-
   try {
-    let embedUrl = videoUrl;
-    const videoParams = new URLSearchParams({
-      controls: 1,
-      rel: 0,
-      modestbranding: 1,
-    });
-
     const videoId = getYouTubeVideoId(videoUrl);
-    embedUrl = getEmbedUrl(videoId, videoParams);
+    const wrapper = document.createElement('div');
+    wrapper.classList.add('youtube-wrapper');
+    wrapper.setAttribute('role', 'region');
+    wrapper.setAttribute('aria-label', 'YouTube video player');
+    wrapper.setAttribute('tabindex', '0');
 
     const iframe = document.createElement('iframe');
-    iframe.setAttribute('src', embedUrl);
+    iframe.setAttribute('src', `https://www.youtube.com/embed/${videoId}?enablejsapi=1&controls=1&rel=0&modestbranding=1`);
     iframe.setAttribute('allowfullscreen', '');
     iframe.setAttribute('allow', 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture');
+    iframe.setAttribute('title', 'YouTube video player');
     iframe.style.width = '100%';
     iframe.style.height = '100%';
-    return iframe;
+    iframe.setAttribute('frameborder', '0');
+
+    let isPlaying = false;
+
+    wrapper.addEventListener('keydown', (e) => {
+      if (e.code === 'Space' && !e.repeat) {
+        e.preventDefault();
+        const message = isPlaying ? 'pauseVideo' : 'playVideo';
+        iframe.contentWindow.postMessage(JSON.stringify({
+          event: 'command',
+          func: message,
+        }), '*');
+        isPlaying = !isPlaying;
+      }
+    });
+
+    window.addEventListener('message', (event) => {
+      if (event.source === iframe.contentWindow) {
+        try {
+          const data = JSON.parse(event.data);
+          if (data.event === 'onStateChange') {
+            isPlaying = data.info === 1;
+          }
+        } catch (e) {
+          // eslint-disable-next-line no-console
+          console.error('Error in createVideoIframe', e);
+        }
+      }
+    });
+
+    wrapper.appendChild(iframe);
+    return wrapper;
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error(`Error in createVideoIframe: ${error.message}`);

@@ -44,7 +44,6 @@ function formatPrice(element) {
   }
 }
 
-// normalize text
 function normalizeText(text) {
   return text
     .replace(/[\u2018\u2019\u201A\u201B\u2032\u2035]/g, '\'')
@@ -113,6 +112,15 @@ function setupAccordion(cardBody) {
   }
 }
 
+function isCTAButton(element) {
+  const linkElement = element.querySelector('a');
+  if (!linkElement || !linkElement.classList.contains('button')) return false;
+
+  const buttonText = normalizeText(linkElement.textContent);
+  const ctaPhrases = ['buy', 'comprar'];
+  return ctaPhrases.some((phrase) => buttonText.includes(phrase));
+}
+
 function decorateDnaCards(block) {
   const firstDiv = block.querySelector(':scope > div:first-child');
 
@@ -146,9 +154,8 @@ function decorateDnaCards(block) {
     for (; idx < productElements.length; idx += 1) {
       const elem = productElements[idx];
 
-      const linkElement = elem.querySelector('a');
-      if (linkElement && normalizeText(linkElement.textContent).includes('buy now')) {
-        elem.classList.add('buy-now-button');
+      if (isCTAButton(elem)) {
+        elem.classList.add('cta-button');
         productGroup.appendChild(elem);
         idx += 1;
         break;
