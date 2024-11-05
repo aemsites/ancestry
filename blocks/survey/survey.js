@@ -45,7 +45,9 @@ export default async function decorate(block) {
 
   document.querySelectorAll('.survey-container').forEach((container) => {
     if (container.querySelector('.animate')) {
-      container.classList.add('animate-container');
+      window.requestAnimationFrame(() => {
+        container.classList.add('animate-container');
+      });
     } else if (container.querySelector('.fixed')) {
       container.classList.add('fixed-container');
     }
