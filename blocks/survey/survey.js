@@ -28,30 +28,26 @@ function createRadioFromList() {
 }
 
 export default async function decorate(block) {
-  // create a div with a cross button when clicked do same as close button
-  if (block.classList.contains('animate')) {
-    const closeDiv = document.createElement('div');
-    closeDiv.classList.add('close-div');
-    closeDiv.innerHTML = '<a href="#" class="close-button">X</a>';
-    block.prepend(closeDiv);
-
+  const closeButtonTemplate = '<div class="close-div"><a href="#" class="close-button">X</a></div>';
+  const isAnimated = block.classList.contains('animate');
+  if (isAnimated) {
+    block.insertAdjacentHTML('afterbegin', closeButtonTemplate);
     createRadioFromList();
-
-    const dismissButton = block.querySelector('p a[title=Dismiss]');
+    const dismissButton = block.querySelector('[title="Dismiss"]');
     if (dismissButton) {
-      dismissButton.setAttribute('href', '#');
+      dismissButton.href = '#';
     }
   }
 
-  document.querySelectorAll('.survey-container').forEach((container) => {
-    if (container.querySelector('.animate')) {
-      window.requestAnimationFrame(() => {
-        container.classList.add('animate-container');
-      });
-    } else if (container.querySelector('.fixed')) {
-      container.classList.add('fixed-container');
-    }
-  });
+  const container = block.closest('.survey-container');
+  if (!container) return;
+  if (isAnimated) {
+    requestAnimationFrame(() => {
+      container.classList.add('animate-container');
+    });
+  } else if (block.classList.contains('fixed')) {
+    container.classList.add('fixed-container');
+  }
 
   document.querySelectorAll('.animate input[type="radio"]').forEach((radio) => {
     radio.addEventListener('change', () => {
@@ -96,13 +92,12 @@ export default async function decorate(block) {
 
   // close survey on Dismiss/Close button click
   const dismissButton = document.querySelector('.animate .button-container:nth-of-type(2) a:first-of-type');
-  const closeButton = document.querySelector('.close-button');
-  const surveyContainer = document.querySelector('.survey-container.animate-container');
+  const closeButtonElement = document.querySelector('.close-button');
 
-  const buttons = [dismissButton, closeButton].filter((button) => button !== null);
+  const buttons = [dismissButton, closeButtonElement].filter((button) => button !== null);
   buttons.forEach((button) => {
     button.addEventListener('click', () => {
-      surveyContainer.classList.add('hidden');
+      container.classList.add('hidden');
     });
   });
 }

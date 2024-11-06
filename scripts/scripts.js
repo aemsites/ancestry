@@ -59,64 +59,149 @@ export function decorateTooltipAndModalLinks(main) {
 }
 
 export function decorateTrademarks(container) {
-  const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§ⓘ]|\(\d+\)|✓\s*ᐩ|✓|ᐩ|✕)/g;
+  const REFERENCE_TOKENS = /(✓\s*ᐩ|✓ᐩ|✓|ⓘ|ᐩ|✕|\w+[®™℠]|\*+|[†‡¤∞§])/;
 
-  const elements = [...container.querySelectorAll('p, a, li, h1, h2, h3, h4, h5, h6, strong, div')]
-    .filter((el) => !el.closest('.button-container') && !el.querySelector('.button') && !el.querySelector('sup')
-      && REFERENCE_TOKENS.test(el.innerHTML));
-
-  const processElement = (el) => {
-    el.innerHTML = el.innerHTML.replace(REFERENCE_TOKENS, (token) => {
-      switch (token) {
-        case '✓':
-          return '<span class="tick"></span>';
-        case '✓ᐩ':
-          return '<span class="tickplus"></span>';
-        case 'ᐩ':
-          return '<span class="plus"></span>';
-        case 'ⓘ':
-          return '<span class="icon-infor"></span>';
-        case '✕':
-          return '<span class="cross"></span>';
-        default:
-          if (/®|™|℠/.test(token)) {
-            const keyword = token.slice(0, -1);
-            const symbol = token.slice(-1);
-            return `<span class="keyword">${keyword}<sup class="trademark">${symbol}</sup></span>`;
-          }
-          return `<sup class="superscript">${token}</sup>`;
+  const createReplacementNode = (() => {
+    const cache = new Map();
+    return (text) => {
+      if (cache.has(text)) {
+        return cache.get(text).cloneNode(true);
       }
+
+      let replacementNode;
+      switch (text) {
+        case '✓':
+          replacementNode = document.createElement('span');
+          replacementNode.className = 'tick';
+          break;
+        case '✓ᐩ':
+        case '✓ ᐩ':
+          replacementNode = document.createElement('span');
+          replacementNode.className = 'tickplus';
+          break;
+        case 'ᐩ':
+          replacementNode = document.createElement('span');
+          replacementNode.className = 'plus';
+          break;
+        case 'ⓘ':
+          replacementNode = document.createElement('span');
+          replacementNode.className = 'icon-infor';
+          break;
+        case '✕':
+          replacementNode = document.createElement('span');
+          replacementNode.className = 'cross';
+          break;
+        default: {
+          const symbol = text.slice(-1);
+          if (['®', '™', '℠'].includes(symbol)) {
+            const keyword = text.slice(0, -1);
+            const span = document.createElement('span');
+            if (keyword) {
+              span.appendChild(document.createTextNode(keyword));
+            }
+            const trademarkSpan = document.createElement('span');
+            trademarkSpan.className = 'trademark';
+            trademarkSpan.textContent = symbol;
+            span.appendChild(trademarkSpan);
+            replacementNode = span;
+          } else {
+            const supSpan = document.createElement('span');
+            supSpan.className = 'superscript';
+            supSpan.textContent = text;
+            replacementNode = supSpan;
+          }
+          break;
+        }
+      }
+
+      cache.set(text, replacementNode.cloneNode(true));
+      return replacementNode;
+    };
+  })();
+
+  const walker = document.createTreeWalker(
+    container,
+    NodeFilter.SHOW_TEXT,
+    {
+      acceptNode: (node) => {
+        const parent = node.parentNode;
+
+        if (parent.nodeType === Node.ELEMENT_NODE) {
+          const tagName = parent.tagName.toLowerCase();
+          if (['script', 'style', 'textarea', 'code', 'pre'].includes(tagName)) {
+            return NodeFilter.FILTER_REJECT;
+          }
+
+          if (parent.classList.contains('button-container')
+            || parent.classList.contains('button') || parent.tagName === 'SUP'
+            || parent.isContentEditable || parent.hasAttribute('contenteditable')) {
+            return NodeFilter.FILTER_REJECT;
+          }
+        }
+        return REFERENCE_TOKENS.test(node.nodeValue)
+          ? NodeFilter.FILTER_ACCEPT
+          : NodeFilter.FILTER_SKIP;
+      },
+    },
+  );
+
+  const processNodes = (deadline) => {
+    const chunk = [];
+    let node = walker.nextNode();
+
+    while (node && chunk.length < 50
+      && (deadline.timeRemaining() > 0 || deadline.didTimeout)) {
+      chunk.push(node);
+      node = walker.nextNode();
+    }
+
+    if (chunk.length === 0) {
+      return false;
+    }
+
+    chunk.forEach((textNode) => {
+      const parts = textNode.nodeValue.split(REFERENCE_TOKENS);
+      if (parts.length <= 1) return;
+
+      const fragment = document.createDocumentFragment();
+      parts.forEach((part) => {
+        if (!part) return;
+        if (REFERENCE_TOKENS.test(part)) {
+          fragment.appendChild(createReplacementNode(part));
+        } else {
+          fragment.appendChild(document.createTextNode(part));
+        }
+      });
+
+      textNode.parentNode.replaceChild(fragment, textNode);
     });
+
+    return true;
   };
 
-  const scheduleProcessing = (elementsToProcess, index = 0) => {
-    if (index >= elementsToProcess.length) return;
-
-    const CHUNK_SIZE = 10;
-    const slice = elementsToProcess.slice(index, index + CHUNK_SIZE);
-
-    slice.forEach((el) => processElement(el));
-    const callback = () => scheduleProcessing(elementsToProcess, index + CHUNK_SIZE);
+  const scheduleProcessing = () => {
+    const processChunk = (deadline) => {
+      if (processNodes(deadline)) {
+        requestIdleCallback(processChunk, { timeout: 1000 });
+      }
+    };
 
     if ('requestIdleCallback' in window) {
-      requestIdleCallback(callback);
+      requestIdleCallback(processChunk, { timeout: 1000 });
     } else {
-      setTimeout(callback, 0);
+      const fallbackDeadline = {
+        timeRemaining: () => true,
+        didTimeout: false,
+      };
+      const fallbackProcess = () => {
+        if (processNodes(fallbackDeadline)) {
+          setTimeout(fallbackProcess, 0);
+        }
+      };
+      setTimeout(fallbackProcess, 0);
     }
   };
-  scheduleProcessing(elements);
-}
-
-if (!window.requestIdleCallback) {
-  window.requestIdleCallback = function requestIdleCallback(handler) {
-    return setTimeout(() => {
-      const start = Date.now();
-      handler({
-        didTimeout: false,
-        timeRemaining: () => Math.max(0, 50 - (Date.now() - start)),
-      });
-    }, 1);
-  };
+  scheduleProcessing();
 }
 
 export function getLanguageFromPath(pathname) {
