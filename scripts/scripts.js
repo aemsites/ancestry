@@ -58,150 +58,101 @@ export function decorateTooltipAndModalLinks(main) {
   });
 }
 
-export function decorateTrademarks(container) {
-  const REFERENCE_TOKENS = /(✓\s*ᐩ|✓ᐩ|✓|ⓘ|ᐩ|✕|\w+[®™℠]|\*+|[†‡¤∞§])/;
-
-  const createReplacementNode = (() => {
-    const cache = new Map();
-    return (text) => {
-      if (cache.has(text)) {
-        return cache.get(text).cloneNode(true);
-      }
-
-      let replacementNode;
-      switch (text) {
-        case '✓':
-          replacementNode = document.createElement('span');
-          replacementNode.className = 'tick';
-          break;
-        case '✓ᐩ':
-        case '✓ ᐩ':
-          replacementNode = document.createElement('span');
-          replacementNode.className = 'tickplus';
-          break;
-        case 'ᐩ':
-          replacementNode = document.createElement('span');
-          replacementNode.className = 'plus';
-          break;
-        case 'ⓘ':
-          replacementNode = document.createElement('span');
-          replacementNode.className = 'icon-infor';
-          break;
-        case '✕':
-          replacementNode = document.createElement('span');
-          replacementNode.className = 'cross';
-          break;
-        default: {
-          const symbol = text.slice(-1);
-          if (['®', '™', '℠'].includes(symbol)) {
-            const keyword = text.slice(0, -1);
-            const span = document.createElement('span');
-            if (keyword) {
-              span.appendChild(document.createTextNode(keyword));
-            }
-            const trademarkSpan = document.createElement('span');
-            trademarkSpan.className = 'trademark';
-            trademarkSpan.textContent = symbol;
-            span.appendChild(trademarkSpan);
-            replacementNode = span;
-          } else {
-            const supSpan = document.createElement('span');
-            supSpan.className = 'superscript';
-            supSpan.textContent = text;
-            replacementNode = supSpan;
-          }
-          break;
-        }
-      }
-
-      cache.set(text, replacementNode.cloneNode(true));
-      return replacementNode;
+function scheduleProcessing(processor, options = { chunkTime: 5 }) {
+  let lastTime = 0;
+  const processChunk = (timestamp) => {
+    const deadline = {
+      didTimeout: false,
+      timeRemaining: () => Math.max(0, options.chunkTime - (timestamp - lastTime)),
     };
-  })();
+    lastTime = timestamp;
 
-  const walker = document.createTreeWalker(
-    container,
-    NodeFilter.SHOW_TEXT,
-    {
-      acceptNode: (node) => {
-        const parent = node.parentNode;
-
-        if (parent.nodeType === Node.ELEMENT_NODE) {
-          const tagName = parent.tagName.toLowerCase();
-          if (['script', 'style', 'textarea', 'code', 'pre'].includes(tagName)) {
-            return NodeFilter.FILTER_REJECT;
-          }
-
-          if (parent.classList.contains('button-container')
-            || parent.classList.contains('button') || parent.tagName === 'SUP'
-            || parent.isContentEditable || parent.hasAttribute('contenteditable')) {
-            return NodeFilter.FILTER_REJECT;
-          }
-        }
-        return REFERENCE_TOKENS.test(node.nodeValue)
-          ? NodeFilter.FILTER_ACCEPT
-          : NodeFilter.FILTER_SKIP;
-      },
-    },
-  );
-
-  const processNodes = (deadline) => {
-    const chunk = [];
-    let node = walker.nextNode();
-
-    while (node && chunk.length < 50
-      && (deadline.timeRemaining() > 0 || deadline.didTimeout)) {
-      chunk.push(node);
-      node = walker.nextNode();
+    if (processor(deadline)) {
+      requestAnimationFrame(processChunk);
     }
+  };
+  requestAnimationFrame(processChunk);
+}
 
-    if (chunk.length === 0) {
-      return false;
-    }
+export function decorateTrademarks(container) {
+  const REFERENCE_TOKENS = /(✓ᐩ|✓\s+ᐩ|✓|ᐩ|✕|ⓘ|\*+|[†‡¤∞§]|\(\d+\)|[A-Za-z0-9]+[®™℠])/;
 
-    chunk.forEach((textNode) => {
-      const parts = textNode.nodeValue.split(REFERENCE_TOKENS);
-      if (parts.length <= 1) return;
+  const textNodes = [];
+  const elements = container.querySelectorAll('p, strong,span, a, li, h1, h2, h3, h4, h5, h6');
 
-      const fragment = document.createDocumentFragment();
+  elements.forEach((el) => {
+    if (el.closest('.keyword, .trademark, sup, .button')) return;
+
+    el.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE && REFERENCE_TOKENS.test(node.textContent)) {
+        textNodes.push(node);
+      }
+    });
+  });
+
+  const processNodes = () => {
+    const batchSize = 10;
+    let count = 0;
+
+    while (count < batchSize && textNodes.length > 0) {
+      const node = textNodes.shift();
+      const text = node.textContent;
+      const parts = text.split(REFERENCE_TOKENS);
+
+      if (parts.length <= 1) {
+        // eslint-disable-next-line no-continue
+        continue;
+      }
+      const fragment = new DocumentFragment();
+
       parts.forEach((part) => {
         if (!part) return;
+
         if (REFERENCE_TOKENS.test(part)) {
-          fragment.appendChild(createReplacementNode(part));
+          if (/[®™℠]/.test(part)) {
+            const span = document.createElement('span');
+            span.className = 'keyword';
+            span.textContent = part.slice(0, -1);
+            const sup = document.createElement('sup');
+            sup.className = 'trademark';
+            sup.textContent = part.slice(-1);
+            span.appendChild(sup);
+            fragment.appendChild(span);
+          } else if (/^(✓ᐩ|✓\s+ᐩ|✓|ᐩ|✕|ⓘ)$/.test(part)) {
+            const span = document.createElement('span');
+            let className;
+            if (part === '✓') {
+              className = 'tick';
+            } else if (part === 'ᐩ') {
+              className = 'plus';
+            } else if (part === '✓ᐩ') {
+              className = 'tickplus';
+            } else if (part === 'ⓘ') {
+              className = 'icon-infor';
+            } else if (part === '✕') {
+              className = 'cross';
+            } else {
+              className = '';
+            }
+            span.className = className;
+            fragment.appendChild(span);
+          } else {
+            const span = document.createElement('span');
+            span.className = 'superscript';
+            span.textContent = part;
+            fragment.appendChild(span);
+          }
         } else {
           fragment.appendChild(document.createTextNode(part));
         }
       });
 
-      textNode.parentNode.replaceChild(fragment, textNode);
-    });
-
-    return true;
-  };
-
-  const scheduleProcessing = () => {
-    const processChunk = (deadline) => {
-      if (processNodes(deadline)) {
-        requestIdleCallback(processChunk, { timeout: 1000 });
-      }
-    };
-
-    if ('requestIdleCallback' in window) {
-      requestIdleCallback(processChunk, { timeout: 1000 });
-    } else {
-      const fallbackDeadline = {
-        timeRemaining: () => true,
-        didTimeout: false,
-      };
-      const fallbackProcess = () => {
-        if (processNodes(fallbackDeadline)) {
-          setTimeout(fallbackProcess, 0);
-        }
-      };
-      setTimeout(fallbackProcess, 0);
+      node.parentNode.replaceChild(fragment, node);
+      count += 1;
     }
+    return textNodes.length > 0;
   };
-  scheduleProcessing();
+  scheduleProcessing(processNodes);
 }
 
 export function getLanguageFromPath(pathname) {
