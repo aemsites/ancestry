@@ -52,8 +52,6 @@
     text-align: center;
   }
 
-  
-
   .survey-container.animate-container.hidden {
     animation: reduce-height 1s ease-in-out;
     overflow: hidden;
@@ -73,6 +71,9 @@
     display: flex;
     position: relative;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 5px;
+    padding: 0 3rem;
   }
 
   .survey-container .animate li {
@@ -88,6 +89,8 @@
     cursor: pointer;
     border-radius: 8px;
     list-style: none;
+    min-width: 150px;
+    flex: 1;
   }
 
   .survey-container .animate li input {
@@ -115,6 +118,9 @@
     font-size: 17px;
     width: 100%;
     height: 100%;
+    text-align: center;
+    word-wrap: break-word;
+    hyphens: auto;
   }
 
   .survey-container .animate p {
@@ -156,14 +162,33 @@
     justify-content: end;
     display: flex;
   }
-  
+
   .close-button {
+    background-color: transparent;
     font-size: 16px;
     color: var(--black-color) !important;
   }
 
-  .close-button:hover {
+  .close-button:hover,
+  .close-button:active,
+  .close-button:focus {
+    background-color: transparent;
     text-decoration: none;
     cursor: pointer;
+  }
+
+  @media (max-width: 600px) {
+    .survey-container .animate li {
+        width: 100%;
+        margin: 0;
+    }
+
+    .survey-container .animate li label {
+        font-size: 15px;
+    }
+
+    .survey-container .animate h2 {
+      font-size: 1rem;
+    }
   }
   

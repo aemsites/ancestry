@@ -28,14 +28,14 @@ function createRadioFromList() {
 }
 
 export default async function decorate(block) {
-  const closeButtonTemplate = '<div class="close-div"><a href="#" class="close-button">X</a></div>';
+  const closeButtonTemplate = '<div class="close-div"><button type="button" class="close-button" aria-label="Close survey">X</button></div>';
   const isAnimated = block.classList.contains('animate');
   if (isAnimated) {
     block.insertAdjacentHTML('afterbegin', closeButtonTemplate);
     createRadioFromList();
-    const dismissButton = block.querySelector('[title="Dismiss"]');
+    const dismissButton = block.querySelector('button[aria-label="Dismiss survey"]');
     if (dismissButton) {
-      dismissButton.href = '#';
+      dismissButton.setAttribute('type', 'button');
     }
   }
 
@@ -91,13 +91,13 @@ export default async function decorate(block) {
   }
 
   // close survey on Dismiss/Close button click
-  const dismissButton = document.querySelector('.animate .button-container:nth-of-type(2) a:first-of-type');
+  const dismissButton = document.querySelector('.animate .button-container:nth-of-type(2) button[aria-label="Dismiss survey"]');
   const closeButtonElement = document.querySelector('.close-button');
 
   const buttons = [dismissButton, closeButtonElement].filter((button) => button !== null);
   buttons.forEach((button) => {
     button.addEventListener('click', () => {
-      container.classList.add('hidden');
+      container.hidden = true;
     });
   });
 }
