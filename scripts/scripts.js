@@ -58,27 +58,34 @@ export function decorateTooltipAndModalLinks(main) {
   });
 }
 
-function scheduleProcessing(processor, options = { chunkTime: 5 }) {
-  let lastTime = 0;
-  const processChunk = (timestamp) => {
-    const deadline = {
-      didTimeout: false,
-      timeRemaining: () => Math.max(0, options.chunkTime - (timestamp - lastTime)),
-    };
-    lastTime = timestamp;
+/**
+ * Processes an array of items in batches,
+ *  allowing for controlled execution and scheduling between batches.
+ *
+ * @param {Array} items - The array of items to process.
+ * @param {number} batchSize - The number of items to process in each batch.
+ * @param {Function} processFn - The function to process each batch.
+ */
 
-    if (processor(deadline)) {
-      requestAnimationFrame(processChunk);
-    }
+function batchProcess(items, batchSize, processFn) {
+  const processNextBatch = () => {
+    const batch = items.splice(0, batchSize);
+    processFn(batch, items.length > 0 ? processNextBatch : null);
   };
-  requestAnimationFrame(processChunk);
+  processNextBatch();
 }
+
+/**
+ * Decorates the container with trademarks and superscripts.
+ *
+ * @param {Element} container - The container element to decorate.
+ */
 
 export function decorateTrademarks(container) {
   const REFERENCE_TOKENS = /(✓ᐩ|✓\s+ᐩ|✓|ᐩ|✕|ⓘ|\*+|[†‡¤∞§]|\(\d+\)|[A-Za-z0-9]+[®™℠])/;
 
   const textNodes = [];
-  const elements = container.querySelectorAll('p, strong,span, a, li, h1, h2, h3, h4, h5, h6');
+  const elements = container.querySelectorAll('p, strong, span, a, li, h1, h2, h3, h4, h5, h6');
 
   elements.forEach((el) => {
     if (el.closest('.keyword, .trademark, sup, .button')) return;
@@ -90,21 +97,13 @@ export function decorateTrademarks(container) {
     });
   });
 
-  const processNodes = () => {
-    const batchSize = 10;
-    let count = 0;
-
-    while (count < batchSize && textNodes.length > 0) {
-      const node = textNodes.shift();
+  const processNodes = (nodes, scheduleNext) => {
+    nodes.forEach((node) => {
       const text = node.textContent;
       const parts = text.split(REFERENCE_TOKENS);
+      if (parts.length <= 1) return;
 
-      if (parts.length <= 1) {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
       const fragment = new DocumentFragment();
-
       parts.forEach((part) => {
         if (!part) return;
 
@@ -119,22 +118,16 @@ export function decorateTrademarks(container) {
             span.appendChild(sup);
             fragment.appendChild(span);
           } else if (/^(✓ᐩ|✓\s+ᐩ|✓|ᐩ|✕|ⓘ)$/.test(part)) {
+            /* eslint-disable quote-props */
+            const iconClassMap = {
+              '✓': 'tick',
+              'ᐩ': 'plus',
+              '✓ᐩ': 'tickplus',
+              'ⓘ': 'icon-infor',
+              '✕': 'cross',
+            };
             const span = document.createElement('span');
-            let className;
-            if (part === '✓') {
-              className = 'tick';
-            } else if (part === 'ᐩ') {
-              className = 'plus';
-            } else if (part === '✓ᐩ') {
-              className = 'tickplus';
-            } else if (part === 'ⓘ') {
-              className = 'icon-infor';
-            } else if (part === '✕') {
-              className = 'cross';
-            } else {
-              className = '';
-            }
-            span.className = className;
+            span.className = iconClassMap[part] || '';
             fragment.appendChild(span);
           } else {
             const span = document.createElement('span');
@@ -147,12 +140,18 @@ export function decorateTrademarks(container) {
         }
       });
 
-      node.parentNode.replaceChild(fragment, node);
-      count += 1;
+      if (node.parentNode) {
+        node.parentNode.replaceChild(fragment, node);
+      }
+    });
+
+    // change deferring API as needed
+    if (scheduleNext) {
+      requestAnimationFrame(scheduleNext);
     }
-    return textNodes.length > 0;
   };
-  scheduleProcessing(processNodes);
+
+  batchProcess(textNodes, 10, processNodes);
 }
 
 export function getLanguageFromPath(pathname) {
