@@ -58,48 +58,100 @@ export function decorateTooltipAndModalLinks(main) {
   });
 }
 
+/**
+ * Processes an array of items in batches,
+ *  allowing for controlled execution and scheduling between batches.
+ *
+ * @param {Array} items - The array of items to process.
+ * @param {number} batchSize - The number of items to process in each batch.
+ * @param {Function} processFn - The function to process each batch.
+ */
+
+function batchProcess(items, batchSize, processFn) {
+  const processNextBatch = () => {
+    const batch = items.splice(0, batchSize);
+    processFn(batch, items.length > 0 ? processNextBatch : null);
+  };
+  processNextBatch();
+}
+
+/**
+ * Decorates the container with trademarks and superscripts.
+ *
+ * @param {Element} container - The container element to decorate.
+ */
+
 export function decorateTrademarks(container) {
-  const REFERENCE_TOKENS = /(\w+®|\w+™|\w+℠|\*+|[†‡¤∞§ⓘ]|\(\d+\)|✓\s*ᐩ|✓|ᐩ|✕)/g;
-  [...container.querySelectorAll('p, a, li, h1, h2, h3, h4, h5, h6, strong, div')]
-    .filter((el) => !el.closest('.button-container') && !el.querySelector('.button'))
-    .forEach((el) => {
-      const nodes = Array.from(el.childNodes);
-      nodes.forEach((node) => {
-        if (node.nodeType === Node.TEXT_NODE) {
-          const modifiedContent = node.textContent.replace(REFERENCE_TOKENS, (token) => {
-            switch (token) {
-              case '✓':
-                /* eslint-disable quotes */
-                return `<span class='tick'></span>`;
-              case '✓ᐩ':
-                /* eslint-disable quotes */
-                return `<span class='tickplus'></span>`;
-              case 'ᐩ':
-                /* eslint-disable quotes */
-                return `<span class='plus'></span>`;
-              case 'ⓘ':
-                /* eslint-disable quotes */
-                return `<span class='icon-infor'></span>`;
-              case '✕':
-                /* eslint-disable quotes */
-                return `<span class='cross'></span>`;
-              default:
-                if (/®|™|℠/.test(token)) {
-                  const keyword = token.slice(0, -1);
-                  const symbol = token.slice(-1);
-                  return `<span class='keyword'>${keyword}<sup class="trademark">${symbol}</sup></span>`;
-                }
-                return `<sup class='superscript'>${token}</sup>`;
-            }
-          });
-          if (modifiedContent !== node.textContent) {
-            const wrapper = document.createElement('span');
-            wrapper.innerHTML = modifiedContent;
-            node.replaceWith(...wrapper.childNodes);
+  const REFERENCE_TOKENS = /(✓ᐩ|✓\s+ᐩ|✓|ᐩ|✕|ⓘ|\*+|[†‡¤∞§]|\(\d+\)|[A-Za-z0-9]+[®™℠])/;
+
+  const textNodes = [];
+  const elements = container.querySelectorAll('p, strong, span, a, li, h1, h2, h3, h4, h5, h6');
+
+  elements.forEach((el) => {
+    if (el.closest('.keyword, .trademark, sup, .button')) return;
+
+    el.childNodes.forEach((node) => {
+      if (node.nodeType === Node.TEXT_NODE && REFERENCE_TOKENS.test(node.textContent)) {
+        textNodes.push(node);
+      }
+    });
+  });
+
+  const processNodes = (nodes, scheduleNext) => {
+    nodes.forEach((node) => {
+      const text = node.textContent;
+      const parts = text.split(REFERENCE_TOKENS);
+      if (parts.length <= 1) return;
+
+      const fragment = new DocumentFragment();
+      parts.forEach((part) => {
+        if (!part) return;
+
+        if (REFERENCE_TOKENS.test(part)) {
+          if (/[®™℠]/.test(part)) {
+            const span = document.createElement('span');
+            span.className = 'keyword';
+            span.textContent = part.slice(0, -1);
+            const sup = document.createElement('sup');
+            sup.className = 'trademark';
+            sup.textContent = part.slice(-1);
+            span.appendChild(sup);
+            fragment.appendChild(span);
+          } else if (/^(✓ᐩ|✓\s+ᐩ|✓|ᐩ|✕|ⓘ)$/.test(part)) {
+            /* eslint-disable quote-props */
+            const iconClassMap = {
+              '✓': 'tick',
+              'ᐩ': 'plus',
+              '✓ᐩ': 'tickplus',
+              'ⓘ': 'icon-infor',
+              '✕': 'cross',
+            };
+            const span = document.createElement('span');
+            span.className = iconClassMap[part] || '';
+            fragment.appendChild(span);
+          } else {
+            const span = document.createElement('span');
+            span.className = 'superscript';
+            span.textContent = part;
+            fragment.appendChild(span);
           }
+        } else {
+          fragment.appendChild(document.createTextNode(part));
         }
       });
+
+      if (node.parentNode) {
+        node.parentNode.replaceChild(fragment, node);
+      }
     });
+
+    // change deferring API as needed
+    if (scheduleNext) {
+      requestAnimationFrame(scheduleNext);
+    }
+  };
+
+  batchProcess(textNodes, 10, processNodes);
 }
 
 export function getLanguageFromPath(pathname) {
