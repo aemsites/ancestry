@@ -46,13 +46,12 @@ export default async function decorate(block) {
   const path = link ? link.getAttribute('href') : block.textContent.trim();
   const fragment = await loadFragment(path);
   if (fragment) {
-    const fragmentSections = fragment.querySelectorAll(':scope .section');
-    if (fragmentSections.length > 0) {
-      const blockDiv = block.closest('.fragment');
-      blockDiv.innerHTML = '';
-      fragmentSections.forEach((section) => {
-        blockDiv.appendChild(section);
-      });
+    const fragmentSection = fragment.querySelector(':scope .section');
+    if (fragmentSection) {
+      block.closest('.section').classList.add(...fragmentSection.classList);
+      const clonedBlockDiv = block.closest('.fragment').cloneNode(false);
+      clonedBlockDiv.append(...fragmentSection.childNodes);
+      block.closest('.fragment').replaceWith(clonedBlockDiv);
     }
   }
 }
